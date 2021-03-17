@@ -52,7 +52,7 @@ List<ProviderFeedback> lstProviderFeedback = List.from([
         'public/img/nail_2.jpg',
       ],
       feedback:
-          'Trời mưa nóng mà bước vô Mít cái mát rượi luôn, vừa làm nail vừa uống '
+          'Trời mưa nóng mà . vô Mít cái mát rượi luôn, vừa làm nail vừa uống '
           'trà sữa đã gì đâu. Bạn nhân viên vui tính, làm rất nhiệt tình và '
           'luôn hỏi ý mình khi chọn màu sơn. Sơn ra khác hợp với tay, màu '
           'sơn đều đẹp, nói chung là ưng ý.',
@@ -76,10 +76,10 @@ List<Service> lstService = List.from([
   Service(
     name: '90 phút Massage body toàn thân',
     description: [
-      'Bước 1: làm sạch tay bằng Cool Blue',
-      'Bước 2: dũa móng theo khuôn khách yêu cầu',
-      'Bước 3: làm mềm da trên mặt móng với gel biểu bì',
-      'Bước 4: dùng cây đẩy da đẩy nhẹ trên mặt móng và lau sạch bằng bông',
+      'làm sạch tay bằng Cool Blue',
+      'dũa móng theo khuôn khách yêu cầu',
+      'làm mềm da trên mặt móng với gel biểu bì',
+      'ùng cây đẩy da đẩy nhẹ trên mặt móng và lau sạch bằng bông',
     ],
     price: '500',
     estimateTime: 30,
@@ -92,10 +92,10 @@ List<Service> lstService = List.from([
   Service(
     name: '90 phút Massage body toàn thân',
     description: [
-      'Bước 1: làm sạch tay bằng Cool Blue',
-      'Bước 2: dũa móng theo khuôn khách yêu cầu',
-      'Bước 3: làm mềm da trên mặt móng với gel biểu bì',
-      'Bước 4: dùng cây đẩy da đẩy nhẹ trên mặt móng và lau sạch bằng bông',
+      'làm sạch tay bằng Cool Blue',
+      'dũa móng theo khuôn khách yêu cầu',
+      'làm mềm da trên mặt móng với gel biểu bì',
+      'dùng cây đẩy da đẩy nhẹ trên mặt móng và lau sạch bằng bông',
     ],
     price: '500',
     estimateTime: 30,
@@ -108,10 +108,10 @@ List<Service> lstService = List.from([
   Service(
     name: '90 phút Massage body toàn thân',
     description: [
-      'Bước 1: làm sạch tay bằng Cool Blue',
-      'Bước 2: dũa móng theo khuôn khách yêu cầu',
-      'Bước 3: làm mềm da trên mặt móng với gel biểu bì',
-      'Bước 4: dùng cây đẩy da đẩy nhẹ trên mặt móng và lau sạch bằng bông',
+      'làm sạch tay bằng Cool Blue',
+      'dũa móng theo khuôn khách yêu cầu',
+      'làm mềm da trên mặt móng với gel biểu bì',
+      'dùng cây đẩy da đẩy nhẹ trên mặt móng và lau sạch bằng bông',
     ],
     price: '500',
     estimateTime: 30,
@@ -124,14 +124,14 @@ List<Service> lstService = List.from([
   Service(
     name: 'Làm sạch và sơn gel',
     description: [
-      'Bước 1: làm sạch tay bằng Cool Blue',
-      'Bước 2: dũa móng theo khuôn khách yêu cầu',
-      'Bước 3: làm mềm da trên mặt móng với gel biểu bì',
-      'Bước 4: dùng cây đẩy da đẩy nhẹ trên mặt móng và lau sạch bằng bông',
-      'Bước 5: làm sạch dung dịch gel sót trên da và dùng kiềm nhặt da sót lại',
-      'Bước 6: làm sạch mặt móng với dung dịch làm khô chuyên biệt',
-      'Bước 7: sơn gel',
-      'Bước 8: thao dưỡng khóe móng và móng bằng culticle eraser và solar oil'
+      'làm sạch tay bằng Cool Blue',
+      'dũa móng theo khuôn khách yêu cầu',
+      'làm mềm da trên mặt móng với gel biểu bì',
+      'dùng cây đẩy da đẩy nhẹ trên mặt móng và lau sạch bằng bông',
+      'làm sạch dung dịch gel sót trên da và dùng kiềm nhặt da sót lại',
+      'làm sạch mặt móng với dung dịch làm khô chuyên biệt',
+      'sơn gel',
+      'thao dưỡng khóe móng và móng bằng culticle eraser và solar oil'
     ],
     price: '200',
     estimateTime: 30,
@@ -390,8 +390,7 @@ class _ProviderDetailScreenState extends State<ProviderDetailScreen> {
                                   //         ),
                                   //   ),
                                   // ),
-                                  _navigateAndDisplaySelection(
-                                      context, service, newCart),
+                                  _navigateAndDisplaySelection(context, service, newCart),
                             ),
                             SizedBox(
                               height: 65,

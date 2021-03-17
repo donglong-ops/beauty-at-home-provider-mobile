@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_app/src/view/profile_edit_creen.dart';
+import 'package:flutter_app/src/view/profile_edit_screen.dart';
 
 class SettingsPage extends StatefulWidget {
   @override

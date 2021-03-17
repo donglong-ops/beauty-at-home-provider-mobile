@@ -1,7 +1,8 @@
 import 'package:custom_switch/custom_switch.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_app/src/utils/widgets_utils.dart';
-import 'package:flutter_app/src/view/provider_detail_screen.dart';
+import 'package:flutter_app/src/view/add_new_service_screen.dart';
+import 'package:flutter_app/src/view/service_detail_screen2.dart';
 import 'package:flutter_app/src/widgets/provider_detail_screen_widget.dart';
 
 class ProviderManagerScreen extends StatelessWidget {
@@ -16,228 +17,404 @@ class ProviderManagerScreen extends StatelessWidget {
 
 List<ServiceItem> lstServiceActive = List.from([
   ServiceItem(
-      image: 'public/img/nail_2.jpg',
-      salonOwner: 'Tony Đặng',
-      titleService: 'Massage - Giác hơi',
-      area: 'Quận 1, TP. Hồ Chí Minh',
-      range: '5 km',
-      rate: 4.8,
-      timeLine: '9:00 AM - 8:30 PM',
-      status: 'Đang hoặt động',
-      price: '50.000 - 500.000'),
+    image: 'public/img/nail_2.jpg',
+    salonOwner: 'Tony Đặng',
+    titleService: 'Massage - Giác hơi',
+    area: 'Quận 1, TP. Hồ Chí Minh',
+    range: '5 km',
+    rate: 4.8,
+    timeLine: '9:00 AM - 8:30 PM',
+    status: 'Đang hoặt động',
+    price: '500.000',
+    description: [
+      'làm sạch tay bằng Cool Blue',
+      'dũa móng theo khuôn khách yêu cầu',
+      'làm mềm da trên mặt móng với gel biểu bì',
+      'dùng cây đẩy da đẩy nhẹ trên mặt móng và lau sạch bằng bông',
+    ],
+    note: 'Bao gồm mỹ phẩm làm đẹp và dụng cụ',
+  ),
   ServiceItem(
-      image: 'public/img/nail_2.jpg',
-      salonOwner: 'Hani Nguyễn',
-      titleService: 'Làm nail - Làm tóc',
-      area: 'Quận 2, TP. Hồ Chí Minh',
-      range: '2.3 km',
-      rate: 4.8,
-      timeLine: '9:00 AM - 8:30 PM',
-      status: 'Đang hoặt động',
-      price: '50.000 - 500.000'),
+    image: 'public/img/nail_2.jpg',
+    salonOwner: 'Hani Nguyễn',
+    titleService: 'Làm nail - Làm tóc',
+    area: 'Quận 2, TP. Hồ Chí Minh',
+    range: '2.3 km',
+    rate: 4.8,
+    timeLine: '9:00 AM - 8:30 PM',
+    status: 'Đang hoặt động',
+    price: '500.000',
+    description: [
+      'Bước 1: làm sạch tay bằng Cool Blue',
+      'Bước 2: dũa móng theo khuôn khách yêu cầu',
+      'Bước 3: làm mềm da trên mặt móng với gel biểu bì',
+      'Bước 4: dùng cây đẩy da đẩy nhẹ trên mặt móng và lau sạch bằng bông',
+    ],
+    note: 'Bao gồm mỹ phẩm làm đẹp và dụng cụ',
+  ),
   ServiceItem(
-      image: 'public/img/nail_1.jpg',
-      salonOwner: 'Tony Đặng',
-      titleService: 'Massage - Giác hơi',
-      area: 'Quận 1, TP. Hồ Chí Minh',
-      range: '5 km',
-      rate: 4.8,
-      timeLine: '9:00 AM - 8:30 PM',
-      status: 'Đang hoặt động',
-      price: '50.000 - 500.000'),
+    image: 'public/img/nail_1.jpg',
+    salonOwner: 'Tony Đặng',
+    titleService: 'Massage - Giác hơi',
+    area: 'Quận 1, TP. Hồ Chí Minh',
+    range: '5 km',
+    rate: 4.8,
+    timeLine: '9:00 AM - 8:30 PM',
+    status: 'Đang hoặt động',
+    price: '500.000',
+    description: [
+      'Bước 1: làm sạch tay bằng Cool Blue',
+      'Bước 2: dũa móng theo khuôn khách yêu cầu',
+      'Bước 3: làm mềm da trên mặt móng với gel biểu bì',
+      'Bước 4: dùng cây đẩy da đẩy nhẹ trên mặt móng và lau sạch bằng bông',
+    ],
+    note: 'Bao gồm mỹ phẩm làm đẹp và dụng cụ',
+  ),
   ServiceItem(
-      image: 'public/img/nail_3.png',
-      salonOwner: 'Marry Trần',
-      titleService: 'Trang điểm - Làm tóc',
-      area: 'Quận 10, TP. Hồ Chí Minh',
-      range: '5 km',
-      rate: 4.8,
-      timeLine: '9:00 AM - 8:30 PM',
-      status: 'Đang hoặt động',
-      price: '50.000 - 500.000'),
+    image: 'public/img/nail_3.png',
+    salonOwner: 'Marry Trần',
+    titleService: 'Trang điểm - Làm tóc',
+    area: 'Quận 10, TP. Hồ Chí Minh',
+    range: '5 km',
+    rate: 4.8,
+    timeLine: '9:00 AM - 8:30 PM',
+    status: 'Đang hoặt động',
+    price: '500.000',
+    description: [
+      'Bước 1: làm sạch tay bằng Cool Blue',
+      'Bước 2: dũa móng theo khuôn khách yêu cầu',
+      'Bước 3: làm mềm da trên mặt móng với gel biểu bì',
+      'Bước 4: dùng cây đẩy da đẩy nhẹ trên mặt móng và lau sạch bằng bông',
+    ],
+    note: 'Bao gồm mỹ phẩm làm đẹp và dụng cụ',
+  ),
   ServiceItem(
-      image: 'public/img/nail_2.jpg',
-      salonOwner: 'Aleck Marry',
-      titleService: 'Combo làm tóc,trang điểm',
-      area: 'Quận 2, TP. Hồ Chí Minh',
-      range: '2.3 km',
-      rate: 4.8,
-      timeLine: '9:00 AM - 8:30 PM',
-      status: 'Đang hoặt động',
-      price: '50.000 - 500.000'),
+    image: 'public/img/nail_2.jpg',
+    salonOwner: 'Aleck Marry',
+    titleService: 'Combo làm tóc,trang điểm',
+    area: 'Quận 2, TP. Hồ Chí Minh',
+    range: '2.3 km',
+    rate: 4.8,
+    timeLine: '9:00 AM - 8:30 PM',
+    status: 'Đang hoặt động',
+    price: '500.000',
+    description: [
+      'Bước 1: làm sạch tay bằng Cool Blue',
+      'Bước 2: dũa móng theo khuôn khách yêu cầu',
+      'Bước 3: làm mềm da trên mặt móng với gel biểu bì',
+      'Bước 4: dùng cây đẩy da đẩy nhẹ trên mặt móng và lau sạch bằng bông',
+    ],
+    note: 'Bao gồm mỹ phẩm làm đẹp và dụng cụ',
+  ),
   ServiceItem(
-      image: 'public/img/nail_1.jpg',
-      salonOwner: 'Tony Đặng',
-      titleService: 'Massage - Giác hơi',
-      area: 'Quận 1, TP. Hồ Chí Minh',
-      range: '5 km',
-      rate: 4.8,
-      timeLine: '9:00 AM - 8:30 PM',
-      status: 'Đang hoặt động',
-      price: '50.000 - 500.000'),
+    image: 'public/img/nail_1.jpg',
+    salonOwner: 'Tony Đặng',
+    titleService: 'Massage - Giác hơi',
+    area: 'Quận 1, TP. Hồ Chí Minh',
+    range: '5 km',
+    rate: 4.8,
+    timeLine: '9:00 AM - 8:30 PM',
+    status: 'Đang hoặt động',
+    price: '500.000',
+    description: [
+      'Bước 1: làm sạch tay bằng Cool Blue',
+      'Bước 2: dũa móng theo khuôn khách yêu cầu',
+      'Bước 3: làm mềm da trên mặt móng với gel biểu bì',
+      'Bước 4: dùng cây đẩy da đẩy nhẹ trên mặt móng và lau sạch bằng bông',
+    ],
+    note: 'Bao gồm mỹ phẩm làm đẹp và dụng cụ',
+  ),
   ServiceItem(
-      image: 'public/img/mit_nails_spa.png',
-      salonOwner: 'Mít Nail & Spa',
-      titleService: 'Làm nail - Làm tóc',
-      area: 'Quận 2, TP. Hồ Chí Minh',
-      range: '2.3 km',
-      rate: 4.8,
-      timeLine: '9:00 AM - 8:30 PM',
-      status: 'Đang hoặt động',
-      price: '50.000 - 500.000'),
+    image: 'public/img/mit_nails_spa.png',
+    salonOwner: 'Mít Nail & Spa',
+    titleService: 'Làm nail - Làm tóc',
+    area: 'Quận 2, TP. Hồ Chí Minh',
+    range: '2.3 km',
+    rate: 4.8,
+    timeLine: '9:00 AM - 8:30 PM',
+    status: 'Đang hoặt động',
+    price: '500.000',
+    description: [
+      'Bước 1: làm sạch tay bằng Cool Blue',
+      'Bước 2: dũa móng theo khuôn khách yêu cầu',
+      'Bước 3: làm mềm da trên mặt móng với gel biểu bì',
+      'Bước 4: dùng cây đẩy da đẩy nhẹ trên mặt móng và lau sạch bằng bông',
+    ],
+    note: 'Bao gồm mỹ phẩm làm đẹp và dụng cụ',
+  ),
   ServiceItem(
-      image: 'public/img/mit_nails_spa.png',
-      salonOwner: 'Mít Nail & Spa',
-      titleService: 'Làm nail - Làm tóc',
-      area: 'Quận 2, TP. Hồ Chí Minh',
-      range: '2.3 km',
-      rate: 4.8,
-      timeLine: '9:00 AM - 8:30 PM',
-      status: 'Đang hoặt động',
-      price: '50.000 - 500.000'),
+    image: 'public/img/mit_nails_spa.png',
+    salonOwner: 'Mít Nail & Spa',
+    titleService: 'Làm nail - Làm tóc',
+    area: 'Quận 2, TP. Hồ Chí Minh',
+    range: '2.3 km',
+    rate: 4.8,
+    timeLine: '9:00 AM - 8:30 PM',
+    status: 'Đang hoặt động',
+    price: '500.000',
+    description: [
+      'Bước 1: làm sạch tay bằng Cool Blue',
+      'Bước 2: dũa móng theo khuôn khách yêu cầu',
+      'Bước 3: làm mềm da trên mặt móng với gel biểu bì',
+      'Bước 4: dùng cây đẩy da đẩy nhẹ trên mặt móng và lau sạch bằng bông',
+    ],
+    note: 'Bao gồm mỹ phẩm làm đẹp và dụng cụ',
+  ),
   ServiceItem(
-      image: 'public/img/nail_3.png',
-      salonOwner: 'Marry Trần',
-      titleService: 'Trang điểm - Làm tóc',
-      area: 'Quận 10, TP. Hồ Chí Minh',
-      range: '5 km',
-      rate: 4.8,
-      timeLine: '9:00 AM - 8:30 PM',
-      status: 'Đang hoặt động',
-      price: '50.000 - 500.000'),
+    image: 'public/img/nail_3.png',
+    salonOwner: 'Marry Trần',
+    titleService: 'Trang điểm - Làm tóc',
+    area: 'Quận 10, TP. Hồ Chí Minh',
+    range: '5 km',
+    rate: 4.8,
+    timeLine: '9:00 AM - 8:30 PM',
+    status: 'Đang hoặt động',
+    price: '500.000',
+    description: [
+      'Bước 1: làm sạch tay bằng Cool Blue',
+      'Bước 2: dũa móng theo khuôn khách yêu cầu',
+      'Bước 3: làm mềm da trên mặt móng với gel biểu bì',
+      'Bước 4: dùng cây đẩy da đẩy nhẹ trên mặt móng và lau sạch bằng bông',
+    ],
+    note: 'Bao gồm mỹ phẩm làm đẹp và dụng cụ',
+  ),
   ServiceItem(
-      image: 'public/img/nail_1.jpg',
-      salonOwner: 'Aleck Marry',
-      titleService: 'Combo làm tóc,trang điểm',
-      area: 'Quận 2, TP. Hồ Chí Minh',
-      range: '2.3 km',
-      rate: 4.8,
-      timeLine: '9:00 AM - 8:30 PM',
-      status: 'Đang hoặt động',
-      price: '50.000 - 500.000'),
+    image: 'public/img/nail_1.jpg',
+    salonOwner: 'Aleck Marry',
+    titleService: 'Combo làm tóc,trang điểm',
+    area: 'Quận 2, TP. Hồ Chí Minh',
+    range: '2.3 km',
+    rate: 4.8,
+    timeLine: '9:00 AM - 8:30 PM',
+    status: 'Đang hoặt động',
+    price: '500.000',
+    description: [
+      'Bước 1: làm sạch tay bằng Cool Blue',
+      'Bước 2: dũa móng theo khuôn khách yêu cầu',
+      'Bước 3: làm mềm da trên mặt móng với gel biểu bì',
+      'Bước 4: dùng cây đẩy da đẩy nhẹ trên mặt móng và lau sạch bằng bông',
+    ],
+    note: 'Bao gồm mỹ phẩm làm đẹp và dụng cụ',
+  ),
   ServiceItem(
-      image: 'public/img/nail_2.jpg',
-      salonOwner: 'Tony Đặng',
-      titleService: 'Massage - Giác hơi',
-      area: 'Quận 1, TP. Hồ Chí Minh',
-      range: '5 km',
-      rate: 4.8,
-      timeLine: '9:00 AM - 8:30 PM',
-      status: 'Đang hoặt động',
-      price: '50.000 - 500.000'),
+    image: 'public/img/nail_2.jpg',
+    salonOwner: 'Tony Đặng',
+    titleService: 'Massage - Giác hơi',
+    area: 'Quận 1, TP. Hồ Chí Minh',
+    range: '5 km',
+    rate: 4.8,
+    timeLine: '9:00 AM - 8:30 PM',
+    status: 'Đang hoặt động',
+    price: '500.000',
+    description: [
+      'Bước 1: làm sạch tay bằng Cool Blue',
+      'Bước 2: dũa móng theo khuôn khách yêu cầu',
+      'Bước 3: làm mềm da trên mặt móng với gel biểu bì',
+      'Bước 4: dùng cây đẩy da đẩy nhẹ trên mặt móng và lau sạch bằng bông',
+    ],
+    note: 'Bao gồm mỹ phẩm làm đẹp và dụng cụ',
+  ),
   ServiceItem(
-      image: 'public/img/nail_2.jpg',
-      salonOwner: 'Hani Nguyễn',
-      titleService: 'Làm nail - Làm tóc',
-      area: 'Quận 2, TP. Hồ Chí Minh',
-      range: '2.3 km',
-      rate: 4.8,
-      timeLine: '9:00 AM - 8:30 PM',
-      status: 'Đang hoặt động',
-      price: '50.000 - 500.000'),
+    image: 'public/img/nail_2.jpg',
+    salonOwner: 'Hani Nguyễn',
+    titleService: 'Làm nail - Làm tóc',
+    area: 'Quận 2, TP. Hồ Chí Minh',
+    range: '2.3 km',
+    rate: 4.8,
+    timeLine: '9:00 AM - 8:30 PM',
+    status: 'Đang hoặt động',
+    price: '500.000',
+    description: [
+      'Bước 1: làm sạch tay bằng Cool Blue',
+      'Bước 2: dũa móng theo khuôn khách yêu cầu',
+      'Bước 3: làm mềm da trên mặt móng với gel biểu bì',
+      'Bước 4: dùng cây đẩy da đẩy nhẹ trên mặt móng và lau sạch bằng bông',
+    ],
+    note: 'Bao gồm mỹ phẩm làm đẹp và dụng cụ',
+  ),
   ServiceItem(
-      image: 'public/img/nail_1.jpg',
-      salonOwner: 'Tony Đặng',
-      titleService: 'Massage - Giác hơi',
-      area: 'Quận 1, TP. Hồ Chí Minh',
-      range: '5 km',
-      rate: 4.8,
-      timeLine: '9:00 AM - 8:30 PM',
-      status: 'Đang hoặt động',
-      price: '50.000 - 500.000'),
+    image: 'public/img/nail_1.jpg',
+    salonOwner: 'Tony Đặng',
+    titleService: 'Massage - Giác hơi',
+    area: 'Quận 1, TP. Hồ Chí Minh',
+    range: '5 km',
+    rate: 4.8,
+    timeLine: '9:00 AM - 8:30 PM',
+    status: 'Đang hoặt động',
+    price: '500.000',
+    description: [
+      'Bước 1: làm sạch tay bằng Cool Blue',
+      'Bước 2: dũa móng theo khuôn khách yêu cầu',
+      'Bước 3: làm mềm da trên mặt móng với gel biểu bì',
+      'Bước 4: dùng cây đẩy da đẩy nhẹ trên mặt móng và lau sạch bằng bông',
+    ],
+    note: 'Bao gồm mỹ phẩm làm đẹp và dụng cụ',
+  ),
   ServiceItem(
-      image: 'public/img/nail_3.png',
-      salonOwner: 'Marry Trần',
-      titleService: 'Trang điểm - Làm tóc',
-      area: 'Quận 10, TP. Hồ Chí Minh',
-      range: '5 km',
-      rate: 4.8,
-      timeLine: '9:00 AM - 8:30 PM',
-      status: 'Đang hoặt động',
-      price: '50.000 - 500.000'),
+    image: 'public/img/nail_3.png',
+    salonOwner: 'Marry Trần',
+    titleService: 'Trang điểm - Làm tóc',
+    area: 'Quận 10, TP. Hồ Chí Minh',
+    range: '5 km',
+    rate: 4.8,
+    timeLine: '9:00 AM - 8:30 PM',
+    status: 'Đang hoặt động',
+    price: '500.000',
+    description: [
+      'Bước 1: làm sạch tay bằng Cool Blue',
+      'Bước 2: dũa móng theo khuôn khách yêu cầu',
+      'Bước 3: làm mềm da trên mặt móng với gel biểu bì',
+      'Bước 4: dùng cây đẩy da đẩy nhẹ trên mặt móng và lau sạch bằng bông',
+    ],
+    note: 'Bao gồm mỹ phẩm làm đẹp và dụng cụ',
+  ),
   ServiceItem(
-      image: 'public/img/nail_2.jpg',
-      salonOwner: 'Aleck Marry',
-      titleService: 'Combo làm tóc,trang điểm',
-      area: 'Quận 2, TP. Hồ Chí Minh',
-      range: '2.3 km',
-      rate: 4.8,
-      timeLine: '9:00 AM - 8:30 PM',
-      status: 'Đang hoặt động',
-      price: '50.000 - 500.000'),
+    image: 'public/img/nail_2.jpg',
+    salonOwner: 'Aleck Marry',
+    titleService: 'Combo làm tóc,trang điểm',
+    area: 'Quận 2, TP. Hồ Chí Minh',
+    range: '2.3 km',
+    rate: 4.8,
+    timeLine: '9:00 AM - 8:30 PM',
+    status: 'Đang hoặt động',
+    price: '500.000',
+    description: [
+      'Bước 1: làm sạch tay bằng Cool Blue',
+      'Bước 2: dũa móng theo khuôn khách yêu cầu',
+      'Bước 3: làm mềm da trên mặt móng với gel biểu bì',
+      'Bước 4: dùng cây đẩy da đẩy nhẹ trên mặt móng và lau sạch bằng bông',
+    ],
+    note: 'Bao gồm mỹ phẩm làm đẹp và dụng cụ',
+  ),
   ServiceItem(
-      image: 'public/img/nail_1.jpg',
-      salonOwner: 'Tony Đặng',
-      titleService: 'Massage - Giác hơi',
-      area: 'Quận 1, TP. Hồ Chí Minh',
-      range: '5 km',
-      rate: 4.8,
-      timeLine: '9:00 AM - 8:30 PM',
-      status: 'Đang hoặt động',
-      price: '50.000 - 500.000'),
+    image: 'public/img/nail_1.jpg',
+    salonOwner: 'Tony Đặng',
+    titleService: 'Massage - Giác hơi',
+    area: 'Quận 1, TP. Hồ Chí Minh',
+    range: '5 km',
+    rate: 4.8,
+    timeLine: '9:00 AM - 8:30 PM',
+    status: 'Đang hoặt động',
+    price: '500.000',
+    description: [
+      'Bước 1: làm sạch tay bằng Cool Blue',
+      'Bước 2: dũa móng theo khuôn khách yêu cầu',
+      'Bước 3: làm mềm da trên mặt móng với gel biểu bì',
+      'Bước 4: dùng cây đẩy da đẩy nhẹ trên mặt móng và lau sạch bằng bông',
+    ],
+    note: 'Bao gồm mỹ phẩm làm đẹp và dụng cụ',
+  ),
 ]);
 
 List<ServiceItem> lstServiceDis = List.from([
   ServiceItem(
-      image: 'public/img/nail_2.jpg',
-      salonOwner: 'Aleck Marry',
-      titleService: 'Combo làm tóc,trang điểm',
-      area: 'Quận 2, TP. Hồ Chí Minh',
-      range: '2.3 km',
-      rate: 4.8,
-      timeLine: '9:00 AM - 8:30 PM',
-      status: 'Đang hoặt động',
-      price: '50.000 - 500.000'),
+    image: 'public/img/nail_2.jpg',
+    salonOwner: 'Aleck Marry',
+    titleService: 'Combo làm tóc,trang điểm',
+    area: 'Quận 2, TP. Hồ Chí Minh',
+    range: '2.3 km',
+    rate: 4.8,
+    timeLine: '9:00 AM - 8:30 PM',
+    status: 'Đang hoặt động',
+    price: '500.000',
+    description: [
+      'Bước 1: làm sạch tay bằng Cool Blue',
+      'Bước 2: dũa móng theo khuôn khách yêu cầu',
+      'Bước 3: làm mềm da trên mặt móng với gel biểu bì',
+      'Bước 4: dùng cây đẩy da đẩy nhẹ trên mặt móng và lau sạch bằng bông',
+    ],
+    note: 'Bao gồm mỹ phẩm làm đẹp và dụng cụ',
+  ),
   ServiceItem(
-      image: 'public/img/nail_1.jpg',
-      salonOwner: 'Tony Đặng',
-      titleService: 'Massage - Giác hơi',
-      area: 'Quận 1, TP. Hồ Chí Minh',
-      range: '5 km',
-      rate: 4.8,
-      timeLine: '9:00 AM - 8:30 PM',
-      status: 'Đang hoặt động',
-      price: '50.000 - 500.000'),
+    image: 'public/img/nail_1.jpg',
+    salonOwner: 'Tony Đặng',
+    titleService: 'Massage - Giác hơi',
+    area: 'Quận 1, TP. Hồ Chí Minh',
+    range: '5 km',
+    rate: 4.8,
+    timeLine: '9:00 AM - 8:30 PM',
+    status: 'Đang hoặt động',
+    price: '500.000',
+    description: [
+      'Bước 1: làm sạch tay bằng Cool Blue',
+      'Bước 2: dũa móng theo khuôn khách yêu cầu',
+      'Bước 3: làm mềm da trên mặt móng với gel biểu bì',
+      'Bước 4: dùng cây đẩy da đẩy nhẹ trên mặt móng và lau sạch bằng bông',
+    ],
+    note: 'Bao gồm mỹ phẩm làm đẹp và dụng cụ',
+  ),
   ServiceItem(
-      image: 'public/img/nail_2.jpg',
-      salonOwner: 'Tony Đặng',
-      titleService: 'Massage - Giác hơi',
-      area: 'Quận 1, TP. Hồ Chí Minh',
-      range: '5 km',
-      rate: 4.8,
-      timeLine: '9:00 AM - 8:30 PM',
-      status: 'Đang hoặt động',
-      price: '50.000 - 500.000'),
+    image: 'public/img/nail_2.jpg',
+    salonOwner: 'Tony Đặng',
+    titleService: 'Massage - Giác hơi',
+    area: 'Quận 1, TP. Hồ Chí Minh',
+    range: '5 km',
+    rate: 4.8,
+    timeLine: '9:00 AM - 8:30 PM',
+    status: 'Đang hoặt động',
+    price: '500.000',
+    description: [
+      'Bước 1: làm sạch tay bằng Cool Blue',
+      'Bước 2: dũa móng theo khuôn khách yêu cầu',
+      'Bước 3: làm mềm da trên mặt móng với gel biểu bì',
+      'Bước 4: dùng cây đẩy da đẩy nhẹ trên mặt móng và lau sạch bằng bông',
+    ],
+    note: 'Bao gồm mỹ phẩm làm đẹp và dụng cụ',
+  ),
   ServiceItem(
-      image: 'public/img/nail_2.jpg',
-      salonOwner: 'Hani Nguyễn',
-      titleService: 'Làm nail - Làm tóc',
-      area: 'Quận 2, TP. Hồ Chí Minh',
-      range: '2.3 km',
-      rate: 4.8,
-      timeLine: '9:00 AM - 8:30 PM',
-      status: 'Đang hoặt động',
-      price: '50.000 - 500.000'),
+    image: 'public/img/nail_2.jpg',
+    salonOwner: 'Hani Nguyễn',
+    titleService: 'Làm nail - Làm tóc',
+    area: 'Quận 2, TP. Hồ Chí Minh',
+    range: '2.3 km',
+    rate: 4.8,
+    timeLine: '9:00 AM - 8:30 PM',
+    status: 'Đang hoặt động',
+    price: '500.000',
+    description: [
+      'Bước 1: làm sạch tay bằng Cool Blue',
+      'Bước 2: dũa móng theo khuôn khách yêu cầu',
+      'Bước 3: làm mềm da trên mặt móng với gel biểu bì',
+      'Bước 4: dùng cây đẩy da đẩy nhẹ trên mặt móng và lau sạch bằng bông',
+    ],
+    note: 'Bao gồm mỹ phẩm làm đẹp và dụng cụ',
+  ),
   ServiceItem(
-      image: 'public/img/nail_1.jpg',
-      salonOwner: 'Tony Đặng',
-      titleService: 'Massage - Giác hơi',
-      area: 'Quận 1, TP. Hồ Chí Minh',
-      range: '5 km',
-      rate: 4.8,
-      timeLine: '9:00 AM - 8:30 PM',
-      status: 'Đang hoặt động',
-      price: '50.000 - 500.000'),
+    image: 'public/img/nail_1.jpg',
+    salonOwner: 'Tony Đặng',
+    titleService: 'Massage - Giác hơi',
+    area: 'Quận 1, TP. Hồ Chí Minh',
+    range: '5 km',
+    rate: 4.8,
+    timeLine: '9:00 AM - 8:30 PM',
+    status: 'Đang hoặt động',
+    price: '500.000',
+    description: [
+      'Bước 1: làm sạch tay bằng Cool Blue',
+      'Bước 2: dũa móng theo khuôn khách yêu cầu',
+      'Bước 3: làm mềm da trên mặt móng với gel biểu bì',
+      'Bước 4: dùng cây đẩy da đẩy nhẹ trên mặt móng và lau sạch bằng bông',
+    ],
+    note: 'Bao gồm mỹ phẩm làm đẹp và dụng cụ',
+  ),
   ServiceItem(
-      image: 'public/img/nail_3.png',
-      salonOwner: 'Marry Trần',
-      titleService: 'Trang điểm - Làm tóc',
-      area: 'Quận 10, TP. Hồ Chí Minh',
-      range: '5 km',
-      rate: 4.8,
-      timeLine: '9:00 AM - 8:30 PM',
-      status: 'Đang hoặt động',
-      price: '50.000 - 500.000'),
+    image: 'public/img/nail_3.png',
+    salonOwner: 'Marry Trần',
+    titleService: 'Trang điểm - Làm tóc',
+    area: 'Quận 10, TP. Hồ Chí Minh',
+    range: '5 km',
+    rate: 4.8,
+    timeLine: '9:00 AM - 8:30 PM',
+    status: 'Đang hoặt động',
+    price: '500.000',
+    description: [
+      'Bước 1: làm sạch tay bằng Cool Blue',
+      'Bước 2: dũa móng theo khuôn khách yêu cầu',
+      'Bước 3: làm mềm da trên mặt móng với gel biểu bì',
+      'Bước 4: dùng cây đẩy da đẩy nhẹ trên mặt móng và lau sạch bằng bông',
+    ],
+    note: 'Bao gồm mỹ phẩm làm đẹp và dụng cụ',
+  ),
 ]);
 
 class DemoApp extends StatefulWidget {
@@ -247,7 +424,7 @@ class DemoApp extends StatefulWidget {
 
 class _DemoAppState extends State<DemoApp> {
   bool status = true;
-  Color bgColorActive =  Color(0x2d27beba);
+  Color bgColorActive = Color(0x2d27beba);
   Color bgColorDis = Colors.white;
 
   @override
@@ -261,10 +438,16 @@ class _DemoAppState extends State<DemoApp> {
             ),
             Container(
                 alignment: Alignment.center,
-                child: Text('Mit Nail & Spa',style: TextStyle(fontSize: 30,fontWeight: FontWeight.bold),)),
+                child: Text(
+                  'Mit Nail & Spa',
+                  style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
+                )),
             Container(
                 alignment: Alignment.center,
-                child: Text('Chăm sóc tóc và móng',style: TextStyle(fontSize: 20),)),
+                child: Text(
+                  'Chăm sóc tóc và móng',
+                  style: TextStyle(fontSize: 20),
+                )),
             SizedBox(height: 10),
             SizedBox(height: 5),
             Container(
@@ -296,7 +479,12 @@ class _DemoAppState extends State<DemoApp> {
                             borderRadius: BorderRadius.circular(6),
                           ),
                           child: Padding(
-                            padding: const EdgeInsets.only(left: 10, right: 6,top: 6,bottom: 5,),
+                            padding: const EdgeInsets.only(
+                              left: 10,
+                              right: 6,
+                              top: 6,
+                              bottom: 5,
+                            ),
                             child: Text(
                               "Tất cả dịch vụ (${lstServiceActive.length})",
                               textAlign: TextAlign.center,
@@ -331,7 +519,12 @@ class _DemoAppState extends State<DemoApp> {
                             borderRadius: BorderRadius.circular(6),
                           ),
                           child: Padding(
-                            padding: const EdgeInsets.only(left: 17, right: 16, top: 6, bottom: 5,),
+                            padding: const EdgeInsets.only(
+                              left: 17,
+                              right: 16,
+                              top: 6,
+                              bottom: 5,
+                            ),
                             child: Text(
                               "Dịch vụ đã dừng (${lstServiceDis.length})",
                               textAlign: TextAlign.center,
@@ -345,12 +538,37 @@ class _DemoAppState extends State<DemoApp> {
                       ),
                     ),
                   ],
-                )
+                )),
+            status ? LoadServicesActive() : LoadServicesDisable(),
+            Container(
+              width: MediaQuery.of(context).size.width,
+              height:  MediaQuery.of(context).size.height*0.05,
+              margin: EdgeInsets.only(left: 4,right: 4),
+              child: FloatingActionButton.extended(
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.all(Radius.circular(5.0),
+                  ),
+                ),
+                onPressed: () {
+                  Navigator.of(context).push(MaterialPageRoute(builder: (context) => AddNewServiceScreen(),));
+                },
+                backgroundColor: Colors.lightBlueAccent,
+                label: Row(
+                  children: <Widget>[
+                    SizedBox(width: 15,),
+                    Text('Thêm mới dịch vụ',
+                      style: TextStyle(color: Colors.white, letterSpacing: 4),
+                    ),
+                    SizedBox(width: 15,),
+                    Icon(Icons.add,size: 20,),
+                  ],
+                ),
+              ),
             ),
-            status ? LoadServicesActive() : LoadServicesDisable()
           ],
         ),
       ]),
+
       bottomNavigationBar: WidgetUtils.appBottomNavigationBar(2),
     );
   }
@@ -360,12 +578,14 @@ class ServiceItem {
   final String image;
   final String salonOwner;
   final String titleService;
+  final String note;
   final double rate;
   final String area;
   final String timeLine;
   final String price;
   String range;
   String status;
+  List<String> description;
 
   ServiceItem({
     this.image,
@@ -377,19 +597,21 @@ class ServiceItem {
     this.status,
     this.range,
     this.price,
+    this.description,
+    this.note,
   });
 }
-
 
 class LoadServicesActive extends StatefulWidget {
   @override
   _LoadServicesActiveState createState() => _LoadServicesActiveState();
 }
-class _LoadServicesActiveState extends  State<LoadServicesActive> {
 
+class _LoadServicesActiveState extends State<LoadServicesActive> {
   @override
   Widget build(BuildContext context) {
-    return Expanded(
+    return Container(
+      height: MediaQuery.of(context).size.height*0.45,
       child: ListView.builder(
         physics: BouncingScrollPhysics(),
         itemCount: lstServiceActive.length,
@@ -397,17 +619,15 @@ class _LoadServicesActiveState extends  State<LoadServicesActive> {
           ServiceItem service = lstServiceActive[index];
           return GestureDetector(
             onTap: () {
-              Navigator.of(context).push(MaterialPageRoute(
-                builder: (context) => ProviderDetailScreen(),
-              ));
+              _navigateAndDisplaySelection(context, service);
             },
             child: Card(
               child: Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Container(
-                    width: 110,
-                    height: 80,
+                    width: 80,
+                    height: 60,
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(5),
                       image: DecorationImage(
@@ -417,14 +637,15 @@ class _LoadServicesActiveState extends  State<LoadServicesActive> {
                     ),
                   ),
                   Container(
-                    margin: const EdgeInsets.only(left: 10, top: 13),
+                    width: 195,
+                    margin: EdgeInsets.only(top: 13),
                     child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: <Widget>[
-                        Row(
+                        Column(
                           children: [
                             Container(
-                              width: 160,
+                              margin: EdgeInsets.only( left: 13),
+                              alignment: Alignment.topLeft,
                               child: Text(
                                 service.titleService,
                                 style: TextStyle(
@@ -435,27 +656,32 @@ class _LoadServicesActiveState extends  State<LoadServicesActive> {
                               ),
                             ),
                             Container(
-                              width: 65,
-                              height: 26,
-                              child: CustomSwitch(
-                                value: true,
-                                activeColor: Colors.blue,
-                                onChanged: (value){
-                                  print('value is: $value' );
-                                },
+                              margin: EdgeInsets.only( left: 13),
+                              alignment: Alignment.topLeft,
+                              child: Text(
+                                '${service.price} đ',
+                                style: TextStyle(
+                                    letterSpacing: 1,
+                                    fontWeight: FontWeight.normal,
+                                    fontSize: 13,
+                                    color: Colors.lightBlueAccent.withOpacity(0.7)),
                               ),
                             ),
                           ],
                         ),
-                        Text(
-                          '${service.price} đ',
-                          style: TextStyle(
-                              letterSpacing: 1,
-                              fontWeight: FontWeight.normal,
-                              fontSize: 13,
-                              color: Colors.lightBlueAccent.withOpacity(0.7)),
-                        ),
                       ],
+                    ),
+                  ),
+                  Container(
+                    margin: EdgeInsets.only(top: 20),
+                    width: 65,
+                    height: 26,
+                    child: CustomSwitch(
+                      value: true,
+                      activeColor: Colors.blue,
+                      onChanged: (value) {
+                        print('value is: $value');
+                      },
                     ),
                   ),
                 ],
@@ -468,13 +694,21 @@ class _LoadServicesActiveState extends  State<LoadServicesActive> {
   }
 }
 
+_navigateAndDisplaySelection(BuildContext context, ServiceItem service) async {
+  final cart = await Navigator.push(
+    context,
+    MaterialPageRoute(
+        builder: (context) => ServiceDetailScreen2(service: service,)
+    ),
+  );
+}
 
 class LoadServicesDisable extends StatefulWidget {
   @override
   _LoadServicesDisableState createState() => _LoadServicesDisableState();
 }
-class _LoadServicesDisableState extends State<LoadServicesDisable> {
 
+class _LoadServicesDisableState extends State<LoadServicesDisable> {
   @override
   Widget build(BuildContext context) {
     return Expanded(
@@ -485,17 +719,15 @@ class _LoadServicesDisableState extends State<LoadServicesDisable> {
           ServiceItem service = lstServiceDis[index];
           return GestureDetector(
             onTap: () {
-              Navigator.of(context).push(MaterialPageRoute(
-                builder: (context) => ProviderDetailScreen(),
-              ));
+              _navigateAndDisplaySelection(context, service);
             },
             child: Card(
               child: Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Container(
-                    width: 110,
-                    height: 80,
+                    width: 80,
+                    height: 60,
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(5),
                       image: DecorationImage(
@@ -505,14 +737,15 @@ class _LoadServicesDisableState extends State<LoadServicesDisable> {
                     ),
                   ),
                   Container(
-                    margin: const EdgeInsets.only(left: 10, top: 13),
+                    width: 195,
+                    margin: EdgeInsets.only(top: 13),
                     child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: <Widget>[
-                        Row(
+                        Column(
                           children: [
                             Container(
-                              width: 160,
+                              margin: EdgeInsets.only( left: 13),
+                              alignment: Alignment.topLeft,
                               child: Text(
                                 service.titleService,
                                 style: TextStyle(
@@ -523,27 +756,32 @@ class _LoadServicesDisableState extends State<LoadServicesDisable> {
                               ),
                             ),
                             Container(
-                              width: 65,
-                              height: 26,
-                              child: CustomSwitch(
-                                value: false,
-                                activeColor: Colors.blue,
-                                onChanged: (value){
-                                  print('value is: $value' );
-                                },
+                              margin: EdgeInsets.only( left: 13),
+                              alignment: Alignment.topLeft,
+                              child: Text(
+                                '${service.price} đ',
+                                style: TextStyle(
+                                    letterSpacing: 1,
+                                    fontWeight: FontWeight.normal,
+                                    fontSize: 13,
+                                    color: Colors.lightBlueAccent.withOpacity(0.7)),
                               ),
                             ),
                           ],
                         ),
-                        Text(
-                          '${service.price} đ',
-                          style: TextStyle(
-                              letterSpacing: 1,
-                              fontWeight: FontWeight.normal,
-                              fontSize: 13,
-                              color: Colors.lightBlueAccent.withOpacity(0.7)),
-                        ),
                       ],
+                    ),
+                  ),
+                  Container(
+                    margin: EdgeInsets.only(top: 20),
+                    width: 65,
+                    height: 26,
+                    child: CustomSwitch(
+                      value: false,
+                      activeColor: Colors.blue,
+                      onChanged: (value) {
+                        print('value is: $value');
+                      },
                     ),
                   ),
                 ],
@@ -555,6 +793,7 @@ class _LoadServicesDisableState extends State<LoadServicesDisable> {
     );
   }
 }
+
 class AnimatedSearchBar extends StatefulWidget {
   @override
   _AnimatedSearchBarState createState() => _AnimatedSearchBarState();
@@ -581,10 +820,10 @@ class _AnimatedSearchBarState extends State<AnimatedSearchBar> {
               padding: EdgeInsets.only(left: 16),
               child: !_folded
                   ? TextField(
-                    decoration: InputDecoration(
-                        hintText: 'Search',
-                        hintStyle: TextStyle(color: Colors.blue[300]),
-                        border: InputBorder.none),
+                      decoration: InputDecoration(
+                          hintText: 'Search',
+                          hintStyle: TextStyle(color: Colors.blue[300]),
+                          border: InputBorder.none),
                     )
                   : null,
             ),

@@ -5,17 +5,15 @@ class ServiceDetailDescription extends StatelessWidget {
   final String note;
   final String price;
 
-  const ServiceDetailDescription(
-      {Key key, this.name, this.note, this.price})
+  const ServiceDetailDescription({Key key, this.name, this.note, this.price})
       : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    final screenSize = MediaQuery.of(context).size;
     return Container(
       margin: EdgeInsets.only(bottom: 15.0),
-      height: screenSize.height * 0.15,
-      width: screenSize.width,
+      height: MediaQuery.of(context).size.height * 0.15,
+      width: MediaQuery.of(context).size.width,
       decoration: BoxDecoration(
         color: Colors.white,
         boxShadow: [
@@ -31,28 +29,24 @@ class ServiceDetailDescription extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
               Container(
-                width: screenSize.width * 0.7,
-                padding: EdgeInsets.only(left: 10.0, bottom: 10.0),
-                child: Text(
-                  name,
-                  style: TextStyle(fontSize: 18.0, fontWeight: FontWeight.bold),
-                ),
-              ),
+                  width: MediaQuery.of(context).size.width * 0.5,
+                  padding: EdgeInsets.only(left: 10.0, bottom: 10.0),
+                  child: TextFormField(
+                     initialValue: name,
+                  )),
               Container(
-                padding: EdgeInsets.only(right: 10.0, bottom: 10.0),
-                child: Text(
-                  price,
-                  style: TextStyle(fontSize: 19.0, fontWeight: FontWeight.bold),
-                ),
-              ),
+                  width: MediaQuery.of(context).size.width * 0.3,
+                  padding: EdgeInsets.only(right: 10.0, bottom: 10.0),
+                  child: TextFormField(
+                    initialValue: price + " đ",
+                  )),
             ],
           ),
           Container(
-            padding: EdgeInsets.only(left: 10.0),
-            child: Text(
-              note,
-              style: TextStyle(color: Colors.grey),
-            ),
+              padding: EdgeInsets.only(left: 10.0),
+              child: TextFormField(
+                initialValue: note,
+              )
           ),
         ],
       ),

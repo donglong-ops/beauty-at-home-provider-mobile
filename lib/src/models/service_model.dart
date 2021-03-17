@@ -6,8 +6,10 @@ class ServiceItem {
   final double rate;
   final String area;
   final String timeLine;
+  final String price;
   String range;
   String status;
+  List<String> description;
 
   ServiceItem({
     this.image,
@@ -17,5 +19,7 @@ class ServiceItem {
     this.rate,
     this.area,
     this.timeLine,
+    this.price,
+    this.description,
   });
 }
