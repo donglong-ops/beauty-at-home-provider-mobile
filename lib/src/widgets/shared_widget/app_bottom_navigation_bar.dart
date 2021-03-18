@@ -33,31 +33,31 @@ class AppBottomNavigationBar extends StatelessWidget {
       },
       items: [
         BottomNavigationBarItem(
-          label: 'Booking',
+          label: 'Đang làm',
           icon: Icon(
             Icons.book_outlined,
           ),
         ),
         BottomNavigationBarItem(
-          label: 'New',
+          label: 'Đơn mới',
           icon: Icon(
-            Icons.list,
+            Icons.list, size: 26
           ),
         ),
         BottomNavigationBarItem(
-          label: 'Service',
+          label: 'Dịch vụ',
           icon: Icon(
             Icons.settings,
           ),
         ),
         BottomNavigationBarItem(
-          label: 'History',
+          label: 'Thống kê',
           icon: Icon(
             Icons.history,
           ),
         ),
         BottomNavigationBarItem(
-          label: 'Account',
+          label: 'Tài Khoản',
           icon: Icon(
             Icons.account_circle,
           ),

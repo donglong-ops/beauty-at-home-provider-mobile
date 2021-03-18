@@ -1,3 +1,4 @@
+import 'package:dropdownfield/dropdownfield.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -30,7 +31,7 @@ final List<ServiceCusDetail> listDetail = List.from(<ServiceCusDetail>[
   ServiceCusDetail(
     cusID: 'GF -267',
     cusName: 'Hữu Long',
-    address: 'Jackson Park, California, Hoa Kỳ',
+    address: '10 Võ Văn Hát, Long Trường, Quận 9, Thành phố Hồ Chí Minh',
     status: 'ON THE WAY',
     note: 'Làm sao để có một bản ghi chú hiệu quả mà không mất quá nhiều thời gian',
     time: '7:37 PM',
@@ -54,8 +55,17 @@ final List<ServiceCusDetail> listDetail = List.from(<ServiceCusDetail>[
   ),
 ]);
 
+
+
 class _DemoAppState extends State<DemoApp> {
-  bool isSwiched = false;
+  bool isSwiched = true;
+  int tab = 1;
+  String status = "Chuẩn bị xong";
+  String statusBooking = "ON THE WAY";
+  Color colorTap1 = Color(0x2d27beba);
+  Color colorTap2 = Colors.white;
+  Color colorTap3 = Colors.white;
+  Color colorTap4 = Colors.white;
 
 
   @override
@@ -80,6 +90,15 @@ class _DemoAppState extends State<DemoApp> {
         currentAddress = first.addressLine;
         });
   }
+
+  String reason;
+  List<String> listReason = [
+    "Tôi thay đổi ý định",
+    "Tôi bận lúc đó",
+    "Tôi không có đủ đồ nghề",
+    "Tôi sẽ nhận lại sau",
+    "Lý do khác ..."
+  ];
 
 
   Widget title(BuildContext context) {
@@ -180,16 +199,22 @@ class _DemoAppState extends State<DemoApp> {
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     GestureDetector(
+                      onTap: (){
+                        setState(() {
+                          tab = 1;
+                          status = "Chuẩn bị xong";
+                          colorTap1 = Color(0x2d27beba);
+                          colorTap2 = Colors.white;
+                          colorTap3 = Colors.white;
+                          colorTap4 = Colors.white;
+                        });
+                      },
                       child: SizedBox(
                         width: 63,
                         height: 24,
                         child: Material(
-                          color: Color(0x2d27beba),
+                          color: colorTap1,
                           shape: RoundedRectangleBorder(
-                            side: BorderSide(
-                              width: 1,
-                              color: Color(0xff28beba),
-                            ),
                             borderRadius: BorderRadius.circular(6),
                           ),
                           child: Padding(
@@ -203,7 +228,7 @@ class _DemoAppState extends State<DemoApp> {
                               "Tất cả (${listDetail.length})",
                               textAlign: TextAlign.center,
                               style: TextStyle(
-                                color: Color(0xff0db5b4),
+                                color: Color(0x7f000000),
                                 fontSize: 11,
                               ),
                             ),
@@ -213,16 +238,23 @@ class _DemoAppState extends State<DemoApp> {
                     ),
                     SizedBox(width: 4),
                     GestureDetector(
+                      onTap: (){
+                        setState(() {
+                          tab = 2;
+                          status = "Đã đến nơi";
+                          colorTap2 = Color(0x2d27beba);
+                          colorTap1 = Colors.white;
+                          colorTap3 = Colors.white;
+                          colorTap4 = Colors.white;
+                          statusBooking = "ON THE WAY";
+                        });
+                      },
                       child: SizedBox(
                         width: 93,
                         height: 24,
                         child: Material(
-                          color: Colors.white,
+                          color: colorTap2,
                           shape: RoundedRectangleBorder(
-                            side: BorderSide(
-                              width: 1,
-                              color: Color(0x60000000),
-                            ),
                             borderRadius: BorderRadius.circular(6),
                           ),
                           child: Padding(
@@ -246,16 +278,23 @@ class _DemoAppState extends State<DemoApp> {
                     ),
                     SizedBox(width: 4),
                     GestureDetector(
+                      onTap: (){
+                        setState(() {
+                          tab = 3;
+                          status = "Đã hoàn thành";
+                          colorTap3 = Color(0x2d27beba);
+                          colorTap1 = Colors.white;
+                          colorTap2 = Colors.white;
+                          colorTap4 = Colors.white;
+                          statusBooking = "DOING";
+                        });
+                      },
                       child: SizedBox(
                         width: 84,
                         height: 24,
                         child: Material(
-                          color: Colors.white,
+                          color: colorTap3,
                           shape: RoundedRectangleBorder(
-                            side: BorderSide(
-                              width: 1,
-                              color: Color(0x60000000),
-                            ),
                             borderRadius: BorderRadius.circular(6),
                           ),
                           child: Padding(
@@ -279,16 +318,23 @@ class _DemoAppState extends State<DemoApp> {
                     ),
                     SizedBox(width: 4),
                     GestureDetector(
+                      onTap: (){
+                        setState(() {
+                          tab = 4;
+                          status = "Xem chi tiết";
+                          colorTap4 = Color(0x2d27beba);
+                          colorTap2 = Colors.white;
+                          colorTap3 = Colors.white;
+                          colorTap1 = Colors.white;
+                          statusBooking = "DONE";
+                        });
+                      },
                       child: SizedBox(
                         width: 92,
                         height: 24,
                         child: Material(
-                          color: Colors.white,
+                          color: colorTap4,
                           shape: RoundedRectangleBorder(
-                            side: BorderSide(
-                              width: 1,
-                              color: Color(0xff9e9d9d),
-                            ),
                             borderRadius: BorderRadius.circular(6),
                           ),
                           child: Padding(
@@ -313,12 +359,409 @@ class _DemoAppState extends State<DemoApp> {
                   ],
                 ),
               ),
-              loadAllBooking(),
+              // tab > 0 ? LoadAllBooking(status: status) : null,
+              Expanded(
+                child: ListView.builder(
+                    physics: BouncingScrollPhysics(),
+                    itemCount: listDetail.length,
+                    itemBuilder: (BuildContext buildContext, int index) {
+                      ServiceCusDetail service = listDetail[index];
+                      return OutlinedCard(
+                        margin: EdgeInsets.only(top: 15),
+                        padding: EdgeInsets.only(left: 4, right: 4),
+                        width: 360,
+                        sections: [
+                          Container(
+                            child: Column(
+                              children: <Widget>[
+                                Row(
+                                  children: <Widget>[
+                                    Container(
+                                      width: 270,
+                                      child: Row(
+                                        children: [
+                                          Text(service.cusID),
+                                          Card(
+                                            color: Color(0xff707DB9),
+                                            child: Padding(
+                                              padding: const EdgeInsets.all(4),
+                                              child: Text(
+                                                statusBooking,
+                                                style: TextStyle(
+                                                    fontWeight: FontWeight.bold,
+                                                    fontSize: 10,
+                                                    color: Colors.white),
+                                              ),
+                                            ),
+                                          ),
+                                          SizedBox(
+                                            width: 100,
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                    Container(
+                                        width: 60,
+                                        child: Text(
+                                          service.time,
+                                          style: TextStyle(fontWeight: FontWeight
+                                              .bold),
+                                        ))
+                                  ],
+                                ),
+                                Row(
+                                  children: <Widget>[
+                                    Container(
+                                      width: 300,
+                                      child: Row(
+                                        children: [
+                                          Icon(Icons.face),
+                                          Text(
+                                            ' Khách đặt: ',
+                                            style: TextStyle(
+                                                fontWeight: FontWeight.bold,
+                                                fontSize: 14),
+                                          ),
+                                          Text('${service.cusName}  '),
+                                          Text('(${service.timeMove})'),
+                                        ],
+                                      ),
+                                    ),
+                                    Container(
+                                      width: 30,
+                                      child: Icon(
+                                        Icons.keyboard_arrow_up,
+                                        size: 35,
+                                      ),
+                                    )
+                                  ],
+                                )
+                              ],
+                            ),
+                          ),
+                          Column(
+                            children: [
+                              Column(
+                                children: [
+                                  Row(children: [
+                                    Container(
+                                        margin: EdgeInsets.only(left: 15, right: 5),
+                                        child: Icon(Icons.local_library_rounded)),
+                                    Container(
+                                      width: 270,
+                                      child: Text(
+                                        service.address,
+                                        style: TextStyle(fontSize: 13),
+                                      ),
+                                    ),
+                                  ]),
+                                  GestureDetector(
+                                    onTap: (){
+                                      MapUtils4.openMap(currentAddress ,service.address);
+                                    },
+                                    child: Row(
+                                      children: [
+                                        SizedBox(
+                                          width: 44,
+                                        ),
+                                        Text(
+                                          'Xem bản đồ',
+                                          style: TextStyle(
+                                              color: Color(0xff0DB5B4), fontSize: 11),
+                                        ),
+                                        Icon(
+                                          Icons.arrow_right,
+                                          color: Color(0xff0DB5B4),
+                                        )
+                                      ],
+                                    ),
+                                  )
+                                ],
+                              ),
+                              SizedBox(
+                                height: 10,
+                              ),
+                              Row(
+                                children: [
+                                  Container(
+                                      margin: EdgeInsets.only(left: 15, right: 5),
+                                      child: Icon(Icons.description_outlined)),
+                                  Container(
+                                      width: 270,
+                                      child: Text(
+                                        'Ghi chú: ${service.note}',
+                                        style: TextStyle(fontSize: 13),
+                                      ))
+                                ],
+                              )
+                            ],
+                          ),
+                          Container(
+                            padding: EdgeInsets.symmetric(horizontal: 7),
+                            child: ListView.separated(
+                              shrinkWrap: true,
+                              itemCount: service.listItem.length,
+                              separatorBuilder: (context, index) => SizedBox(
+                                height: 6,
+                              ),
+                              itemBuilder: (context, index) => Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Row(
+                                    children: [
+                                      Text(
+                                        '${service.listItem[index].quantity}  x',
+                                        style: TextStyle(
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 14,
+                                        ),
+                                      ),
+                                      Container(
+                                        margin: EdgeInsets.only(left: 15),
+                                        child: Text(
+                                          service.listItem[index].content,
+                                          style: TextStyle(
+                                            fontWeight: FontWeight.bold,
+                                            fontSize: 14,
+                                          ),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                  Text(service.listItem[index].price + " đ")
+                                ],
+                              ),
+                            ),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.only(bottom: 10),
+                            child: Column(
+                              children: [
+                                Row(
+                                  children: [
+                                    Container(
+                                      width: 300,
+                                      child: Row(
+                                        children: [
+                                          Text('Tổng đơn: '),
+                                          Text(service.totalBill + " đ",),
+                                          Card(
+                                            color: Color(0xffC4C4C4),
+                                            child: Padding(
+                                              padding: const EdgeInsets.all(6),
+                                              child: Text(
+                                                service.payment,
+                                                style: TextStyle(
+                                                    fontWeight: FontWeight.bold,
+                                                    fontSize: 12),
+                                              ),
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                    Container(
+                                      width: 30,
+                                      child: Icon(
+                                        Icons.keyboard_arrow_down_sharp,
+                                        size: 35,
+                                      ),
+                                    )
+                                  ],
+                                ),
+                                SizedBox(
+                                  height: 10,
+                                ),
+                                status.contains("Đã đến nơi") ? GestureDetector(
+                                  onTap: (){
+                                    showDialog(
+                                      context: context,
+                                      barrierDismissible: false,
+                                      builder:(context) {
+                                       return AlertDialog(
+                                          title: Center(child: Text('Chọn lý do hủy đơn ? ', style: TextStyle(fontWeight: FontWeight.bold),)),
+                                          content: SingleChildScrollView(
+                                            child: Container(
+                                              // height: MediaQuery.of(context).size.height*0.2,
+                                              child: Column(
+                                                children: <Widget>[
+                                                  DropDownField(
+                                                    onValueChanged: (dynamic value){
+                                                      reason = value;
+                                                    },
+                                                    value: reason,
+                                                    required: false,
+                                                    // hintText: 'Chọn lý do hủy đơn',
+                                                    labelText: 'Lý do hủy đơn',
+                                                    items: listReason,
+                                                  ),
+                                                  SizedBox(height: 20,),
+                                                  Container(
+                                                    width: 270,
+                                                    child: Row(
+                                                      children: [
+                                                        Container(
+                                                          color: Colors.lightBlueAccent.withOpacity(0.5),
+                                                          width: MediaQuery.of(context).size.width*0.3,
+                                                          child: FlatButton(
+                                                              child: Padding(
+                                                                padding: const EdgeInsets.all(8.0),
+                                                                child: Text('Quay lại',style: TextStyle(fontSize: 16,color: Colors.black.withOpacity(0.6))),
+                                                              ),
+                                                            onPressed: () => Navigator.pop(context),
+                                                          ),
+                                                        ),
+                                                        SizedBox(width: 10,),
+                                                        Container(
+                                                          color: Colors.redAccent,
+                                                          width: MediaQuery.of(context).size.width*0.3,
+                                                          child: FlatButton(
+                                                              child: Padding(
+                                                                padding: const EdgeInsets.all(7.0),
+                                                                child: Text('Hủy đơn',style: TextStyle(fontSize: 16,color: Colors.black.withOpacity(0.6)),),
+                                                              )),
+                                                        ),
+                                                      ],
+                                                    ),
+                                                  ),
+                                                ],
+                                              ),
+                                            ),
+                                          )
+                                        );
+                                      },
+                                    );
+                                  },
+                                  child: SizedBox(
+                                    width: 336,
+                                    height: 30,
+                                    child: Material(
+                                      color: Colors.redAccent,
+                                      borderRadius: BorderRadius.circular(5),
+                                      clipBehavior: Clip.antiAlias,
+                                      child: Padding(
+                                        padding: const EdgeInsets.only(
+                                          left: 87,
+                                          right: 88,
+                                          top: 8,
+                                          bottom: 9,
+                                        ),
+                                        child: Text(
+                                          "Hủy Đơn",
+                                          textAlign: TextAlign.center,
+                                          style: TextStyle(
+                                            color: Colors.white,
+                                            fontSize: 14,
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                ) : SizedBox(height: 1,),
+                                status.contains("Chuẩn bị xong") ? GestureDetector(
+                                  onTap: (){
+                                    MapUtils4.openMap(currentAddress ,service.address);
+                                  },
+                                  child: SizedBox(
+                                    width: 336,
+                                    height: 30,
+                                    child: Material(
+                                      color: Colors.lightBlueAccent.withOpacity(0.8),
+                                      borderRadius: BorderRadius.circular(5),
+                                      clipBehavior: Clip.antiAlias,
+                                      child: Padding(
+                                        padding: const EdgeInsets.only(
+                                          left: 87,
+                                          right: 88,
+                                          top: 8,
+                                          bottom: 9,
+                                        ),
+                                        child: Text(
+                                          "Xem bản đồ",
+                                          textAlign: TextAlign.center,
+                                          style: TextStyle(
+                                            color: Colors.white,
+                                            fontSize: 14,
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                ) : SizedBox(height: 1,),
+                                SizedBox(height: 5,),
+                                GestureDetector(
+                                  onTap: (){
+                                    if(status.contains("Đã đến nơi")){
+                                      setState(() {
+                                        tab = 3;
+                                        status = "Đã hoàn thành";
+                                        statusBooking = "DOING";
+                                        colorTap3 = Color(0x2d27beba);
+                                        colorTap1 = Colors.white;
+                                        colorTap2 = Colors.white;
+                                        colorTap4 = Colors.white;
+                                      });
+                                    }
+                                    else if(status.contains("Đã hoàn thành")){
+                                        setState(() {
+                                          tab = 4;
+                                          status = "Xem chi tiết";
+                                          statusBooking = "DONE";
+                                          colorTap4 = Color(0x2d27beba);
+                                          colorTap2 = Colors.white;
+                                          colorTap3 = Colors.white;
+                                          colorTap1 = Colors.white;
+                                        });
+                                    }else if(status.contains("Chuẩn bị xong")){
+                                        setState(() {
+                                          status = "Đã đến nơi";
+                                          colorTap2 = Color(0x2d27beba);
+                                          colorTap1 = Colors.white;
+                                          colorTap3 = Colors.white;
+                                          colorTap4 = Colors.white;
+                                          statusBooking = "ON THE WAY";
+                                        });
+                                    }
+                                  },
+                                  child: SizedBox(
+                                    width: 336,
+                                    height: 40,
+                                    child: Material(
+                                      color: Color(0xff7899D4),
+                                      borderRadius: BorderRadius.circular(5),
+                                      clipBehavior: Clip.antiAlias,
+                                      child: Padding(
+                                        padding: const EdgeInsets.only(
+                                          left: 87,
+                                          right: 88,
+                                          top: 8,
+                                          bottom: 9,
+                                        ),
+                                        child: Text(
+                                          status,
+                                          textAlign: TextAlign.center,
+                                          style: TextStyle(
+                                            color: Colors.white,
+                                            fontSize: 18,
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ],
+                      );
+                    }
+                ),
+              )
             ],
           ),
         ),
       ]),
-      floatingActionButton: Container(
+      floatingActionButton: (isSwiched == true )?  Container(
         width: MediaQuery.of(context).size.width*0.9,
         child: FloatingActionButton.extended(
           shape: RoundedRectangleBorder(
@@ -332,11 +775,31 @@ class _DemoAppState extends State<DemoApp> {
           label: Row(
             children: <Widget>[
               SizedBox(width: 15,),
-              Text('2 New Orders',
+              Text('4 Đơn Mới',
                 style: TextStyle(color: Colors.white, letterSpacing: 4),
               ),
               SizedBox(width: 15,),
               Icon(Icons.arrow_forward,size: 20,),
+            ],
+          ),
+        ),
+      )
+          : Container(
+        width: MediaQuery.of(context).size.width*0.9,
+        child: FloatingActionButton.extended(
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.all(Radius.circular(1.0),
+            ),
+          ),
+          backgroundColor: Colors.grey.withOpacity(0.7),
+          label: Row(
+            children: <Widget>[
+              SizedBox(width: 15,),
+              Text('Không thể nhận đơn mới',
+                style: TextStyle(color: Colors.white, letterSpacing: 4),
+              ),
+              SizedBox(width: 15,),
+              Icon(Icons.error,size: 22,color: Colors.orange,),
             ],
           ),
         ),
@@ -346,7 +809,11 @@ class _DemoAppState extends State<DemoApp> {
   }
 }
 
-class loadAllBooking extends StatelessWidget{
+class LoadAllBooking extends StatelessWidget{
+
+  final String status;
+  LoadAllBooking({this.status = "Chuẩn bị xong"});
+
   @override
   Widget build(BuildContext context) {
       return
@@ -448,7 +915,6 @@ class loadAllBooking extends StatelessWidget{
                               GestureDetector(
                                 onTap: (){
                                   MapUtils4.openMap(currentAddress ,service.address);
-                                  //MapUtils3.openMap(double.parse(latitudeData),double.parse(longitudeData),service.address);
                                 },
                                 child: Row(
                                   children: [
@@ -519,7 +985,7 @@ class loadAllBooking extends StatelessWidget{
                                   ),
                                 ],
                               ),
-                              Text(service.listItem[index].price)
+                              Text(service.listItem[index].price + " đ")
                             ],
                           ),
                         ),
@@ -534,8 +1000,8 @@ class loadAllBooking extends StatelessWidget{
                                   width: 300,
                                   child: Row(
                                     children: [
-                                      Text('Total bill: '),
-                                      Text(service.totalBill,),
+                                      Text('Tổng đơn: '),
+                                      Text(service.totalBill + " đ",),
                                       Card(
                                         color: Color(0xffC4C4C4),
                                         child: Padding(
@@ -563,26 +1029,40 @@ class loadAllBooking extends StatelessWidget{
                             SizedBox(
                               height: 10,
                             ),
-                            SizedBox(
-                              width: 336,
-                              height: 30,
-                              child: Material(
-                                color: Color(0xff7899D4),
-                                borderRadius: BorderRadius.circular(5),
-                                clipBehavior: Clip.antiAlias,
-                                child: Padding(
-                                  padding: const EdgeInsets.only(
-                                    left: 87,
-                                    right: 88,
-                                    top: 8,
-                                    bottom: 9,
-                                  ),
-                                  child: Text(
-                                    "Bắt đầu làm việc ",
-                                    textAlign: TextAlign.center,
-                                    style: TextStyle(
-                                      color: Colors.white,
-                                      fontSize: 13,
+                            GestureDetector(
+                              onTap: (){
+                                if(status.contains("Chuẩn bị xong")){
+                                  // setState(() {
+                                  //   tab = 3;
+                                  //   status = "Đã hoàn thành dịch vụ";
+                                  //   colorTap3 = Color(0x2d27beba);
+                                  //   colorTap1 = Colors.white;
+                                  //   colorTap2 = Colors.white;
+                                  //   colorTap4 = Colors.white;
+                                  // });
+                                }
+                              },
+                              child: SizedBox(
+                                width: 336,
+                                height: 30,
+                                child: Material(
+                                  color: Color(0xff7899D4),
+                                  borderRadius: BorderRadius.circular(5),
+                                  clipBehavior: Clip.antiAlias,
+                                  child: Padding(
+                                    padding: const EdgeInsets.only(
+                                      left: 87,
+                                      right: 88,
+                                      top: 8,
+                                      bottom: 9,
+                                    ),
+                                    child: Text(
+                                      status,
+                                      textAlign: TextAlign.center,
+                                      style: TextStyle(
+                                        color: Colors.white,
+                                        fontSize: 13,
+                                      ),
                                     ),
                                   ),
                                 ),
@@ -598,6 +1078,7 @@ class loadAllBooking extends StatelessWidget{
         );
   }
 }
+
 
 
 class ServiceCusDetail {

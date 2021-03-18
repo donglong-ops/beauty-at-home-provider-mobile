@@ -1,9 +1,9 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_app/src/view/provider_manager_service_screen.dart';
-import 'package:flutter_app/src/widgets/service_detail_screen_widget/service_detail_description.dart';
-import 'package:flutter_app/src/widgets/service_detail_screen_widget/service_detail_image.dart';
-import 'package:flutter_app/src/widgets/service_detail_screen_widget/service_detail_step_description.dart';
 import 'package:flutter_app/src/widgets/shared_widget/style.dart';
+import 'package:image_picker/image_picker.dart';
 
 class AddNewServiceScreen extends StatefulWidget {
   final ServiceItem service;
@@ -15,9 +15,20 @@ class AddNewServiceScreen extends StatefulWidget {
 }
 
 class _AddNewServiceScreenState extends State<AddNewServiceScreen> {
+
+  File _file;
+  void pickImage() async{
+    PickedFile pickedFile = await ImagePicker().getImage(source: ImageSource.gallery);
+    setState(() {
+      _file = File(pickedFile.path);
+    });
+    print("linkkkkkkkkkeeeee: " + _file.path);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white,
       body: Container(
         height: MediaQuery.of(context).size.height,
         child: SingleChildScrollView(
@@ -40,10 +51,16 @@ class _AddNewServiceScreenState extends State<AddNewServiceScreen> {
                     ),
                     child: Container(
                       child: ClipRRect(
-                        child: Image(
-                          image: AssetImage('ccc'),
-                          fit: BoxFit.cover,
-                        ),
+                        child:
+                        _file == null ? GestureDetector(
+                          onTap: pickImage,
+                          child: Image(
+                            image: AssetImage('public/img/upload.jpg'),
+                            fit: BoxFit.fitHeight,
+                          ),
+                        ):
+                        Image.file(_file,fit: BoxFit.cover,),
+                       // Image.asset(_file.path,fit: BoxFit.cover,)
                       ),
                     ),
                   ),
@@ -51,74 +68,98 @@ class _AddNewServiceScreenState extends State<AddNewServiceScreen> {
                     padding: EdgeInsets.symmetric(horizontal: 5.0, vertical: 25.0),
                     child: Row(
                       children: <Widget>[
-                      GestureDetector(
-                        child: IconButton(
-                          icon: Icon(Icons.cancel, color: Colors.white,),
-                          iconSize: 30.0,
-                          color: Colors.black,
-                        ),
+                      IconButton(
+                        icon: Icon(Icons.cancel, color: Colors.black.withOpacity(0.6),),
+                        iconSize: 30.0,
+                        color: Colors.black,
+                        onPressed: () => Navigator.pop(context),
                       )
                     ],),
+                  ),
+                  Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 5.0, vertical: 20.0),
+                    child: Container(
+                      height: 170.0,
+                      alignment: Alignment.bottomRight,
+                      child: Card(
+                        color: Colors.grey.shade100,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.all(
+                            Radius.circular(30.0),
+                          ),
+                        ),
+                        child: IconButton(
+                          icon: Icon(Icons.add , color: Colors.black.withOpacity(0.6),),
+                          iconSize: 25.0,
+                          color: Colors.black,
+                          //onPressed: getImage,
+                          onPressed: pickImage,
+                        ),
+                      ),
+                    ),
                   ),
                 ],
               ),
               Container(
-                margin: EdgeInsets.only(bottom: 15.0),
-                height: MediaQuery.of(context).size.height * 0.15,
+                margin: EdgeInsets.only(bottom: 15.0,top:5),
+                height: MediaQuery.of(context).size.height * 0.17,
                 width: MediaQuery.of(context).size.width,
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  boxShadow: [
-                    BoxShadow(color: Colors.grey[200], offset: Offset(0.0, 8.0))
-                  ],
-                ),
                 child: Column(
-                  // mainAxisAlignment: MainAxisAlignment.center,
-                  // crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: <Widget>[
-                        Container(
-                            width: MediaQuery.of(context).size.width * 0.6,
-                            padding: EdgeInsets.only(left: 10.0, bottom: 10.0),
-                            child: TextFormField(
-                              initialValue: " ",
-                              decoration: InputDecoration(
-                                hintText: 'Tên Dịch vụ',
-                                hintStyle: CustomTextStyle.subtitleText(Colors.black45),
+                        Padding(
+                          padding: const EdgeInsets.only(left: 4,top: 4,right: 0,bottom: 4),
+                          child: Container(
+                              width: MediaQuery.of(context).size.width * 0.6,
+                              child:
+                              TextField(
+                                textInputAction: TextInputAction.done,
+                                decoration: InputDecoration(
+                                    contentPadding: EdgeInsets.only(top: 3,left: 15),
+                                    border: OutlineInputBorder(),
+                                    labelText: 'Tên dịch vụ',
+                                ),
                               ),
-                            )
+                          ),
                         ),
-                        Container(
-                            width: MediaQuery.of(context).size.width * 0.35,
-                            padding: EdgeInsets.only(right: 10.0, bottom: 10.0),
-                            child: TextFormField(
-                              initialValue: " ",
-                              decoration: InputDecoration(
-                                hintText: 'Giá dịch vụ',
-                                hintStyle: CustomTextStyle.subtitleText(Colors.black45),
+                        Padding(
+                          padding: const EdgeInsets.only(left: 0,top: 4,right: 4,bottom: 4),
+                          child: Container(
+                              width: MediaQuery.of(context).size.width * 0.35,
+                              child:
+                             TextField(
+                               keyboardType: TextInputType.number,
+                               decoration: InputDecoration(
+                                  contentPadding: EdgeInsets.only(top: 3,left: 15),
+                                  border: OutlineInputBorder(),
+                                  labelText: 'Giá (VND)',
                               ),
-                            )
+                            ),
+                          ),
                         ),
                       ],
                     ),
-                    Container(
-                        width: MediaQuery.of(context).size.width * 0.9,
-                        margin: EdgeInsets.only(right: 10.0),
-                        child: TextFormField(
-                          initialValue: " ",
+                    Padding(
+                      padding: const EdgeInsets.all(4.0),
+                      child: Container(
+                        color: Colors.white,
+                        height: MediaQuery.of(context).size.height * 0.07,
+                        child: TextField(
+                          textInputAction: TextInputAction.done,
                           decoration: InputDecoration(
-                            hintText: 'Miêu tả dịch vụ',
-                            hintStyle: CustomTextStyle.subtitleText(Colors.black45),
+                            contentPadding: EdgeInsets.only(top: 3,left: 15),
+                            labelText: 'Miêu tả dịch vụ (nếu có)*',
+                            border: OutlineInputBorder(),
                           ),
-                        )
+                        ),
+                      ),
                     ),
                   ],
                 ),
               ),
-              SizedBox(height: 10,),
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
@@ -131,135 +172,23 @@ class _AddNewServiceScreenState extends State<AddNewServiceScreen> {
                           fontSize: 15.0, fontWeight: FontWeight.bold),
                     ),
                   ),
-                  Container(
-                    color: Colors.white,
-                    height: MediaQuery.of(context).size.height * 0.35,
-                    child: ListView(
-                      children: <Widget>[
-                        Container(
-                          margin: EdgeInsets.only(
-                              left: 15.0, top: 0.0, right: 15.0, bottom: 10.0),
-                          width: MediaQuery.of(context).size.width * 0.8,
-                          child: TextFormField(
-                            initialValue: " ",
-                            decoration: InputDecoration(
-                              hintText: 'Miêu tả các bước',
-                              hintStyle: CustomTextStyle.subtitleText(Colors.black45),
-                              prefix: Padding(
-                                padding: const EdgeInsets.all(5),
-                                child: Text(
-                                  'Bước  1 :',
-                                  style: TextStyle(fontSize: 15),
-                                ),
-                              ),
-                            ),
-                          ),
+                  Padding(
+                    padding: const EdgeInsets.all(4.0),
+                    child: Container(
+                      color: Colors.white,
+                      height: MediaQuery.of(context).size.height * 0.35,
+                      child: TextField(
+                        textInputAction: TextInputAction.done,
+                        decoration: InputDecoration(
+                          labelText: 'Các bước làm dịch vụ (Yêu cầu)*',
+                          border: OutlineInputBorder(),
                         ),
-                        Container(
-                          margin: EdgeInsets.only(left: 15.0, top: 0.0, right: 15.0, bottom: 10.0),
-                          width: MediaQuery.of(context).size.width * 0.8,
-                          child: TextFormField(
-                            initialValue: " ",
-                            decoration: InputDecoration(
-                              hintText: 'Miêu tả các bước',
-                              hintStyle:
-                                  CustomTextStyle.subtitleText(Colors.black45),
-                              prefix: Padding(
-                                padding: const EdgeInsets.all(5),
-                                child: Text(
-                                  'Bước  2 :',
-                                  style: TextStyle(fontSize: 15),
-                                ),
-                              ),
-                            ),
-                          ),
-                        ),
-                        Container(
-                          margin: EdgeInsets.only(
-                              left: 15.0, top: 0.0, right: 15.0, bottom: 10.0),
-                          width: MediaQuery.of(context).size.width * 0.8,
-                          child: TextFormField(
-                            initialValue: " ",
-                            decoration: InputDecoration(
-                              hintText: 'Miêu tả các bước',
-                              hintStyle:
-                                  CustomTextStyle.subtitleText(Colors.black45),
-                              prefix: Padding(
-                                padding: const EdgeInsets.all(5),
-                                child: Text(
-                                  'Bước  3 :',
-                                  style: TextStyle(fontSize: 15),
-                                ),
-                              ),
-                            ),
-                          ),
-                        ),
-                        Container(
-                          margin: EdgeInsets.only(
-                              left: 15.0, top: 0.0, right: 15.0, bottom: 10.0),
-                          width: MediaQuery.of(context).size.width * 0.8,
-                          child: TextFormField(
-                            initialValue: " ",
-                            decoration: InputDecoration(
-                              hintText: 'Miêu tả các bước',
-                              hintStyle:
-                                  CustomTextStyle.subtitleText(Colors.black45),
-                              prefix: Padding(
-                                padding: const EdgeInsets.all(5),
-                                child: Text(
-                                  'Bước  4 :',
-                                  style: TextStyle(fontSize: 15),
-                                ),
-                              ),
-                            ),
-                          ),
-                        ),
-                        Container(
-                          margin: EdgeInsets.only(
-                              left: 15.0, top: 0.0, right: 15.0, bottom: 10.0),
-                          width: MediaQuery.of(context).size.width * 0.8,
-                          child: TextFormField(
-                            initialValue: " ",
-                            decoration: InputDecoration(
-                              hintText: 'Miêu tả các bước',
-                              hintStyle:
-                                  CustomTextStyle.subtitleText(Colors.black45),
-                              prefix: Padding(
-                                padding: const EdgeInsets.all(5),
-                                child: Text(
-                                  'Bước  5 :',
-                                  style: TextStyle(fontSize: 15),
-                                ),
-                              ),
-                            ),
-                          ),
-                        ),
-                        Container(
-                          margin: EdgeInsets.only(
-                              left: 15.0, top: 0.0, right: 15.0, bottom: 10.0),
-                          width: MediaQuery.of(context).size.width * 0.8,
-                          child: TextFormField(
-                            initialValue: " ",
-                            decoration: InputDecoration(
-                              hintText: 'Miêu tả các bước',
-                              hintStyle:
-                                  CustomTextStyle.subtitleText(Colors.black45),
-                              prefix: Padding(
-                                padding: const EdgeInsets.all(5),
-                                child: Text(
-                                  'Bước  6 :',
-                                  style: TextStyle(fontSize: 15),
-                                ),
-                              ),
-                            ),
-                          ),
-                        )
-                      ],
+                        maxLines: 9,
+                      ),
                     ),
                   ),
                 ],
               ),
-              SizedBox(height: 50),
               GestureDetector(
                 onTap: () {
                   Navigator.of(context).push(MaterialPageRoute(
@@ -274,10 +203,10 @@ class _AddNewServiceScreenState extends State<AddNewServiceScreen> {
                         Radius.circular(1.0),
                       ),
                     ),
-                    backgroundColor: Colors.grey,
+                    backgroundColor: Colors.black.withOpacity(0.5),
                     label: Text(
                       'Lưu mới',
-                      style: TextStyle(color: Colors.white, letterSpacing: 4),
+                      style: TextStyle(fontSize: 17,color: Colors.white, letterSpacing: 4),
                     ),
                   ),
                 ),

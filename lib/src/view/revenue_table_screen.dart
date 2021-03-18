@@ -15,6 +15,8 @@ class _HistoryPageState extends State<HistoryScreen> {
   bool changeDate = true;
   bool changeMonth = true;
 
+  String monthandYear = "March 2021";
+
   @override
   void initState() {
     // TODO: implement initState
@@ -32,14 +34,13 @@ class _HistoryPageState extends State<HistoryScreen> {
         appBar: AppBar(
           centerTitle: true,
           backgroundColor: Colors.white,
-          elevation: 1,
-          title: Column(
-            children: [
-              Text(
-                'Lịch sử làm của bạn',
-                style: CustomTextStyle.headerText(Colors.black87),
-              ),
-            ],
+          elevation: 0,
+          leadingWidth: 0,
+          title: Center(
+            child: Text(
+              'Thống kê hoạt động của bạn',
+              style: CustomTextStyle.headerText(Colors.black87),
+            ),
           ),
           bottom: TabBar(
             indicatorSize: TabBarIndicatorSize.label,
@@ -152,12 +153,13 @@ class _HistoryPageState extends State<HistoryScreen> {
                               alignment: Alignment.topLeft,
                               child: Padding(
                                 padding: const EdgeInsets.all(4.0),
-                                child: Text('   Hoàn thành 5 dịch vụ',style: TextStyle(fontSize: 18)),
+                                child: Text('   Hoàn thành 5 giao dịch',style: TextStyle(fontSize: 18)),
                               )
                           ),
                         ],
                         ),
-                      ) : Container(
+                      )
+                          : Container(
                         width: MediaQuery.of(context).size.width,
                         child: Column(children: [
                           Container(
@@ -184,7 +186,7 @@ class _HistoryPageState extends State<HistoryScreen> {
                               alignment: Alignment.topLeft,
                               child: Padding(
                                 padding: const EdgeInsets.all(4.0),
-                                child: Text('   Hoàn thành 4 dịch vụ',style: TextStyle(fontSize: 18)),
+                                child: Text('   Hoàn thành 4 giao dịch',style: TextStyle(fontSize: 18)),
                               )
                           ),
                         ],
@@ -201,174 +203,82 @@ class _HistoryPageState extends State<HistoryScreen> {
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
-                      Card(
-                        child: TableCalendar(
-                          initialCalendarFormat: CalendarFormat.week,
-                          calendarStyle: CalendarStyle(
-                              todayColor: Colors.orange,
-                              selectedColor: Theme.of(context).primaryColor,
-                              todayStyle: TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 18.0,
-                                  color: Colors.white)),
-                          headerStyle: HeaderStyle(
-                            centerHeaderTitle: true,
-                            formatButtonDecoration: BoxDecoration(
-                              color: Colors.orange,
-                              borderRadius: BorderRadius.circular(20.0),
+                      SizedBox(height: 15,),
+                      Row(
+                        children:[
+                          GestureDetector(
+                              onTap: (){
+                                setState(() {
+                                  monthandYear = "March 2021";
+                                  changeMonth = false;
+                                });
+                              },
+                              child: Container(
+                                  alignment: Alignment.center,margin: EdgeInsets.only(top: 8),width: 70,
+                                  child: Icon(Icons.arrow_back_ios))
+                          ),
+                          Container(
+                            alignment: Alignment.center,
+                            width: 220,
+                            // height: 19,
+                            child: Center(
+                              child: Row(
+                                children: [
+                                  SizedBox(width: 25,),
+                                  Text(
+                                    monthandYear,
+                                    style: TextStyle(
+                                      color: Colors.black,
+                                      fontSize: 17,
+                                      fontFamily: "Montserrat",
+                                      fontWeight: FontWeight.w500,
+                                    ),
+                                  ),
+                                  SizedBox(width: 25,),
+                                  Container(
+                                    height: 35,
+                                    child: Card(
+                                      color: Colors.orange,
+                                      child: Padding(
+                                        padding: const EdgeInsets.all(4),
+                                        child: Text(
+                                          'Month',
+                                          style: TextStyle(
+                                              fontWeight: FontWeight.bold,
+                                              fontSize: 15,
+                                              color: Colors.white),
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
                             ),
-                            formatButtonTextStyle: TextStyle(color: Colors.white),
-                            formatButtonShowsNext: false,
                           ),
-                          startingDayOfWeek: StartingDayOfWeek.monday,
-                          onDaySelected: (date, events, holidays) {
-                            print(date.toIso8601String());
-                            changeMonth = !changeMonth;
-                          },
-                          builders: CalendarBuilders(
-                            selectedDayBuilder: (context, date, events) => Container(
-                                margin: const EdgeInsets.all(4.0),
-                                alignment: Alignment.center,
-                                decoration: BoxDecoration(
-                                    color: Theme.of(context).primaryColor,
-                                    borderRadius: BorderRadius.circular(10.0)),
-                                child: Text(
-                                  date.day.toString(),
-                                  style: TextStyle(color: Colors.white),
-                                )),
-                            todayDayBuilder: (context, date, events) => Container(
-                                margin: const EdgeInsets.all(4.0),
-                                alignment: Alignment.center,
-                                decoration: BoxDecoration(
-                                    color: Colors.orange,
-                                    borderRadius: BorderRadius.circular(10.0)),
-                                child: Text(
-                                  date.day.toString(),
-                                  style: TextStyle(color: Colors.white),
-                                )),
+                          GestureDetector(
+                              onTap: (){
+                                setState(() {
+                                  monthandYear = "April 2021";
+                                  changeMonth = true;
+                                });
+                              },
+                              child: Container(
+                                  alignment: Alignment.center,width: 70,child: Icon(Icons.arrow_forward_ios_rounded))
                           ),
-                          calendarController: _controller,
-                        ),
+                        ],
                       ),
+                      SizedBox(height: 10,),
                       Container(
-                        child: Row(
-                          children: [
-                            Container(
-                              width: MediaQuery.of(context).size.width*0.08,
-                              child: Column(
-                                children: [
-                                  Text('Jan'),
-                                  Text('1'),
-                                ],
-                              ),
-                            ),
-                            Container(
-                              width: MediaQuery.of(context).size.width*0.08,
-                              child: Column(
-                                children: [
-                                  Text('Fed'),
-                                  Text('2'),
-                                ],
-                              ),
-                            ),
-                            Container(
-                              width: MediaQuery.of(context).size.width*0.08,
-                              child: Column(
-                                children: [
-                                  Text('Mar',style: TextStyle(color: Colors.lightBlueAccent),),
-                                  Text('3',style: TextStyle(color: Colors.lightBlueAccent)),
-                                ],
-                              ),
-                            ),
-                            Container(
-                              width: MediaQuery.of(context).size.width*0.08,
-                              child: Column(
-                                children: [
-                                  Text('Apr'),
-                                  Text('4'),
-                                ],
-                              ),
-                            ),
-                            Container(
-                              width: MediaQuery.of(context).size.width*0.08,
-                              child: Column(
-                                children: [
-                                  Text('May'),
-                                  Text('5'),
-                                ],
-                              ),
-                            ),
-                            Container(
-                              width: MediaQuery.of(context).size.width*0.08,
-                              child: Column(
-                                children: [
-                                  Text('Jun'),
-                                  Text('6'),
-                                ],
-                              ),
-                            ),
-                            Container(
-                              width: MediaQuery.of(context).size.width*0.08,
-                              child: Column(
-                                children: [
-                                  Text('Jul'),
-                                  Text('7'),
-                                ],
-                              ),
-                            ),
-                            Container(
-                              width: MediaQuery.of(context).size.width*0.08,
-                              child: Column(
-                                children: [
-                                  Text('Aug'),
-                                  Text('8'),
-                                ],
-                              ),
-                            ),
-                            Container(
-                              width: MediaQuery.of(context).size.width*0.08,
-                              child: Column(
-                                children: [
-                                  Text('Sep '),
-                                  Text('9'),
-                                ],
-                              ),
-                            ),
-                            Container(
-                              width: MediaQuery.of(context).size.width*0.08,
-                              child: Column(
-                                children: [
-                                  Text('Oct'),
-                                  Text('10'),
-                                ],
-                              ),
-                            ),
-                            Container(
-                              width: MediaQuery.of(context).size.width*0.08,
-                              child: Column(
-                                children: [
-                                  Text('Nov'),
-                                  Text('11'),
-                                ],
-                              ),
-                            ),
-                            Container(
-                              width: MediaQuery.of(context).size.width*0.08,
-                              child: Column(
-                                children: [
-                                  Text('Dec'),
-                                  Text('12'),
-                                ],
-                              ),
-                            ),
-                          ],
-                        ),
+                        margin: EdgeInsets.only(top: 20),
+                        color: Colors.black.withOpacity(0.3),
+                        width: MediaQuery.of(context).size.width,
+                        height: 1,
                       ),
                       changeMonth ? Container(
                         width: MediaQuery.of(context).size.width,
                         child: Column(children: [
                           Container(
-                              margin: EdgeInsets.only(left: 10),
+                              margin: EdgeInsets.only(left: 10,top: 15),
                               alignment: Alignment.topLeft,
                               child: Row(
                                 children: [
@@ -390,7 +300,7 @@ class _HistoryPageState extends State<HistoryScreen> {
                               alignment: Alignment.topLeft,
                               child: Padding(
                                 padding: const EdgeInsets.all(4.0),
-                                child: Text('   Hoàn thành 22 dịch vụ',style: TextStyle(fontSize: 18)),
+                                child: Text('   Hoàn thành 22 giao dịch',style: TextStyle(fontSize: 18)),
                               )
                           )
                         ],
@@ -399,7 +309,7 @@ class _HistoryPageState extends State<HistoryScreen> {
                         width: MediaQuery.of(context).size.width,
                         child: Column(children: [
                           Container(
-                              margin: EdgeInsets.only(left: 10),
+                              margin: EdgeInsets.only(left: 10,top: 15),
                               alignment: Alignment.topLeft,
                               child: Row(
                                 children: [
@@ -421,7 +331,7 @@ class _HistoryPageState extends State<HistoryScreen> {
                               alignment: Alignment.topLeft,
                               child: Padding(
                                 padding: const EdgeInsets.all(4.0),
-                                child: Text('   Hoàn thành 27 dịch vụ',style: TextStyle(fontSize: 18)),
+                                child: Text('   Hoàn thành 27 giao dịch',style: TextStyle(fontSize: 18)),
                               )
                           )
                         ],

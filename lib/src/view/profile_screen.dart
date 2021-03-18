@@ -36,7 +36,7 @@ class ProfileScreenState extends StatelessWidget {
                   children: <Widget>[
                     CircleAvatar(
                       radius: 10.0 * 5,
-                      backgroundImage: AssetImage('public/img/meo.jpg'),
+                      backgroundImage: AssetImage('public/img/user_image.jpg'),
                     ),
                     GestureDetector(
                       onTap: () {
@@ -74,28 +74,6 @@ class ProfileScreenState extends StatelessWidget {
                     fontSize: 10.0 * 2,
                     fontWeight: FontWeight.w600,
                   )),
-              SizedBox(height: 3),
-              Row(
-                children: [
-                  SizedBox(
-                    width: MediaQuery.of(context).size.width * 0.3,
-                  ),
-                  Icon(
-                    FontAwesomeIcons.chessQueen,
-                    color: Colors.yellowAccent,
-                  ),
-                  SizedBox(
-                    width: 10,
-                  ),
-                  Text(
-                    '531 Points | Sliver',
-                    style: TextStyle(
-                      fontSize: 10.0 * 1.3,
-                      fontWeight: FontWeight.w500,
-                    ),
-                  ),
-                ],
-              ),
             ],
           ),
           SizedBox(height: 20),
@@ -289,7 +267,7 @@ class ProfileScreenState extends StatelessWidget {
           ),
         ],
       ),
-      bottomNavigationBar: WidgetUtils.appBottomNavigationBar(3),
+      bottomNavigationBar: WidgetUtils.appBottomNavigationBar(4),
     );
   }
 

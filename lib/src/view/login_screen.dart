@@ -6,6 +6,8 @@ import 'package:flutter_app/src/widgets/shared_widget/style.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
 
+import 'login_phone_screen.dart';
+
 class LoginScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -91,7 +93,7 @@ class LoginScreen extends StatelessWidget {
   Widget _loginWithPhone(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        Navigator.of(context).pushNamed(Routes.loginPhoneScreen);
+        Navigator.of(context).push(MaterialPageRoute(builder: (context) => LoginPhoneScreen()));
       },
       child: Container(
         height: 45,

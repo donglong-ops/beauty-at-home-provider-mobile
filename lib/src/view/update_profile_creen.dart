@@ -1,55 +1,26 @@
-import 'dart:io';
-
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_app/src/view/profile_screen.dart';
-import 'package:image_picker/image_picker.dart';
+import 'package:flutter_app/src/view/provider_confirm_screen.dart';
+import 'package:flutter_app/src/widgets/shared_widget/style.dart';
 
-class ProfileEditScreen extends StatefulWidget {
+class ProfileAddScreen extends StatefulWidget {
   @override
   ProfileEditScreenState createState() => ProfileEditScreenState();
 }
 
-class ProfileEditScreenState extends  State<ProfileEditScreen> {
+class ProfileEditScreenState extends State<ProfileAddScreen> {
   bool showPassword = false;
-  File _file;
-  void pickImage() async{
-    PickedFile pickedFile = await ImagePicker().getImage(source: ImageSource.gallery);
-    setState(() {
-      _file = File(pickedFile.path);
-    });
-  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        leading: IconButton(
-          icon: Icon(
-            Icons.arrow_back_ios,
-            color: Colors.black,
-          ),
-          onPressed: () {
-            Navigator.pop(context);
-          },
-        ),
+        centerTitle: true,
+        automaticallyImplyLeading: false,
         backgroundColor: Colors.white,
         title: Text(
-          'Chỉnh sửa thông tin', style: TextStyle(color: Colors.black),),
-        actions: [
-          GestureDetector(
-            onTap: () {
-              Navigator.of(context).push(MaterialPageRoute(
-                builder: (context) => ProfileScreen(),
-              ));
-            },
-            child: Container(
-                margin: EdgeInsets.only(right: 15, top: 15),
-                child: Text('Lưu', style: TextStyle(color: Colors.blueAccent,
-                  fontSize: 20,
-                  fontWeight: FontWeight.bold,))),
-          ),
-        ],
+          'Cập nhật thông tin',
+          style: CustomTextStyle.headerText(Colors.black87),
+        ),
       ),
       body: Container(
         padding: EdgeInsets.only(left: 16, top: 25, right: 16),
@@ -77,13 +48,9 @@ class ProfileEditScreenState extends  State<ProfileEditScreen> {
                                 offset: Offset(0, 10))
                           ],
                           shape: BoxShape.circle,
-                          image:
-                          DecorationImage(
+                          image: DecorationImage(
                               fit: BoxFit.cover,
-                              image: _file == null ? AssetImage('public/img/meo.jpg')
-                                  : Image.file(_file,fit: BoxFit.cover,)
-                          )
-                      ),
+                              image: AssetImage('public/img/images.png'))),
                     ),
                     Positioned(
                         bottom: 0,
@@ -99,22 +66,53 @@ class ProfileEditScreenState extends  State<ProfileEditScreen> {
                             ),
                             color: Colors.green,
                           ),
-                          child: IconButton(
-                              icon: Icon(Icons.camera_alt, color: Colors.white,),
-                              iconSize: 20.0,
-                              color: Colors.white,
-                              onPressed: pickImage,
-                            )
+                          child: Icon(
+                            Icons.camera_alt,
+                            color: Colors.white,
+                          ),
                         )),
                   ],
                 ),
               ),
-              SizedBox(height: 35),
-              buildTextField("Name", "Huỳnh Thế Hiển", false),
-              buildTextField("Địa chỉ Email", "thehienvag@gmail.com", false),
-              buildTextField("Số điện thoại", "0918455666", false),
+              SizedBox(
+                height: 35,
+              ),
+              buildTextField("Name", " ", false),
+              buildTextField("Địa chỉ Email", " ", false),
+              buildTextField("Số điện thoại", "0918076861", false),
+              buildTextField("Mật khẩu", "********", true),
               buildTextField("Địa chỉ (Không bắt buộc)", " ", false),
-              SizedBox(height: 35,),
+              SizedBox(
+                height: 35,
+              ),
+              GestureDetector(
+                onTap: () {
+                  Navigator.of(context).push(
+                      MaterialPageRoute(builder: (context) => ProviderScreen()));
+                },
+                child: Container(
+                  width: MediaQuery.of(context).size.width * 0.9,
+                  height: 50,
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 63,
+                      vertical: 13,
+                    ),
+                    child: SizedBox(
+                      width: 167,
+                      height: 19,
+                      child: Text(
+                        "Lưu thông tin",
+                        textAlign: TextAlign.center,
+                        style: CustomTextStyle.titleText(Colors.white),
+                      ),
+                    ),
+                  ),
+                  decoration: BoxDecoration(
+                      color: Color(0xff2AD4D3),
+                      borderRadius: BorderRadius.circular(4)),
+                ),
+              ),
             ],
           ),
         ),
@@ -122,9 +120,10 @@ class ProfileEditScreenState extends  State<ProfileEditScreen> {
     );
   }
 
-  Widget buildTextField(String labelText, String placeholder, bool isPasswordTextField) {
+  Widget buildTextField(
+      String labelText, String placeholder, bool isPasswordTextField) {
     return Container(
-      margin: EdgeInsets.only(left: 20,right: 20),
+      margin: EdgeInsets.only(left: 20, right: 20),
       child: Padding(
         padding: EdgeInsets.all(10),
         child: TextField(
@@ -132,15 +131,16 @@ class ProfileEditScreenState extends  State<ProfileEditScreen> {
           decoration: InputDecoration(
               suffixIcon: isPasswordTextField
                   ? IconButton(
-                onPressed: () {
-                  setState(() {
-                    showPassword = !showPassword;
-                  });
-                },
-                icon: Icon(
-                  Icons.remove_red_eye,
-                  color: Colors.grey,),
-                )
+                      onPressed: () {
+                        setState(() {
+                          showPassword = !showPassword;
+                        });
+                      },
+                      icon: Icon(
+                        Icons.remove_red_eye,
+                        color: Colors.grey,
+                      ),
+                    )
                   : null,
               contentPadding: EdgeInsets.only(bottom: 3),
               labelText: labelText,

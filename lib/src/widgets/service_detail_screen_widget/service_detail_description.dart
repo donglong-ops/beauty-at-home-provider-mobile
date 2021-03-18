@@ -11,41 +11,43 @@ class ServiceDetailDescription extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.only(bottom: 15.0),
-      height: MediaQuery.of(context).size.height * 0.15,
+      height: MediaQuery.of(context).size.height * 0.2,
       width: MediaQuery.of(context).size.width,
-      decoration: BoxDecoration(
-        color: Colors.white,
-        boxShadow: [
-          BoxShadow(color: Colors.grey[200], offset: Offset(0.0, 8.0))
-        ],
-      ),
       child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: <Widget>[
-              Container(
-                  width: MediaQuery.of(context).size.width * 0.5,
-                  padding: EdgeInsets.only(left: 10.0, bottom: 10.0),
-                  child: TextFormField(
-                     initialValue: name,
-                  )),
-              Container(
-                  width: MediaQuery.of(context).size.width * 0.3,
-                  padding: EdgeInsets.only(right: 10.0, bottom: 10.0),
-                  child: TextFormField(
-                    initialValue: price + " đ",
-                  )),
-            ],
+          Padding(
+            padding: const EdgeInsets.all(4.0),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: <Widget>[
+                Container(
+                    width: MediaQuery.of(context).size.width * 0.6,
+                    child: TextFormField(
+                       initialValue: name,
+                      decoration: InputDecoration(
+                        border: OutlineInputBorder(),
+                      ),
+                    )),
+                Container(
+                    width: MediaQuery.of(context).size.width * 0.35,
+                    child: TextFormField(
+                      initialValue: price + " đ",
+                      decoration: InputDecoration(
+                        border: OutlineInputBorder(),
+                      ),
+                    )),
+              ],
+            ),
           ),
           Container(
-              padding: EdgeInsets.only(left: 10.0),
+            width: MediaQuery.of(context).size.width,
+              padding: const EdgeInsets.all(4.0),
               child: TextFormField(
                 initialValue: note,
+                decoration: InputDecoration(
+                  border: OutlineInputBorder(),
+                ),
               )
           ),
         ],

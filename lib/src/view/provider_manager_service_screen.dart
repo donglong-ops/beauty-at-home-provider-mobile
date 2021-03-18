@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_app/src/utils/widgets_utils.dart';
 import 'package:flutter_app/src/view/add_new_service_screen.dart';
 import 'package:flutter_app/src/view/service_detail_screen2.dart';
-import 'package:flutter_app/src/widgets/provider_detail_screen_widget.dart';
+
 
 class ProviderManagerScreen extends StatelessWidget {
   @override
@@ -17,7 +17,7 @@ class ProviderManagerScreen extends StatelessWidget {
 
 List<ServiceItem> lstServiceActive = List.from([
   ServiceItem(
-    image: 'public/img/nail_2.jpg',
+    image: 'public/img/spa-massage.jpg',
     salonOwner: 'Tony Đặng',
     titleService: 'Massage - Giác hơi',
     area: 'Quận 1, TP. Hồ Chí Minh',
@@ -27,15 +27,15 @@ List<ServiceItem> lstServiceActive = List.from([
     status: 'Đang hoặt động',
     price: '500.000',
     description: [
-      'làm sạch tay bằng Cool Blue',
-      'dũa móng theo khuôn khách yêu cầu',
-      'làm mềm da trên mặt móng với gel biểu bì',
-      'dùng cây đẩy da đẩy nhẹ trên mặt móng và lau sạch bằng bông',
+      'Bước 1: làm sạch tay bằng Cool Blue',
+      'Bước 2: dũa móng theo khuôn khách yêu cầu',
+      'Bước 3: làm mềm da trên mặt móng với gel biểu bì',
+      'Bước 4: dùng cây đẩy da đẩy nhẹ trên mặt móng và lau sạch bằng bông',
     ],
     note: 'Bao gồm mỹ phẩm làm đẹp và dụng cụ',
   ),
   ServiceItem(
-    image: 'public/img/nail_2.jpg',
+    image: 'public/img/nail_1.jpg',
     salonOwner: 'Hani Nguyễn',
     titleService: 'Làm nail - Làm tóc',
     area: 'Quận 2, TP. Hồ Chí Minh',
@@ -53,25 +53,7 @@ List<ServiceItem> lstServiceActive = List.from([
     note: 'Bao gồm mỹ phẩm làm đẹp và dụng cụ',
   ),
   ServiceItem(
-    image: 'public/img/nail_1.jpg',
-    salonOwner: 'Tony Đặng',
-    titleService: 'Massage - Giác hơi',
-    area: 'Quận 1, TP. Hồ Chí Minh',
-    range: '5 km',
-    rate: 4.8,
-    timeLine: '9:00 AM - 8:30 PM',
-    status: 'Đang hoặt động',
-    price: '500.000',
-    description: [
-      'Bước 1: làm sạch tay bằng Cool Blue',
-      'Bước 2: dũa móng theo khuôn khách yêu cầu',
-      'Bước 3: làm mềm da trên mặt móng với gel biểu bì',
-      'Bước 4: dùng cây đẩy da đẩy nhẹ trên mặt móng và lau sạch bằng bông',
-    ],
-    note: 'Bao gồm mỹ phẩm làm đẹp và dụng cụ',
-  ),
-  ServiceItem(
-    image: 'public/img/nail_3.png',
+    image: 'public/img/trang_diem.jpg',
     salonOwner: 'Marry Trần',
     titleService: 'Trang điểm - Làm tóc',
     area: 'Quận 10, TP. Hồ Chí Minh',
@@ -89,25 +71,7 @@ List<ServiceItem> lstServiceActive = List.from([
     note: 'Bao gồm mỹ phẩm làm đẹp và dụng cụ',
   ),
   ServiceItem(
-    image: 'public/img/nail_2.jpg',
-    salonOwner: 'Aleck Marry',
-    titleService: 'Combo làm tóc,trang điểm',
-    area: 'Quận 2, TP. Hồ Chí Minh',
-    range: '2.3 km',
-    rate: 4.8,
-    timeLine: '9:00 AM - 8:30 PM',
-    status: 'Đang hoặt động',
-    price: '500.000',
-    description: [
-      'Bước 1: làm sạch tay bằng Cool Blue',
-      'Bước 2: dũa móng theo khuôn khách yêu cầu',
-      'Bước 3: làm mềm da trên mặt móng với gel biểu bì',
-      'Bước 4: dùng cây đẩy da đẩy nhẹ trên mặt móng và lau sạch bằng bông',
-    ],
-    note: 'Bao gồm mỹ phẩm làm đẹp và dụng cụ',
-  ),
-  ServiceItem(
-    image: 'public/img/nail_1.jpg',
+    image: 'public/img/spa-massage.jpg',
     salonOwner: 'Tony Đặng',
     titleService: 'Massage - Giác hơi',
     area: 'Quận 1, TP. Hồ Chí Minh',
@@ -125,9 +89,9 @@ List<ServiceItem> lstServiceActive = List.from([
     note: 'Bao gồm mỹ phẩm làm đẹp và dụng cụ',
   ),
   ServiceItem(
-    image: 'public/img/mit_nails_spa.png',
+    image: 'public/img/beautician1.PNG',
     salonOwner: 'Mít Nail & Spa',
-    titleService: 'Làm nail - Làm tóc',
+    titleService: 'Trang điểm - Làm tóc',
     area: 'Quận 2, TP. Hồ Chí Minh',
     range: '2.3 km',
     rate: 4.8,
@@ -181,7 +145,7 @@ List<ServiceItem> lstServiceActive = List.from([
   ServiceItem(
     image: 'public/img/nail_1.jpg',
     salonOwner: 'Aleck Marry',
-    titleService: 'Combo làm tóc,trang điểm',
+    titleService: 'Làm tóc,trang điểm',
     area: 'Quận 2, TP. Hồ Chí Minh',
     range: '2.3 km',
     rate: 4.8,
@@ -197,7 +161,7 @@ List<ServiceItem> lstServiceActive = List.from([
     note: 'Bao gồm mỹ phẩm làm đẹp và dụng cụ',
   ),
   ServiceItem(
-    image: 'public/img/nail_2.jpg',
+    image: 'public/img/spa-massage.jpg',
     salonOwner: 'Tony Đặng',
     titleService: 'Massage - Giác hơi',
     area: 'Quận 1, TP. Hồ Chí Minh',
@@ -233,7 +197,7 @@ List<ServiceItem> lstServiceActive = List.from([
     note: 'Bao gồm mỹ phẩm làm đẹp và dụng cụ',
   ),
   ServiceItem(
-    image: 'public/img/nail_1.jpg',
+    image: 'public/img/spa-massage.jpg',
     salonOwner: 'Tony Đặng',
     titleService: 'Massage - Giác hơi',
     area: 'Quận 1, TP. Hồ Chí Minh',
@@ -271,7 +235,7 @@ List<ServiceItem> lstServiceActive = List.from([
   ServiceItem(
     image: 'public/img/nail_2.jpg',
     salonOwner: 'Aleck Marry',
-    titleService: 'Combo làm tóc,trang điểm',
+    titleService: 'Làm tóc,trang điểm',
     area: 'Quận 2, TP. Hồ Chí Minh',
     range: '2.3 km',
     rate: 4.8,
@@ -287,7 +251,7 @@ List<ServiceItem> lstServiceActive = List.from([
     note: 'Bao gồm mỹ phẩm làm đẹp và dụng cụ',
   ),
   ServiceItem(
-    image: 'public/img/nail_1.jpg',
+    image: 'public/img/spa-massage.jpg',
     salonOwner: 'Tony Đặng',
     titleService: 'Massage - Giác hơi',
     area: 'Quận 1, TP. Hồ Chí Minh',
@@ -310,7 +274,7 @@ List<ServiceItem> lstServiceDis = List.from([
   ServiceItem(
     image: 'public/img/nail_2.jpg',
     salonOwner: 'Aleck Marry',
-    titleService: 'Combo làm tóc,trang điểm',
+    titleService: 'Làm tóc,trang điểm',
     area: 'Quận 2, TP. Hồ Chí Minh',
     range: '2.3 km',
     rate: 4.8,
@@ -326,7 +290,7 @@ List<ServiceItem> lstServiceDis = List.from([
     note: 'Bao gồm mỹ phẩm làm đẹp và dụng cụ',
   ),
   ServiceItem(
-    image: 'public/img/nail_1.jpg',
+    image: 'public/img/spa-massage.jpg',
     salonOwner: 'Tony Đặng',
     titleService: 'Massage - Giác hơi',
     area: 'Quận 1, TP. Hồ Chí Minh',
@@ -344,7 +308,7 @@ List<ServiceItem> lstServiceDis = List.from([
     note: 'Bao gồm mỹ phẩm làm đẹp và dụng cụ',
   ),
   ServiceItem(
-    image: 'public/img/nail_2.jpg',
+    image: 'public/img/spa-massage.jpg',
     salonOwner: 'Tony Đặng',
     titleService: 'Massage - Giác hơi',
     area: 'Quận 1, TP. Hồ Chí Minh',
@@ -380,7 +344,7 @@ List<ServiceItem> lstServiceDis = List.from([
     note: 'Bao gồm mỹ phẩm làm đẹp và dụng cụ',
   ),
   ServiceItem(
-    image: 'public/img/nail_1.jpg',
+    image: 'public/img/spa-massage.jpg',
     salonOwner: 'Tony Đặng',
     titleService: 'Massage - Giác hơi',
     area: 'Quận 1, TP. Hồ Chí Minh',
@@ -430,24 +394,25 @@ class _DemoAppState extends State<DemoApp> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white,
       body: Stack(children: <Widget>[
         Column(
           children: <Widget>[
             ProviderImage(
               path: 'public/img/mit_nails_spa.png',
             ),
-            Container(
-                alignment: Alignment.center,
-                child: Text(
-                  'Mit Nail & Spa',
-                  style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
-                )),
-            Container(
-                alignment: Alignment.center,
-                child: Text(
-                  'Chăm sóc tóc và móng',
-                  style: TextStyle(fontSize: 20),
-                )),
+            // Container(
+            //     alignment: Alignment.center,
+            //     child: Text(
+            //       'Mit Nail & Spa',
+            //       style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
+            //     )),
+            // Container(
+            //     alignment: Alignment.center,
+            //     child: Text(
+            //       'Chăm sóc tóc và móng',
+            //       style: TextStyle(fontSize: 18),
+            //     )),
             SizedBox(height: 10),
             SizedBox(height: 5),
             Container(
@@ -542,7 +507,7 @@ class _DemoAppState extends State<DemoApp> {
             status ? LoadServicesActive() : LoadServicesDisable(),
             Container(
               width: MediaQuery.of(context).size.width,
-              height:  MediaQuery.of(context).size.height*0.05,
+              height:  MediaQuery.of(context).size.height*0.04,
               margin: EdgeInsets.only(left: 4,right: 4),
               child: FloatingActionButton.extended(
                 shape: RoundedRectangleBorder(
@@ -608,10 +573,11 @@ class LoadServicesActive extends StatefulWidget {
 }
 
 class _LoadServicesActiveState extends State<LoadServicesActive> {
+  bool state = true;
   @override
   Widget build(BuildContext context) {
-    return Container(
-      height: MediaQuery.of(context).size.height*0.45,
+    return Expanded(
+      // height: MediaQuery.of(context).size.height*0.447,
       child: ListView.builder(
         physics: BouncingScrollPhysics(),
         itemCount: lstServiceActive.length,
@@ -621,71 +587,121 @@ class _LoadServicesActiveState extends State<LoadServicesActive> {
             onTap: () {
               _navigateAndDisplaySelection(context, service);
             },
-            child: Card(
-              child: Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Container(
-                    width: 80,
-                    height: 60,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(5),
-                      image: DecorationImage(
-                        fit: BoxFit.cover,
-                        image: AssetImage(service.image),
+            child:
+            // SwitchListTile(
+            //   value: _switch,
+            //   onChanged: (value){
+            //     setState(() {
+            //       _switch= value;
+            //     });
+            //   },
+            //   title: Container(
+            //     alignment: Alignment.topLeft,
+            //     child: Text(
+            //       service.titleService,
+            //       style: TextStyle(
+            //           letterSpacing: 1,
+            //           fontWeight: FontWeight.w500,
+            //           fontSize: 16,
+            //           color: Colors.black),
+            //     ),
+            //   ),
+            //   subtitle: Container(
+            //     alignment: Alignment.topLeft,
+            //     child: Text(
+            //       '${service.price} đ',
+            //       style: TextStyle(
+            //           letterSpacing: 1,
+            //           fontWeight: FontWeight.normal,
+            //           fontSize: 13,
+            //           color: Colors.lightBlueAccent.withOpacity(0.7)),
+            //     ),
+            //   ),
+            //   secondary: Container(
+            //     width: 80,
+            //     height: 60,
+            //     decoration: BoxDecoration(
+            //       borderRadius: BorderRadius.circular(5),
+            //       image: DecorationImage(
+            //         fit: BoxFit.cover,
+            //         image: AssetImage(service.image),
+            //       ),
+            //     ),
+            //   ),
+            // ),
+            Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Container(
+                  margin: EdgeInsets.only(left: 10,bottom: 10),
+                  width: 80,
+                  height: 60,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(5),
+                    image: DecorationImage(
+                      fit: BoxFit.cover,
+                      image: AssetImage(service.image),
+                    ),
+                  ),
+                ),
+                Container(
+                  width: 195,
+                  margin: EdgeInsets.only(top: 13),
+                  child: Column(
+                    children: <Widget>[
+                      Column(
+                        children: [
+                          Container(
+                            margin: EdgeInsets.only( left: 13),
+                            alignment: Alignment.topLeft,
+                            child: Text(
+                              service.titleService,
+                              style: TextStyle(
+                                  letterSpacing: 1,
+                                  fontWeight: FontWeight.w500,
+                                  fontSize: 16,
+                                  color: Colors.black),
+                            ),
+                          ),
+                          Container(
+                            margin: EdgeInsets.only( left: 13),
+                            alignment: Alignment.topLeft,
+                            child: Text(
+                              '${service.price} đ',
+                              style: TextStyle(
+                                  letterSpacing: 1,
+                                  fontWeight: FontWeight.normal,
+                                  fontSize: 13,
+                                  color: Colors.lightBlueAccent.withOpacity(0.7)),
+                            ),
+                          ),
+                        ],
                       ),
-                    ),
+                    ],
                   ),
-                  Container(
-                    width: 195,
-                    margin: EdgeInsets.only(top: 13),
-                    child: Column(
-                      children: <Widget>[
-                        Column(
-                          children: [
-                            Container(
-                              margin: EdgeInsets.only( left: 13),
-                              alignment: Alignment.topLeft,
-                              child: Text(
-                                service.titleService,
-                                style: TextStyle(
-                                    letterSpacing: 1,
-                                    fontWeight: FontWeight.w500,
-                                    fontSize: 16,
-                                    color: Colors.black),
-                              ),
-                            ),
-                            Container(
-                              margin: EdgeInsets.only( left: 13),
-                              alignment: Alignment.topLeft,
-                              child: Text(
-                                '${service.price} đ',
-                                style: TextStyle(
-                                    letterSpacing: 1,
-                                    fontWeight: FontWeight.normal,
-                                    fontSize: 13,
-                                    color: Colors.lightBlueAccent.withOpacity(0.7)),
-                              ),
-                            ),
-                          ],
-                        ),
-                      ],
-                    ),
-                  ),
-                  Container(
+                ),
+                Container(
                     margin: EdgeInsets.only(top: 20),
                     width: 65,
                     height: 26,
-                    child: CustomSwitch(
-                      value: true,
-                      activeColor: Colors.blue,
-                      onChanged: (value) {
-                        print('value is: $value');
+                    child:
+                    // CustomSwitch(
+                    //   value: true,
+                    //   activeColor: Colors.blue,
+                    //   onChanged: (value) {
+                    //     print('value is: $value');
+                    //   },
+                    // ),
+                    Switch(
+                      value: state,
+                      onChanged: (bool s){
+                        setState(() {
+                          state = s;
+                        });
                       },
-                    ),
-                  ),
-                ],
-              ),
+                    )
+                ),
+              ],
             ),
           );
         },
@@ -694,7 +710,7 @@ class _LoadServicesActiveState extends State<LoadServicesActive> {
   }
 }
 
-_navigateAndDisplaySelection(BuildContext context, ServiceItem service) async {
+ _navigateAndDisplaySelection(BuildContext context, ServiceItem service) async {
   final cart = await Navigator.push(
     context,
     MaterialPageRoute(
@@ -709,6 +725,7 @@ class LoadServicesDisable extends StatefulWidget {
 }
 
 class _LoadServicesDisableState extends State<LoadServicesDisable> {
+  bool state = false;
   @override
   Widget build(BuildContext context) {
     return Expanded(
@@ -721,72 +738,121 @@ class _LoadServicesDisableState extends State<LoadServicesDisable> {
             onTap: () {
               _navigateAndDisplaySelection(context, service);
             },
-            child: Card(
-              child: Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Container(
-                    width: 80,
-                    height: 60,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(5),
-                      image: DecorationImage(
-                        fit: BoxFit.cover,
-                        image: AssetImage(service.image),
-                      ),
-                    ),
-                  ),
-                  Container(
-                    width: 195,
-                    margin: EdgeInsets.only(top: 13),
-                    child: Column(
-                      children: <Widget>[
-                        Column(
-                          children: [
-                            Container(
-                              margin: EdgeInsets.only( left: 13),
-                              alignment: Alignment.topLeft,
-                              child: Text(
-                                service.titleService,
-                                style: TextStyle(
-                                    letterSpacing: 1,
-                                    fontWeight: FontWeight.w500,
-                                    fontSize: 16,
-                                    color: Colors.black),
-                              ),
-                            ),
-                            Container(
-                              margin: EdgeInsets.only( left: 13),
-                              alignment: Alignment.topLeft,
-                              child: Text(
-                                '${service.price} đ',
-                                style: TextStyle(
-                                    letterSpacing: 1,
-                                    fontWeight: FontWeight.normal,
-                                    fontSize: 13,
-                                    color: Colors.lightBlueAccent.withOpacity(0.7)),
-                              ),
-                            ),
-                          ],
-                        ),
-                      ],
-                    ),
-                  ),
-                  Container(
-                    margin: EdgeInsets.only(top: 20),
-                    width: 65,
-                    height: 26,
-                    child: CustomSwitch(
-                      value: false,
-                      activeColor: Colors.blue,
-                      onChanged: (value) {
-                        print('value is: $value');
+            // child: SwitchListTile(
+            //   value: _switch,
+            //   // onChanged: (value){
+            //   //   setState(() {
+            //   //     _switch= value;
+            //   //   });
+            //   // },
+            //     title: Container(
+            //       alignment: Alignment.topLeft,
+            //       child: Text(
+            //         service.titleService,
+            //         style: TextStyle(
+            //             letterSpacing: 1,
+            //             fontWeight: FontWeight.w500,
+            //             fontSize: 16,
+            //             color: Colors.black),
+            //       ),
+            //     ),
+            //     subtitle: Container(
+            //       alignment: Alignment.topLeft,
+            //       child: Text(
+            //         '${service.price} đ',
+            //         style: TextStyle(
+            //             letterSpacing: 1,
+            //             fontWeight: FontWeight.normal,
+            //             fontSize: 13,
+            //             color: Colors.lightBlueAccent.withOpacity(0.7)),
+            //       ),
+            //     ),
+            //     secondary: Container(
+            //       width: 80,
+            //       height: 60,
+            //       decoration: BoxDecoration(
+            //         borderRadius: BorderRadius.circular(5),
+            //         image: DecorationImage(
+            //           fit: BoxFit.cover,
+            //           image: AssetImage(service.image),
+            //         ),
+            //       ),
+            //     ),
+            // ),
+             child: Row(
+               crossAxisAlignment: CrossAxisAlignment.start,
+               children: [
+                 Container(
+                   margin: EdgeInsets.only(left: 10,bottom: 10),
+                   width: 80,
+                   height: 60,
+                   decoration: BoxDecoration(
+                     borderRadius: BorderRadius.circular(5),
+                     image: DecorationImage(
+                       fit: BoxFit.cover,
+                       image: AssetImage(service.image),
+                     ),
+                   ),
+                 ),
+                 Container(
+                   width: 195,
+                   margin: EdgeInsets.only(top: 13),
+                   child: Column(
+                     children: <Widget>[
+                       Column(
+                         children: [
+                           Container(
+                             margin: EdgeInsets.only( left: 13),
+                             alignment: Alignment.topLeft,
+                             child: Text(
+                               service.titleService,
+                               style: TextStyle(
+                                   letterSpacing: 1,
+                                   fontWeight: FontWeight.w500,
+                                   fontSize: 16,
+                                   color: Colors.black),
+                             ),
+                           ),
+                           Container(
+                             margin: EdgeInsets.only( left: 13),
+                             alignment: Alignment.topLeft,
+                             child: Text(
+                               '${service.price} đ',
+                               style: TextStyle(
+                                   letterSpacing: 1,
+                                   fontWeight: FontWeight.normal,
+                                   fontSize: 13,
+                                   color: Colors.lightBlueAccent.withOpacity(0.7)),
+                             ),
+                           ),
+                         ],
+                       ),
+                     ],
+                   ),
+                 ),
+                 Container(
+                   margin: EdgeInsets.only(top: 20),
+                   width: 65,
+                   height: 26,
+                   child:
+                   // CustomSwitch(
+                   //   value: true,
+                   //   activeColor: Colors.blue,
+                   //   onChanged: (value) {
+                   //     print('value is: $value');
+                   //   },
+                   // ),
+                    Switch(
+                      value: state,
+                      onChanged: (bool s){
+                         setState(() {
+                           state = s;
+                         });
                       },
-                    ),
-                  ),
-                ],
-              ),
-            ),
+                    )
+                 ),
+               ],
+             ),
           );
         },
       ),
@@ -821,7 +887,7 @@ class _AnimatedSearchBarState extends State<AnimatedSearchBar> {
               child: !_folded
                   ? TextField(
                       decoration: InputDecoration(
-                          hintText: 'Search',
+                          hintText: 'Tìm kiếm dịch vụ',
                           hintStyle: TextStyle(color: Colors.blue[300]),
                           border: InputBorder.none),
                     )
@@ -856,6 +922,59 @@ class _AnimatedSearchBarState extends State<AnimatedSearchBar> {
           )
         ],
       ),
+    );
+  }
+}
+
+class ProviderImage extends StatelessWidget {
+  final String path;
+  const ProviderImage({
+    Key key,
+    this.path,
+  }) : super(key: key);
+  @override
+  Widget build(BuildContext context) {
+    return Stack(
+      children: [
+        Container(
+          height: 200.0,
+          width: MediaQuery.of(context).size.width,
+          margin: EdgeInsets.only(bottom: 1.0),
+          decoration: BoxDecoration(
+            boxShadow: [
+              BoxShadow(
+                  color: Colors.black26,
+                  offset: Offset(0.0, 2.0),
+                  blurRadius: 6.0
+              ),
+            ],
+          ),
+          child: Hero(
+            tag: this.path,
+            child: ClipRRect(
+              child: Image(
+                image: AssetImage(this.path),
+                fit: BoxFit.cover,
+              ),
+            ),
+          ),
+        ),
+        Padding(
+          padding: EdgeInsets.symmetric(horizontal: 5.0, vertical: 20.0),
+          child: Row(children: <Widget>[
+            IconButton(
+              icon: Icon(Icons.arrow_back_ios_outlined),
+              iconSize: 30.0,
+              color: Colors.black,
+              onPressed: () => Navigator.pop(context),
+            ),
+            Container(
+                width: 300,
+                alignment: Alignment.topRight,
+                child: AnimatedSearchBar()),
+          ],),
+        ),
+      ],
     );
   }
 }

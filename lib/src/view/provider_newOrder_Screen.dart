@@ -1,3 +1,4 @@
+import 'package:dropdownfield/dropdownfield.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -10,6 +11,7 @@ import 'package:geocoder/geocoder.dart';
 import 'package:location/location.dart';
 import 'package:timer_count_down/timer_controller.dart';
 import 'package:timer_count_down/timer_count_down.dart';
+
 
 class ProviderNewOderScreen extends StatelessWidget {
   @override
@@ -30,6 +32,56 @@ final List<ServiceCusDetail> listDetail = List.from(<ServiceCusDetail>[
     time: '7:37 PM',
     timeMove: '20 mins - 5km',
     payment: 'CASH',
+    totalBill: '740.000',
+    listItem: List.from(
+      <CartItem>[
+        CartItem(
+          content: 'Trang điểm dự tiệc',
+          quantity: 1,
+          price: '470.000',
+        ),
+        CartItem(
+          content: 'Cắt móng uốn cong',
+          quantity: 1,
+          price: '270.000',
+        ),
+      ],
+    ),
+  ),
+  ServiceCusDetail(
+    cusID: 'GF -280',
+    cusName: 'Thế Hiển',
+    address: '5/3 đường số 9 , phước bình , quận 9 , Tp Hồ Chí Minh',
+    status: 'ON THE WAY',
+    note: 'Làm sao để có một bản ghi chú hiệu quả mà không mất quá nhiều thời gian',
+    time: '7:37 PM',
+    timeMove: '20 mins - 5km',
+    payment: 'MOMO',
+    totalBill: '740.000',
+    listItem: List.from(
+      <CartItem>[
+        CartItem(
+          content: 'Trang điểm dự tiệc',
+          quantity: 1,
+          price: '470.000',
+        ),
+        CartItem(
+          content: 'Cắt móng uốn cong',
+          quantity: 1,
+          price: '270.000',
+        ),
+      ],
+    ),
+  ),
+  ServiceCusDetail(
+    cusID: 'GF -280',
+    cusName: 'Thế Hiển',
+    address: '5/3 đường số 9 , phước bình , quận 9 , Tp Hồ Chí Minh',
+    status: 'ON THE WAY',
+    note: 'Làm sao để có một bản ghi chú hiệu quả mà không mất quá nhiều thời gian',
+    time: '7:37 PM',
+    timeMove: '20 mins - 5km',
+    payment: 'MOMO',
     totalBill: '740.000',
     listItem: List.from(
       <CartItem>[
@@ -102,7 +154,7 @@ class _DemoAppState extends State<DemoApp> {
       currentAddress = first.addressLine;
     });
   }
-
+  int numberList = listDetail.length;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -110,7 +162,7 @@ class _DemoAppState extends State<DemoApp> {
         elevation: 0,
         leadingWidth: 0,
         backgroundColor: Colors.white,
-        title: Text('2 New Oders',style: TextStyle(color: Colors.black,fontWeight: FontWeight.bold),),
+        title: Text('$numberList Đơn mới',style: TextStyle(color: Colors.black,fontWeight: FontWeight.bold),),
         actions: [GestureDetector(
           onTap: (){
             Navigator.of(context).push(MaterialPageRoute(
@@ -350,7 +402,8 @@ class _DemoAppState extends State<DemoApp> {
                                               minute  = minute + 10;
                                             });
                                           },
-                                          child: Container(alignment: Alignment.center,width: 90,child: Icon(Icons.add))),
+                                          child: Container(alignment: Alignment.center,width: 90,child: Icon(Icons.add))
+                                      ),
                                     ],
                                   ),
                                 ),
@@ -361,6 +414,12 @@ class _DemoAppState extends State<DemoApp> {
                                   child: Row(
                                     children:[
                                       GestureDetector(
+                                        onTap: (){
+                                          setState(() {
+                                            listDetail.removeAt(0);
+                                            numberList = numberList - 1;
+                                          });
+                                        },
                                         child: Container(
                                           width: 95,
                                           height: 30,
@@ -371,7 +430,7 @@ class _DemoAppState extends State<DemoApp> {
                                           ),
                                           padding: const EdgeInsets.only(left: 17, right: 18, top: 5),
                                           child: Text(
-                                            "TỪ CHỐI",
+                                            "BỎ QUA",
                                             style: TextStyle(
                                               color: Color(0xffcf8b93),
                                               fontSize: 13,
@@ -383,6 +442,57 @@ class _DemoAppState extends State<DemoApp> {
                                       ),
                                       SizedBox(width: 19),
                                       GestureDetector(
+                                        onTap: (){
+                                          showDialog(
+                                            context: context,
+                                            barrierDismissible: false,
+                                            builder:(context) {
+                                              return AlertDialog(
+                                                  title: Center(child: Text('Bạn có chắc muốn nhận đơn này ? ', style: TextStyle(fontWeight: FontWeight.bold),)),
+                                                  content: SingleChildScrollView(
+                                                    child: Container(
+                                                      // height: MediaQuery.of(context).size.height*0.2,
+                                                      child: Column(
+                                                        children: <Widget>[
+                                                          SizedBox(height: 20,),
+                                                          Container(
+                                                            width: 280,
+                                                            child: Row(
+                                                              children: [
+                                                                Container(
+                                                                  color: Colors.lightBlueAccent.withOpacity(0.5),
+                                                                  width: MediaQuery.of(context).size.width*0.3,
+                                                                  child: FlatButton(
+                                                                    child: Padding(
+                                                                      padding: const EdgeInsets.all(8.0),
+                                                                      child: Text('Quay lại',style: TextStyle(fontSize: 16,color: Colors.black.withOpacity(0.6))),
+                                                                    ),
+                                                                    onPressed: () => Navigator.pop(context),
+                                                                  ),
+                                                                ),
+                                                                SizedBox(width: 10,),
+                                                                Container(
+                                                                  color: Colors.redAccent,
+                                                                  width: MediaQuery.of(context).size.width*0.31,
+                                                                  child: FlatButton(
+                                                                      child: Padding(
+                                                                        padding: const EdgeInsets.all(6.0),
+                                                                        child: Text('Nhận',style: TextStyle(fontSize: 16,color: Colors.black.withOpacity(0.6)),),
+                                                                      ),
+                                                                    onPressed:() => Navigator.of(context).push(MaterialPageRoute(builder: (context) => ProviderScreen(),)),
+                                                                  ),
+                                                                ),
+                                                              ],
+                                                            ),
+                                                          ),
+                                                        ],
+                                                      ),
+                                                    ),
+                                                  )
+                                              );
+                                            },
+                                          );
+                                        },
                                         child: SizedBox(
                                           width: 200,
                                           height: 30,
@@ -412,7 +522,7 @@ class _DemoAppState extends State<DemoApp> {
                                                       ),
                                                       Countdown(
                                                         controller: controller.restart(),
-                                                        seconds: 40,
+                                                        seconds: 50,
                                                         build: (_, double time) => Text(' (${time.toString()}) ',
                                                           style: TextStyle(
                                                             color: Colors.white,
