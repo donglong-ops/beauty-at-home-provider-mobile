@@ -132,6 +132,7 @@ class _HistoryPageState extends State<HistoryScreen> {
                       ),
                       changeDate
                           ? Container(
+                              margin: EdgeInsets.only(top: 15),
                               width: MediaQuery.of(context).size.width,
                               child: Column(
                                 children: [

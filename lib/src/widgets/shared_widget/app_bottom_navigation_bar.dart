@@ -40,9 +40,7 @@ class AppBottomNavigationBar extends StatelessWidget {
         ),
         BottomNavigationBarItem(
           label: 'Đơn mới',
-          icon: Icon(
-            Icons.list, size: 26
-          ),
+          icon: Icon(Icons.list, size: 26),
         ),
         BottomNavigationBarItem(
           label: 'Dịch vụ',

@@ -129,25 +129,6 @@ List<ServiceItem> lstServiceActive = List.from([
     ],
     note: 'Bao gồm mỹ phẩm làm đẹp và dụng cụ',
   ),
-  ServiceItem(
-    image:
-        'https://lh3.googleusercontent.com/proxy/2elmTSeLd2e8Yz8GKJSJBNYD_MgR1YXpLExih_fGAcJST6b7pL3qp6EMj82uQOb-dO7tmTvvGp-zB-1j_vavuu2zHvWOjkUrJMXkjWvXR4EKUNwXqfiTkOPkoXrpTItEV7pGFsC71XAGCVjs5kxYAKI',
-    salonOwner: 'Hani Nguyễn',
-    titleService: 'MASSAGE MẶT',
-    area: 'Quận 9, TP. Hồ Chí Minh',
-    range: '2.3 km',
-    rate: 4.8,
-    timeLine: '9:00 AM - 8:30 PM',
-    status: 'Đang hoạt động',
-    price: '500.000',
-    description: [
-      'Bước 1: Sử dụng kem lót, kem nền',
-      'Bước 2: Kem che dấu các khuyết điểm',
-      'Bước 3: Bộ cha phấn Bronzer, phấn má hồng vá phấn bắt sáng',
-      'Bước 4: Phấn tán chân mày, bảng phấn mắt',
-    ],
-    note: 'Bao gồm mỹ phẩm làm đẹp và dụng cụ',
-  ),
 ]);
 
 List<ServiceItem> lstServiceDis = List.from([
