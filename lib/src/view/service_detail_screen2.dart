@@ -17,8 +17,7 @@ class ServiceDetailScreen2 extends StatefulWidget {
 class _ServiceDetailScreenState extends State<ServiceDetailScreen2> {
   File _file;
   void pickImage() async {
-    PickedFile pickedFile =
-        await ImagePicker().getImage(source: ImageSource.gallery);
+    PickedFile pickedFile = await ImagePicker().getImage(source: ImageSource.gallery);
     setState(() {
       _file = File(pickedFile.path);
     });

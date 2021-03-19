@@ -482,100 +482,42 @@ class _DemoAppState extends State<DemoApp> {
                                             context: context,
                                             barrierDismissible: false,
                                             builder: (context) {
-                                              return AlertDialog(
-                                                  title: Center(
-                                                      child: Text(
-                                                    'Bạn có chắc muốn nhận đơn này ? ',
-                                                    style: TextStyle(
-                                                        fontWeight:
-                                                            FontWeight.bold),
-                                                  )),
-                                                  content:
-                                                      SingleChildScrollView(
-                                                    child: Container(
-                                                      // height: MediaQuery.of(context).size.height*0.2,
-                                                      child: Column(
-                                                        children: <Widget>[
-                                                          SizedBox(
-                                                            height: 20,
-                                                          ),
-                                                          Container(
-                                                            width: 280,
-                                                            child: Row(
-                                                              children: [
-                                                                Container(
-                                                                  color: Colors
-                                                                      .lightBlueAccent
-                                                                      .withOpacity(
-                                                                          0.5),
-                                                                  width: MediaQuery.of(
-                                                                              context)
-                                                                          .size
-                                                                          .width *
-                                                                      0.3,
-                                                                  child:
-                                                                      FlatButton(
-                                                                    child:
-                                                                        Padding(
-                                                                      padding:
-                                                                          const EdgeInsets.all(
-                                                                              8.0),
-                                                                      child: Text(
-                                                                          'Quay lại',
-                                                                          style: TextStyle(
-                                                                              fontSize: 16,
-                                                                              color: Colors.black.withOpacity(0.6))),
-                                                                    ),
-                                                                    onPressed: () =>
-                                                                        Navigator.pop(
-                                                                            context),
-                                                                  ),
-                                                                ),
-                                                                SizedBox(
-                                                                  width: 10,
-                                                                ),
-                                                                Container(
-                                                                  color: Colors
-                                                                      .redAccent,
-                                                                  width: MediaQuery.of(
-                                                                              context)
-                                                                          .size
-                                                                          .width *
-                                                                      0.31,
-                                                                  child:
-                                                                      FlatButton(
-                                                                    child:
-                                                                        Padding(
-                                                                      padding:
-                                                                          const EdgeInsets.all(
-                                                                              6.0),
-                                                                      child:
-                                                                          Text(
-                                                                        'Nhận',
-                                                                        style: TextStyle(
-                                                                            fontSize:
-                                                                                16,
-                                                                            color:
-                                                                                Colors.black.withOpacity(0.6)),
-                                                                      ),
-                                                                    ),
-                                                                    onPressed: () => Navigator.of(
-                                                                            context)
-                                                                        .push(
-                                                                            MaterialPageRoute(
-                                                                      builder:
-                                                                          (context) =>
-                                                                              ProviderScreen(),
-                                                                    )),
-                                                                  ),
-                                                                ),
-                                                              ],
-                                                            ),
-                                                          ),
-                                                        ],
-                                                      ),
-                                                    ),
-                                                  ));
+                                              return  AlertDialog(
+                                                // title: Text("Bạn có chắc muốn hủy đơn?"),
+                                                content: Text(
+                                                  "Bạn có muốn nhận đơn không?",
+                                                ),
+                                                actions: [
+                                                  FlatButton(
+                                                    textColor: Color(
+                                                        0xFF6200EE),
+                                                    onPressed: () {
+                                                      Navigator.of(
+                                                          context)
+                                                          .pop();
+                                                    },
+                                                    child:
+                                                    Text('Không'),
+                                                  ),
+                                                  FlatButton(
+                                                    textColor: Color(
+                                                        0xFF6200EE),
+                                                    onPressed:
+                                                        () async {
+                                                      final result = await Navigator
+                                                          .of(
+                                                          context)
+                                                          .pushReplacement(
+                                                          MaterialPageRoute(
+                                                              builder:
+                                                                  (context) => ProviderScreen()
+                                                          ));
+                                                    },
+                                                    child:
+                                                    Text('Đồng ý'),
+                                                  ),
+                                                ],
+                                              );
                                             },
                                           );
                                         },

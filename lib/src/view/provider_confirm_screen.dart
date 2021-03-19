@@ -747,43 +747,6 @@ class _ProviderScreenState extends State<ProviderScreen> {
                                         : SizedBox(
                                             height: 1,
                                           ),
-                                    // status.contains("CHUẨN BỊ XONG")
-                                    //     ? GestureDetector(
-                                    //         onTap: () {
-                                    //           MapUtils4.openMap(
-                                    //               currentAddress, service.address);
-                                    //         },
-                                    //         child: SizedBox(
-                                    //           width: 336,
-                                    //           height: 30,
-                                    //           child: Material(
-                                    //             color: Colors.lightBlueAccent
-                                    //                 .withOpacity(0.8),
-                                    //             borderRadius:
-                                    //                 BorderRadius.circular(5),
-                                    //             clipBehavior: Clip.antiAlias,
-                                    //             child: Padding(
-                                    //               padding: const EdgeInsets.only(
-                                    //                 left: 87,
-                                    //                 right: 88,
-                                    //                 top: 8,
-                                    //                 bottom: 9,
-                                    //               ),
-                                    //               child: Text(
-                                    //                 "XEM BẢN ĐỒ",
-                                    //                 textAlign: TextAlign.center,
-                                    //                 style: TextStyle(
-                                    //                   color: Colors.white,
-                                    //                   fontSize: 14,
-                                    //                 ),
-                                    //               ),
-                                    //             ),
-                                    //           ),
-                                    //         ),
-                                    //       )
-                                    //     : SizedBox(
-                                    //         height: 1,
-                                    //       ),
                                     SizedBox(
                                       height: 5,
                                     ),
