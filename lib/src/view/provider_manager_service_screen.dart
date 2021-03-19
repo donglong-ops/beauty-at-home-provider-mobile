@@ -402,9 +402,13 @@ class _DemoAppState extends State<DemoApp> {
 
             status ? LoadServicesActive() : LoadServicesDisable(),
             Container(
-              width: MediaQuery.of(context).size.width,
-              height: MediaQuery.of(context).size.height * 0.04,
-              margin: EdgeInsets.only(left: 4, right: 4),
+              width: MediaQuery.of(context).size.width * 0.7,
+              height: MediaQuery.of(context).size.height * 0.06,
+              margin: EdgeInsets.only(
+                left: 4,
+                right: 4,
+                bottom: 5,
+              ),
               child: FloatingActionButton.extended(
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.all(

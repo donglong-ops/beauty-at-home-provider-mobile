@@ -43,27 +43,26 @@ class _AddNewServiceScreenState extends State<AddNewServiceScreen> {
                     padding: EdgeInsets.only(bottom: 20),
                     decoration: BoxDecoration(border: Border.all(width: 0.5)),
                     child: Container(
-                      child: ClipRRect(
-                        child: _file == null
-                            ? GestureDetector(
-                                onTap: pickImage,
-                                child: Container(
-                                  height: 50,
-                                  padding: EdgeInsets.only(top: 15),
-                                  child: Image(
-                                    image: AssetImage(
-                                      'public/img/Image.png',
-                                    ),
-                                    fit: BoxFit.fitHeight,
-                                  ),
+                      child: _file == null
+                          ? GestureDetector(
+                              onTap: pickImage,
+                              child: Container(
+                                margin: EdgeInsets.only(top: 50),
+                                width: 50,
+                                child: Image.asset(
+                                  'public/img/Image.png',
+                                  width: 50,
+                                  fit: BoxFit.fitHeight,
                                 ),
-                              )
-                            : Image.file(
+                              ),
+                            )
+                          : ClipRRect(
+                              child: Image.file(
                                 _file,
                                 fit: BoxFit.cover,
                               ),
-                        // Image.asset(_file.path,fit: BoxFit.cover,)
-                      ),
+                              // Image.asset(_file.path,fit: BoxFit.cover,)
+                            ),
                     ),
                   ),
                   Padding(
@@ -164,7 +163,7 @@ class _AddNewServiceScreenState extends State<AddNewServiceScreen> {
                           textInputAction: TextInputAction.done,
                           decoration: InputDecoration(
                             contentPadding: EdgeInsets.only(top: 3, left: 15),
-                            labelText: 'Miêu tả dịch vụ (nếu có)*',
+                            labelText: 'Mô tả dịch vụ (nếu có)*',
                             border: OutlineInputBorder(),
                           ),
                         ),
@@ -210,13 +209,14 @@ class _AddNewServiceScreenState extends State<AddNewServiceScreen> {
                 },
                 child: Container(
                   width: MediaQuery.of(context).size.width * 0.9,
+                  height: 38,
                   child: FloatingActionButton.extended(
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.all(
                         Radius.circular(1.0),
                       ),
                     ),
-                    backgroundColor: Colors.black.withOpacity(0.5),
+                    backgroundColor: Colors.blue[400],
                     label: Text(
                       'Lưu mới',
                       style: TextStyle(

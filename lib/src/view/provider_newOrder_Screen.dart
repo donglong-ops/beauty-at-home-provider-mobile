@@ -12,7 +12,6 @@ import 'package:location/location.dart';
 import 'package:timer_count_down/timer_controller.dart';
 import 'package:timer_count_down/timer_count_down.dart';
 
-
 class ProviderNewOderScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -22,13 +21,15 @@ class ProviderNewOderScreen extends StatelessWidget {
     );
   }
 }
+
 final List<ServiceCusDetail> listDetail = List.from(<ServiceCusDetail>[
   ServiceCusDetail(
     cusID: 'GF -267',
     cusName: 'Hữu Long',
     address: 'võ văn hát , quận 9 , Tp Hồ Chí Minh',
     status: 'ON THE WAY',
-    note: 'Làm sao để có một bản ghi chú hiệu quả mà không mất quá nhiều thời gian',
+    note:
+        'Làm sao để có một bản ghi chú hiệu quả mà không mất quá nhiều thời gian',
     time: '7:37 PM',
     timeMove: '20 mins - 5km',
     payment: 'CASH',
@@ -53,7 +54,8 @@ final List<ServiceCusDetail> listDetail = List.from(<ServiceCusDetail>[
     cusName: 'Thế Hiển',
     address: '5/3 đường số 9 , phước bình , quận 9 , Tp Hồ Chí Minh',
     status: 'ON THE WAY',
-    note: 'Làm sao để có một bản ghi chú hiệu quả mà không mất quá nhiều thời gian',
+    note:
+        'Làm sao để có một bản ghi chú hiệu quả mà không mất quá nhiều thời gian',
     time: '7:37 PM',
     timeMove: '20 mins - 5km',
     payment: 'MOMO',
@@ -78,7 +80,8 @@ final List<ServiceCusDetail> listDetail = List.from(<ServiceCusDetail>[
     cusName: 'Thế Hiển',
     address: '5/3 đường số 9 , phước bình , quận 9 , Tp Hồ Chí Minh',
     status: 'ON THE WAY',
-    note: 'Làm sao để có một bản ghi chú hiệu quả mà không mất quá nhiều thời gian',
+    note:
+        'Làm sao để có một bản ghi chú hiệu quả mà không mất quá nhiều thời gian',
     time: '7:37 PM',
     timeMove: '20 mins - 5km',
     payment: 'MOMO',
@@ -103,7 +106,8 @@ final List<ServiceCusDetail> listDetail = List.from(<ServiceCusDetail>[
     cusName: 'Thế Hiển',
     address: '5/3 đường số 9 , phước bình , quận 9 , Tp Hồ Chí Minh',
     status: 'ON THE WAY',
-    note: 'Làm sao để có một bản ghi chú hiệu quả mà không mất quá nhiều thời gian',
+    note:
+        'Làm sao để có một bản ghi chú hiệu quả mà không mất quá nhiều thời gian',
     time: '7:37 PM',
     timeMove: '20 mins - 5km',
     payment: 'MOMO',
@@ -135,10 +139,11 @@ class _DemoAppState extends State<DemoApp> {
   double minute = 20;
   String currentAddress = "";
   @override
-  void initState(){
+  void initState() {
     getUserLocation();
     super.initState();
   }
+
   getUserLocation() async {
     LocationData myLocation;
     Location location = new Location();
@@ -147,32 +152,43 @@ class _DemoAppState extends State<DemoApp> {
     } on PlatformException catch (e) {
       myLocation = null;
     }
-    final coordinates = new Coordinates(myLocation.latitude, myLocation.longitude);
-    var addresses = await Geocoder.local.findAddressesFromCoordinates(coordinates);
+    final coordinates =
+        new Coordinates(myLocation.latitude, myLocation.longitude);
+    var addresses =
+        await Geocoder.local.findAddressesFromCoordinates(coordinates);
     var first = addresses.first;
     setState(() {
       currentAddress = first.addressLine;
     });
   }
+
   int numberList = listDetail.length;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        elevation: 0,
-        leadingWidth: 0,
-        backgroundColor: Colors.white,
-        title: Text('$numberList Đơn mới',style: TextStyle(color: Colors.black,fontWeight: FontWeight.bold),),
-        actions: [GestureDetector(
-          onTap: (){
-            Navigator.of(context).push(MaterialPageRoute(
-              builder: (context) => ProviderScreen(),
-            ));
-          },
-            child: Container(margin: EdgeInsets.only(right: 10),child: Icon(Icons.cancel ,color: Colors.black.withOpacity(0.5),)))]
-      ),
-      body:
-      Stack(children: [
+          elevation: 0,
+          leadingWidth: 0,
+          backgroundColor: Colors.white,
+          title: Text(
+            '$numberList Đơn mới',
+            style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
+          ),
+          actions: [
+            GestureDetector(
+                onTap: () {
+                  Navigator.of(context).push(MaterialPageRoute(
+                    builder: (context) => ProviderScreen(),
+                  ));
+                },
+                child: Container(
+                    margin: EdgeInsets.only(right: 10),
+                    child: Icon(
+                      Icons.cancel,
+                      color: Colors.black.withOpacity(0.5),
+                    )))
+          ]),
+      body: Stack(children: [
         Padding(
           padding: const EdgeInsets.all(8.0),
           child: Column(
@@ -221,8 +237,8 @@ class _DemoAppState extends State<DemoApp> {
                                         width: 60,
                                         child: Text(
                                           service.time,
-                                          style: TextStyle(fontWeight: FontWeight
-                                              .bold),
+                                          style: TextStyle(
+                                              fontWeight: FontWeight.bold),
                                         ))
                                   ],
                                 ),
@@ -262,8 +278,10 @@ class _DemoAppState extends State<DemoApp> {
                                 children: [
                                   Row(children: [
                                     Container(
-                                        margin: EdgeInsets.only(left: 15, right: 5),
-                                        child: Icon(Icons.local_library_rounded)),
+                                        margin:
+                                            EdgeInsets.only(left: 15, right: 5),
+                                        child:
+                                            Icon(Icons.local_library_rounded)),
                                     Container(
                                       width: 270,
                                       child: Text(
@@ -273,9 +291,10 @@ class _DemoAppState extends State<DemoApp> {
                                     ),
                                   ]),
                                   GestureDetector(
-                                    onTap: (){
-                                      MapUtils4.openMap(currentAddress ,service.address);
-                                     //MapUtils2.openMap(service.address);
+                                    onTap: () {
+                                      MapUtils4.openMap(
+                                          currentAddress, service.address);
+                                      //MapUtils2.openMap(service.address);
                                     },
                                     child: Row(
                                       children: [
@@ -285,7 +304,8 @@ class _DemoAppState extends State<DemoApp> {
                                         Text(
                                           'Xem bản đồ',
                                           style: TextStyle(
-                                              color: Color(0xff0DB5B4), fontSize: 11),
+                                              color: Color(0xff0DB5B4),
+                                              fontSize: 11),
                                         ),
                                         Icon(
                                           Icons.arrow_right,
@@ -302,7 +322,8 @@ class _DemoAppState extends State<DemoApp> {
                               Row(
                                 children: [
                                   Container(
-                                      margin: EdgeInsets.only(left: 15, right: 5),
+                                      margin:
+                                          EdgeInsets.only(left: 15, right: 5),
                                       child: Icon(Icons.description_outlined)),
                                   Container(
                                       width: 270,
@@ -323,7 +344,8 @@ class _DemoAppState extends State<DemoApp> {
                                 height: 6,
                               ),
                               itemBuilder: (context, index) => Row(
-                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
                                 children: [
                                   Row(
                                     children: [
@@ -356,7 +378,7 @@ class _DemoAppState extends State<DemoApp> {
                             child: Column(
                               children: [
                                 Container(
-                                    alignment:  Alignment.topLeft,
+                                    alignment: Alignment.topLeft,
                                     child: Text('Đặt thời gian chuẩn bị')),
                                 SizedBox(
                                   height: 10,
@@ -367,21 +389,28 @@ class _DemoAppState extends State<DemoApp> {
                                   decoration: BoxDecoration(
                                     borderRadius: BorderRadius.circular(4),
                                     border: Border.all(
-                                      color: Color(0x42000000), width: 1, ),
+                                      color: Color(0x42000000),
+                                      width: 1,
+                                    ),
                                   ),
-                                  padding: const EdgeInsets.only(left: 22, top: 5, ),
+                                  padding: const EdgeInsets.only(
+                                    left: 22,
+                                    top: 5,
+                                  ),
                                   child: Row(
-                                    children:[
+                                    children: [
                                       GestureDetector(
-                                          onTap: (){
+                                          onTap: () {
                                             setState(() {
-                                              minute  = minute - 10;
+                                              minute = minute - 10;
                                             });
                                           },
                                           child: Container(
-                                              alignment: Alignment.center,margin: EdgeInsets.only(top: 8),width: 90,
-                                              child: Icon(Icons.maximize_sharp))
-                                      ),
+                                              alignment: Alignment.center,
+                                              margin: EdgeInsets.only(top: 8),
+                                              width: 90,
+                                              child:
+                                                  Icon(Icons.maximize_sharp))),
                                       Container(
                                         alignment: Alignment.center,
                                         width: 105,
@@ -397,13 +426,15 @@ class _DemoAppState extends State<DemoApp> {
                                         ),
                                       ),
                                       GestureDetector(
-                                          onTap: (){
+                                          onTap: () {
                                             setState(() {
-                                              minute  = minute + 10;
+                                              minute = minute + 10;
                                             });
                                           },
-                                          child: Container(alignment: Alignment.center,width: 90,child: Icon(Icons.add))
-                                      ),
+                                          child: Container(
+                                              alignment: Alignment.center,
+                                              width: 90,
+                                              child: Icon(Icons.add))),
                                     ],
                                   ),
                                 ),
@@ -412,9 +443,9 @@ class _DemoAppState extends State<DemoApp> {
                                   width: 316,
                                   height: 30,
                                   child: Row(
-                                    children:[
+                                    children: [
                                       GestureDetector(
-                                        onTap: (){
+                                        onTap: () {
                                           setState(() {
                                             listDetail.removeAt(0);
                                             numberList = numberList - 1;
@@ -424,11 +455,15 @@ class _DemoAppState extends State<DemoApp> {
                                           width: 95,
                                           height: 30,
                                           decoration: BoxDecoration(
-                                            borderRadius: BorderRadius.circular(6),
+                                            borderRadius:
+                                                BorderRadius.circular(6),
                                             border: Border.all(
-                                              color: Color(0xffcf8b93), width: 1.50, ),
+                                              color: Color(0xffcf8b93),
+                                              width: 1.50,
+                                            ),
                                           ),
-                                          padding: const EdgeInsets.only(left: 17, right: 18, top: 5),
+                                          padding: const EdgeInsets.only(
+                                              left: 17, right: 18, top: 5),
                                           child: Text(
                                             "BỎ QUA",
                                             style: TextStyle(
@@ -442,44 +477,96 @@ class _DemoAppState extends State<DemoApp> {
                                       ),
                                       SizedBox(width: 19),
                                       GestureDetector(
-                                        onTap: (){
+                                        onTap: () {
                                           showDialog(
                                             context: context,
                                             barrierDismissible: false,
-                                            builder:(context) {
+                                            builder: (context) {
                                               return AlertDialog(
-                                                  title: Center(child: Text('Bạn có chắc muốn nhận đơn này ? ', style: TextStyle(fontWeight: FontWeight.bold),)),
-                                                  content: SingleChildScrollView(
+                                                  title: Center(
+                                                      child: Text(
+                                                    'Bạn có chắc muốn nhận đơn này ? ',
+                                                    style: TextStyle(
+                                                        fontWeight:
+                                                            FontWeight.bold),
+                                                  )),
+                                                  content:
+                                                      SingleChildScrollView(
                                                     child: Container(
                                                       // height: MediaQuery.of(context).size.height*0.2,
                                                       child: Column(
                                                         children: <Widget>[
-                                                          SizedBox(height: 20,),
+                                                          SizedBox(
+                                                            height: 20,
+                                                          ),
                                                           Container(
                                                             width: 280,
                                                             child: Row(
                                                               children: [
                                                                 Container(
-                                                                  color: Colors.lightBlueAccent.withOpacity(0.5),
-                                                                  width: MediaQuery.of(context).size.width*0.3,
-                                                                  child: FlatButton(
-                                                                    child: Padding(
-                                                                      padding: const EdgeInsets.all(8.0),
-                                                                      child: Text('Quay lại',style: TextStyle(fontSize: 16,color: Colors.black.withOpacity(0.6))),
+                                                                  color: Colors
+                                                                      .lightBlueAccent
+                                                                      .withOpacity(
+                                                                          0.5),
+                                                                  width: MediaQuery.of(
+                                                                              context)
+                                                                          .size
+                                                                          .width *
+                                                                      0.3,
+                                                                  child:
+                                                                      FlatButton(
+                                                                    child:
+                                                                        Padding(
+                                                                      padding:
+                                                                          const EdgeInsets.all(
+                                                                              8.0),
+                                                                      child: Text(
+                                                                          'Quay lại',
+                                                                          style: TextStyle(
+                                                                              fontSize: 16,
+                                                                              color: Colors.black.withOpacity(0.6))),
                                                                     ),
-                                                                    onPressed: () => Navigator.pop(context),
+                                                                    onPressed: () =>
+                                                                        Navigator.pop(
+                                                                            context),
                                                                   ),
                                                                 ),
-                                                                SizedBox(width: 10,),
+                                                                SizedBox(
+                                                                  width: 10,
+                                                                ),
                                                                 Container(
-                                                                  color: Colors.redAccent,
-                                                                  width: MediaQuery.of(context).size.width*0.31,
-                                                                  child: FlatButton(
-                                                                      child: Padding(
-                                                                        padding: const EdgeInsets.all(6.0),
-                                                                        child: Text('Nhận',style: TextStyle(fontSize: 16,color: Colors.black.withOpacity(0.6)),),
+                                                                  color: Colors
+                                                                      .redAccent,
+                                                                  width: MediaQuery.of(
+                                                                              context)
+                                                                          .size
+                                                                          .width *
+                                                                      0.31,
+                                                                  child:
+                                                                      FlatButton(
+                                                                    child:
+                                                                        Padding(
+                                                                      padding:
+                                                                          const EdgeInsets.all(
+                                                                              6.0),
+                                                                      child:
+                                                                          Text(
+                                                                        'Nhận',
+                                                                        style: TextStyle(
+                                                                            fontSize:
+                                                                                16,
+                                                                            color:
+                                                                                Colors.black.withOpacity(0.6)),
                                                                       ),
-                                                                    onPressed:() => Navigator.of(context).push(MaterialPageRoute(builder: (context) => ProviderScreen(),)),
+                                                                    ),
+                                                                    onPressed: () => Navigator.of(
+                                                                            context)
+                                                                        .push(
+                                                                            MaterialPageRoute(
+                                                                      builder:
+                                                                          (context) =>
+                                                                              ProviderScreen(),
+                                                                    )),
                                                                   ),
                                                                 ),
                                                               ],
@@ -488,8 +575,7 @@ class _DemoAppState extends State<DemoApp> {
                                                         ],
                                                       ),
                                                     ),
-                                                  )
-                                              );
+                                                  ));
                                             },
                                           );
                                         },
@@ -499,40 +585,54 @@ class _DemoAppState extends State<DemoApp> {
                                           child: Material(
                                             color: Color(0xff50B644),
                                             shape: RoundedRectangleBorder(
-                                              side: BorderSide(width: 1,
-                                                color: Color(0x23000000), ),
-                                              borderRadius: BorderRadius.circular(6),
+                                              side: BorderSide(
+                                                width: 1,
+                                                color: Color(0x23000000),
+                                              ),
+                                              borderRadius:
+                                                  BorderRadius.circular(6),
                                             ),
                                             clipBehavior: Clip.antiAlias,
                                             child: Padding(
-                                              padding: const EdgeInsets.only(left: 10, top: 8, bottom: 7, ),
+                                              padding: const EdgeInsets.only(
+                                                left: 10,
+                                                top: 8,
+                                                bottom: 7,
+                                              ),
                                               child: Center(
                                                 child: Container(
                                                   child: Row(
                                                     children: [
-                                                      SizedBox(width: 20,),
+                                                      SizedBox(
+                                                        width: 20,
+                                                      ),
                                                       Text(
                                                         "CHẤP NHẬN  ",
                                                         style: TextStyle(
                                                           color: Colors.white,
                                                           fontSize: 13,
                                                           fontFamily: "Roboto",
-                                                          fontWeight: FontWeight.w700,
+                                                          fontWeight:
+                                                              FontWeight.w700,
                                                         ),
                                                       ),
                                                       Countdown(
-                                                        controller: controller.restart(),
+                                                        controller: controller
+                                                            .restart(),
                                                         seconds: 50,
-                                                        build: (_, double time) => Text(' (${time.toString()}) ',
+                                                        build:
+                                                            (_, double time) =>
+                                                                Text(
+                                                          ' (${time.toInt().toString()}) ',
                                                           style: TextStyle(
                                                             color: Colors.white,
                                                             fontSize: 13,
                                                           ),
                                                         ),
-                                                        interval: Duration(milliseconds: 100),
+                                                        interval: Duration(
+                                                            seconds: 1),
                                                         onFinished: () {
                                                           //
-
                                                         },
                                                       ),
                                                     ],
@@ -551,335 +651,352 @@ class _DemoAppState extends State<DemoApp> {
                           ),
                         ],
                       );
-                    }
-                ),
+                    }),
               ),
             ],
           ),
         ),
       ]),
-        bottomNavigationBar: WidgetUtils.appBottomNavigationBar(1),
+      bottomNavigationBar: WidgetUtils.appBottomNavigationBar(1),
     );
   }
-
 }
-class loadAllBooking extends StatelessWidget{
+
+class loadAllBooking extends StatelessWidget {
   final CountdownController controller = CountdownController();
   double minute = 20;
   @override
   Widget build(BuildContext context) {
     return Expanded(
-        child: ListView.builder(
-            physics: BouncingScrollPhysics(),
-            itemCount: listDetail.length,
-            itemBuilder: (BuildContext buildContext, int index) {
-              ServiceCusDetail service = listDetail[index];
-              return OutlinedCard(
-                margin: EdgeInsets.only(top: 15),
-                padding: EdgeInsets.only(left: 4, right: 4),
-                width: 360,
-                sections: [
-                  Container(
-                    child: Column(
-                      children: <Widget>[
-                        Row(
-                          children: <Widget>[
-                            Container(
-                              width: 270,
-                              child: Row(
-                                children: [
-                                  Text(service.cusID),
-                                  Card(
-                                    color: Color(0xff707DB9),
-                                    child: Padding(
-                                      padding: const EdgeInsets.all(4),
-                                      child: Text(
-                                        service.status,
-                                        style: TextStyle(
-                                            fontWeight: FontWeight.bold,
-                                            fontSize: 10,
-                                            color: Colors.white),
-                                      ),
+      child: ListView.builder(
+          physics: BouncingScrollPhysics(),
+          itemCount: listDetail.length,
+          itemBuilder: (BuildContext buildContext, int index) {
+            ServiceCusDetail service = listDetail[index];
+            return OutlinedCard(
+              margin: EdgeInsets.only(top: 15),
+              padding: EdgeInsets.only(left: 4, right: 4),
+              width: 360,
+              sections: [
+                Container(
+                  child: Column(
+                    children: <Widget>[
+                      Row(
+                        children: <Widget>[
+                          Container(
+                            width: 270,
+                            child: Row(
+                              children: [
+                                Text(service.cusID),
+                                Card(
+                                  color: Color(0xff707DB9),
+                                  child: Padding(
+                                    padding: const EdgeInsets.all(4),
+                                    child: Text(
+                                      service.status,
+                                      style: TextStyle(
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 10,
+                                          color: Colors.white),
                                     ),
                                   ),
-                                  SizedBox(
-                                    width: 100,
-                                  ),
-                                ],
-                              ),
+                                ),
+                                SizedBox(
+                                  width: 100,
+                                ),
+                              ],
                             ),
-                            Container(
-                                width: 60,
-                                child: Text(
-                                  service.time,
-                                  style: TextStyle(fontWeight: FontWeight
-                                      .bold),
-                                ))
-                          ],
-                        ),
+                          ),
+                          Container(
+                              width: 60,
+                              child: Text(
+                                service.time,
+                                style: TextStyle(fontWeight: FontWeight.bold),
+                              ))
+                        ],
+                      ),
+                      Row(
+                        children: <Widget>[
+                          Container(
+                            width: 300,
+                            child: Row(
+                              children: [
+                                Icon(Icons.face),
+                                Text(
+                                  ' Khách đặt: ',
+                                  style: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 14),
+                                ),
+                                Text('${service.cusName}  '),
+                                Text('(${service.timeMove})'),
+                              ],
+                            ),
+                          ),
+                          Container(
+                            width: 30,
+                            child: Icon(
+                              Icons.keyboard_arrow_up,
+                              size: 35,
+                            ),
+                          )
+                        ],
+                      )
+                    ],
+                  ),
+                ),
+                Column(
+                  children: [
+                    Column(
+                      children: [
+                        Row(children: [
+                          Container(
+                              margin: EdgeInsets.only(left: 15, right: 5),
+                              child: Icon(Icons.local_library_rounded)),
+                          Container(
+                            width: 270,
+                            child: Text(
+                              service.address,
+                              style: TextStyle(fontSize: 13),
+                            ),
+                          ),
+                        ]),
                         Row(
-                          children: <Widget>[
-                            Container(
-                              width: 300,
-                              child: Row(
-                                children: [
-                                  Icon(Icons.face),
-                                  Text(
-                                    ' Khách đặt: ',
-                                    style: TextStyle(
-                                        fontWeight: FontWeight.bold,
-                                        fontSize: 14),
-                                  ),
-                                  Text('${service.cusName}  '),
-                                  Text('(${service.timeMove})'),
-                                ],
-                              ),
+                          children: [
+                            SizedBox(
+                              width: 44,
                             ),
-                            Container(
-                              width: 30,
-                              child: Icon(
-                                Icons.keyboard_arrow_up,
-                                size: 35,
-                              ),
+                            Text(
+                              'Xem bản đồ',
+                              style: TextStyle(
+                                  color: Color(0xff0DB5B4), fontSize: 11),
+                            ),
+                            Icon(
+                              Icons.arrow_right,
+                              color: Color(0xff0DB5B4),
                             )
                           ],
                         )
                       ],
                     ),
-                  ),
-                  Column(
-                    children: [
-                      Column(
-                        children: [
-                          Row(children: [
-                            Container(
-                                margin: EdgeInsets.only(left: 15, right: 5),
-                                child: Icon(Icons.local_library_rounded)),
-                            Container(
-                              width: 270,
-                              child: Text(
-                                service.address,
-                                style: TextStyle(fontSize: 13),
+                    SizedBox(
+                      height: 10,
+                    ),
+                    Row(
+                      children: [
+                        Container(
+                            margin: EdgeInsets.only(left: 15, right: 5),
+                            child: Icon(Icons.description_outlined)),
+                        Container(
+                            width: 270,
+                            child: Text(
+                              'Ghi chú: ${service.note}',
+                              style: TextStyle(fontSize: 13),
+                            ))
+                      ],
+                    )
+                  ],
+                ),
+                Container(
+                  padding: EdgeInsets.symmetric(horizontal: 7),
+                  child: ListView.separated(
+                    shrinkWrap: true,
+                    itemCount: service.listItem.length,
+                    separatorBuilder: (context, index) => SizedBox(
+                      height: 6,
+                    ),
+                    itemBuilder: (context, index) => Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Row(
+                          children: [
+                            Text(
+                              '${service.listItem[index].quantity}  x',
+                              style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                fontSize: 14,
                               ),
                             ),
-                          ]),
-                          Row(
-                            children: [
-                              SizedBox(
-                                width: 44,
-                              ),
-                              Text(
-                                'Xem bản đồ',
-                                style: TextStyle(
-                                    color: Color(0xff0DB5B4), fontSize: 11),
-                              ),
-                              Icon(
-                                Icons.arrow_right,
-                                color: Color(0xff0DB5B4),
-                              )
-                            ],
-                          )
-                        ],
-                      ),
-                      SizedBox(
-                        height: 10,
-                      ),
-                      Row(
-                        children: [
-                          Container(
-                              margin: EdgeInsets.only(left: 15, right: 5),
-                              child: Icon(Icons.description_outlined)),
-                          Container(
-                              width: 270,
+                            Container(
+                              margin: EdgeInsets.only(left: 15),
                               child: Text(
-                                'Ghi chú: ${service.note}',
-                                style: TextStyle(fontSize: 13),
-                              ))
-                        ],
-                      )
-                    ],
-                  ),
-                  Container(
-                    padding: EdgeInsets.symmetric(horizontal: 7),
-                    child: ListView.separated(
-                      shrinkWrap: true,
-                      itemCount: service.listItem.length,
-                      separatorBuilder: (context, index) => SizedBox(
-                        height: 6,
-                      ),
-                      itemBuilder: (context, index) => Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Row(
-                            children: [
-                              Text(
-                                '${service.listItem[index].quantity}  x',
+                                service.listItem[index].content,
                                 style: TextStyle(
                                   fontWeight: FontWeight.bold,
                                   fontSize: 14,
                                 ),
                               ),
-                              Container(
-                                margin: EdgeInsets.only(left: 15),
-                                child: Text(
-                                  service.listItem[index].content,
-                                  style: TextStyle(
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 14,
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ),
-                          Text(service.listItem[index].price)
-                        ],
-                      ),
+                            ),
+                          ],
+                        ),
+                        Text(service.listItem[index].price)
+                      ],
                     ),
                   ),
-                  Padding(
-                    padding: const EdgeInsets.only(bottom: 10),
-                    child: Column(
-                      children: [
-                        Container(
-                           alignment:  Alignment.topLeft,
-                            child: Text('Set booking preparation time')),
-                        SizedBox(
-                          height: 10,
-                        ),
-                        Container(
-                          width: 315,
-                          height: 31,
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(4),
-                            border: Border.all(
-                              color: Color(0x42000000), width: 1, ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(bottom: 10),
+                  child: Column(
+                    children: [
+                      Container(
+                          alignment: Alignment.topLeft,
+                          child: Text('Set booking preparation time')),
+                      SizedBox(
+                        height: 10,
+                      ),
+                      Container(
+                        width: 315,
+                        height: 31,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(4),
+                          border: Border.all(
+                            color: Color(0x42000000),
+                            width: 1,
                           ),
-                          padding: const EdgeInsets.only(left: 22, top: 5, ),
-                          child: Row(
-                            children:[
-                              GestureDetector(
-                                onTap: (){
-                                  this.minute  = minute - 10;
+                        ),
+                        padding: const EdgeInsets.only(
+                          left: 22,
+                          top: 5,
+                        ),
+                        child: Row(
+                          children: [
+                            GestureDetector(
+                                onTap: () {
+                                  this.minute = minute - 10;
                                 },
-                                  child: Container(
-                                      alignment: Alignment.center,margin: EdgeInsets.only(top: 8),width: 90,
-                                      child: Icon(Icons.maximize_sharp))
+                                child: Container(
+                                    alignment: Alignment.center,
+                                    margin: EdgeInsets.only(top: 8),
+                                    width: 90,
+                                    child: Icon(Icons.maximize_sharp))),
+                            Container(
+                              alignment: Alignment.center,
+                              width: 105,
+                              height: 17,
+                              child: Text(
+                                "${this.minute} mins",
+                                style: TextStyle(
+                                  color: Colors.black,
+                                  fontSize: 14,
+                                  fontFamily: "Montserrat",
+                                  fontWeight: FontWeight.w500,
+                                ),
                               ),
-                              Container(
+                            ),
+                            Container(
                                 alignment: Alignment.center,
-                                width: 105,
-                                height: 17,
+                                width: 90,
+                                child: Icon(Icons.add)),
+                          ],
+                        ),
+                      ),
+                      SizedBox(height: 10),
+                      GestureDetector(
+                        onTap: () {
+                          this.minute = minute + 10;
+                        },
+                        child: Container(
+                          width: 316,
+                          height: 30,
+                          child: Row(
+                            mainAxisSize: MainAxisSize.min,
+                            mainAxisAlignment: MainAxisAlignment.end,
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              Container(
+                                width: 90,
+                                height: 30,
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(6),
+                                  border: Border.all(
+                                    color: Color(0xffcf8b93),
+                                    width: 1.50,
+                                  ),
+                                ),
+                                padding: const EdgeInsets.only(
+                                    left: 17, right: 18, top: 5),
                                 child: Text(
-                                  "${this.minute} mins",
+                                  "TỪ CHỐI",
                                   style: TextStyle(
-                                    color: Colors.black,
-                                    fontSize: 14,
-                                    fontFamily: "Montserrat",
-                                    fontWeight: FontWeight.w500,
+                                    color: Color(0xffcf8b93),
+                                    fontSize: 13,
+                                    fontFamily: "Roboto",
+                                    fontWeight: FontWeight.w700,
                                   ),
                                 ),
                               ),
-                              Container(alignment: Alignment.center,width: 90,child: Icon(Icons.add)),
-                            ],
-                          ),
-                        ),
-                        SizedBox(height: 10),
-                        GestureDetector(
-                          onTap: (){
-                            this.minute  = minute + 10;
-                          },
-                          child: Container(
-                            width: 316,
-                            height: 30,
-                            child: Row(
-                              mainAxisSize: MainAxisSize.min,
-                              mainAxisAlignment: MainAxisAlignment.end,
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              children:[
-                                Container(
-                                  width: 90,
-                                  height: 30,
-                                  decoration: BoxDecoration(
+                              SizedBox(width: 19),
+                              SizedBox(
+                                width: 200,
+                                height: 30,
+                                child: Material(
+                                  color: Color(0xff50B644),
+                                  shape: RoundedRectangleBorder(
+                                    side: BorderSide(
+                                      width: 1,
+                                      color: Color(0x23000000),
+                                    ),
                                     borderRadius: BorderRadius.circular(6),
-                                    border: Border.all(
-                                      color: Color(0xffcf8b93), width: 1.50, ),
                                   ),
-                                  padding: const EdgeInsets.only(left: 17, right: 18, top: 5),
-                                  child: Text(
-                                    "TỪ CHỐI",
-                                    style: TextStyle(
-                                      color: Color(0xffcf8b93),
-                                      fontSize: 13,
-                                      fontFamily: "Roboto",
-                                      fontWeight: FontWeight.w700,
+                                  clipBehavior: Clip.antiAlias,
+                                  child: Padding(
+                                    padding: const EdgeInsets.only(
+                                      left: 10,
+                                      top: 8,
+                                      bottom: 7,
                                     ),
-                                  ),
-                                ),
-                                SizedBox(width: 19),
-                                SizedBox(
-                                  width: 200,
-                                  height: 30,
-                                  child: Material(
-                                    color: Color(0xff50B644),
-                                    shape: RoundedRectangleBorder(
-                                      side: BorderSide(width: 1,
-                                        color: Color(0x23000000), ),
-                                      borderRadius: BorderRadius.circular(6),
-                                    ),
-                                    clipBehavior: Clip.antiAlias,
-                                    child: Padding(
-                                      padding: const EdgeInsets.only(left: 10, top: 8, bottom: 7, ),
-                                      child: Center(
-                                        child: Container(
-                                          child: Row(
-                                            children: [
-                                              SizedBox(width: 20,),
-                                              Text(
-                                                "CHẤP NHẬN  ",
+                                    child: Center(
+                                      child: Container(
+                                        child: Row(
+                                          children: [
+                                            SizedBox(
+                                              width: 20,
+                                            ),
+                                            Text(
+                                              "CHẤP NHẬN  ",
+                                              style: TextStyle(
+                                                color: Colors.white,
+                                                fontSize: 13,
+                                                fontFamily: "Roboto",
+                                                fontWeight: FontWeight.w700,
+                                              ),
+                                            ),
+                                            Countdown(
+                                              controller: controller.restart(),
+                                              seconds: 30,
+                                              build: (_, double time) => Text(
+                                                ' (${time.toString()}) ',
                                                 style: TextStyle(
                                                   color: Colors.white,
                                                   fontSize: 13,
-                                                  fontFamily: "Roboto",
-                                                  fontWeight: FontWeight.w700,
                                                 ),
                                               ),
-                                              Countdown(
-                                                controller: controller.restart(),
-                                                seconds: 30,
-                                                build: (_, double time) => Text(' (${time.toString()}) ',
-                                                  style: TextStyle(
-                                                    color: Colors.white,
-                                                    fontSize: 13,
-                                                  ),
-                                                ),
-                                                interval: Duration(milliseconds: 100),
-                                                onFinished: () {
-                                                  //
-
-                                                },
-                                              ),
-                                            ],
-                                          ),
+                                              interval:
+                                                  Duration(milliseconds: 100),
+                                              onFinished: () {
+                                                //
+                                              },
+                                            ),
+                                          ],
                                         ),
                                       ),
                                     ),
                                   ),
                                 ),
-                              ],
-                            ),
+                              ),
+                            ],
                           ),
-                        )
-                      ],
-                    ),
+                        ),
+                      )
+                    ],
                   ),
-                ],
-              );
-            }
-        ),
-      );
+                ),
+              ],
+            );
+          }),
+    );
   }
 }
-
 
 class ServiceCusDetail {
   String cusName; // hưu long

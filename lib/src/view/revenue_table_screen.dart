@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:flutter_app/src/utils/widgets_utils.dart';
 import 'package:flutter_app/src/widgets/shared_widget/style.dart';
@@ -79,7 +78,7 @@ class _HistoryPageState extends State<HistoryScreen> {
                         child: TableCalendar(
                           initialCalendarFormat: CalendarFormat.week,
                           calendarStyle: CalendarStyle(
-                            // todayColor: Colors.orange,
+                              // todayColor: Colors.orange,
                               selectedColor: Theme.of(context).primaryColor,
                               todayStyle: TextStyle(
                                   fontWeight: FontWeight.bold,
@@ -91,7 +90,8 @@ class _HistoryPageState extends State<HistoryScreen> {
                               color: Colors.orange, // hiện cái week
                               borderRadius: BorderRadius.circular(20.0),
                             ),
-                            formatButtonTextStyle: TextStyle(color: Colors.white),
+                            formatButtonTextStyle:
+                                TextStyle(color: Colors.white),
                             formatButtonShowsNext: false,
                           ),
                           startingDayOfWeek: StartingDayOfWeek.monday,
@@ -102,96 +102,117 @@ class _HistoryPageState extends State<HistoryScreen> {
                             });
                           },
                           builders: CalendarBuilders(
-                            selectedDayBuilder: (context, date, events) => Container(
-                                margin: const EdgeInsets.all(4.0),
-                                alignment: Alignment.center,
-                                decoration: BoxDecoration(
-                                    color: Theme.of(context).primaryColor,
-                                    borderRadius: BorderRadius.circular(10.0)),
-                                child: Text(
-                                  date.day.toString(),
-                                  style: TextStyle(color: Colors.white),
-                                )),
-                            todayDayBuilder: (context, date, events) => Container(
-                                margin: const EdgeInsets.all(4.0),
-                                alignment: Alignment.center,
-                                decoration: BoxDecoration(
-                                    color: Colors.orange,
-                                    borderRadius: BorderRadius.circular(10.0)),
-                                child: Text(
-                                  date.day.toString(),
-                                  style: TextStyle(color: Colors.white),
-                                )),
+                            selectedDayBuilder: (context, date, events) =>
+                                Container(
+                                    margin: const EdgeInsets.all(4.0),
+                                    alignment: Alignment.center,
+                                    decoration: BoxDecoration(
+                                        color: Theme.of(context).primaryColor,
+                                        borderRadius:
+                                            BorderRadius.circular(10.0)),
+                                    child: Text(
+                                      date.day.toString(),
+                                      style: TextStyle(color: Colors.white),
+                                    )),
+                            todayDayBuilder: (context, date, events) =>
+                                Container(
+                                    margin: const EdgeInsets.all(4.0),
+                                    alignment: Alignment.center,
+                                    decoration: BoxDecoration(
+                                        color: Colors.orange,
+                                        borderRadius:
+                                            BorderRadius.circular(10.0)),
+                                    child: Text(
+                                      date.day.toString(),
+                                      style: TextStyle(color: Colors.white),
+                                    )),
                           ),
                           calendarController: _controller,
                         ),
                       ),
-                      changeDate ? Container(
-                        width: MediaQuery.of(context).size.width,
-                        child: Column(children: [
-                          Container(
-                              margin: EdgeInsets.only(left: 10),
-                              alignment: Alignment.topLeft,
-                              child: Row(
-                                children: [
-                                  Text('Tổng doanh thu :',style: TextStyle(fontSize: 20),),
-                                  Text(' 1860.000 đ',style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold),),
-                                ],
-                              )
-                          ),
-                          Container(
-                            margin: EdgeInsets.only(top: 20),
-                            color: Colors.black.withOpacity(0.3),
-                            width: MediaQuery.of(context).size.width,
-                            height: 1,
-                          ),
-                          Container(
+                      changeDate
+                          ? Container(
                               width: MediaQuery.of(context).size.width,
-                              height: 40,
-                              // color: Colors.grey.withOpacity(0.3),
-                              margin: EdgeInsets.only(top: 5),
-                              alignment: Alignment.topLeft,
-                              child: Padding(
-                                padding: const EdgeInsets.all(4.0),
-                                child: Text('   Hoàn thành 5 giao dịch',style: TextStyle(fontSize: 18)),
-                              )
-                          ),
-                        ],
-                        ),
-                      )
+                              child: Column(
+                                children: [
+                                  Container(
+                                      margin: EdgeInsets.only(left: 10),
+                                      alignment: Alignment.topLeft,
+                                      child: Row(
+                                        children: [
+                                          Text(
+                                            'Tổng doanh thu :',
+                                            style: TextStyle(fontSize: 20),
+                                          ),
+                                          Text(
+                                            ' 1860.000 đ',
+                                            style: TextStyle(
+                                                fontSize: 20,
+                                                fontWeight: FontWeight.bold),
+                                          ),
+                                        ],
+                                      )),
+                                  Container(
+                                    margin: EdgeInsets.only(top: 20),
+                                    color: Colors.black.withOpacity(0.3),
+                                    width: MediaQuery.of(context).size.width,
+                                    height: 1,
+                                  ),
+                                  Container(
+                                      width: MediaQuery.of(context).size.width,
+                                      height: 40,
+                                      // color: Colors.grey.withOpacity(0.3),
+                                      margin: EdgeInsets.only(top: 5),
+                                      alignment: Alignment.topLeft,
+                                      child: Padding(
+                                        padding: const EdgeInsets.all(4.0),
+                                        child: Text('   Hoàn thành 5 đơn',
+                                            style: TextStyle(fontSize: 18)),
+                                      )),
+                                ],
+                              ),
+                            )
                           : Container(
-                        width: MediaQuery.of(context).size.width,
-                        child: Column(children: [
-                          Container(
-                              margin: EdgeInsets.only(left: 10),
-                              alignment: Alignment.topLeft,
-                              child: Row(
-                                children: [
-                                  Text('Tổng doanh thu :',style: TextStyle(fontSize: 20),),
-                                  Text(' 1210.000 đ',style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold),),
-                                ],
-                              )
-                          ),
-                          Container(
-                            margin: EdgeInsets.only(top: 20),
-                            color: Colors.black.withOpacity(0.3),
-                            width: MediaQuery.of(context).size.width,
-                            height: 1,
-                          ),
-                          Container(
                               width: MediaQuery.of(context).size.width,
-                              height: 40,
-                              // color: Colors.grey.withOpacity(0.3),
-                              margin: EdgeInsets.only(top: 5),
-                              alignment: Alignment.topLeft,
-                              child: Padding(
-                                padding: const EdgeInsets.all(4.0),
-                                child: Text('   Hoàn thành 4 giao dịch',style: TextStyle(fontSize: 18)),
-                              )
-                          ),
-                        ],
-                        ),
-                      ),
+                              child: Column(
+                                children: [
+                                  Container(
+                                      margin: EdgeInsets.only(left: 10),
+                                      alignment: Alignment.topLeft,
+                                      child: Row(
+                                        children: [
+                                          Text(
+                                            'Tổng doanh thu :',
+                                            style: TextStyle(fontSize: 20),
+                                          ),
+                                          Text(
+                                            ' 1210.000 đ',
+                                            style: TextStyle(
+                                                fontSize: 20,
+                                                fontWeight: FontWeight.bold),
+                                          ),
+                                        ],
+                                      )),
+                                  Container(
+                                    margin: EdgeInsets.only(top: 20),
+                                    color: Colors.black.withOpacity(0.3),
+                                    width: MediaQuery.of(context).size.width,
+                                    height: 1,
+                                  ),
+                                  Container(
+                                      width: MediaQuery.of(context).size.width,
+                                      height: 40,
+                                      // color: Colors.grey.withOpacity(0.3),
+                                      margin: EdgeInsets.only(top: 5),
+                                      alignment: Alignment.topLeft,
+                                      child: Padding(
+                                        padding: const EdgeInsets.all(4.0),
+                                        child: Text('   Hoàn thành 4 đơn',
+                                            style: TextStyle(fontSize: 18)),
+                                      )),
+                                ],
+                              ),
+                            ),
                       changeDate ? LoadHistory() : LoadHistoryNextDate()
                     ],
                   ),
@@ -203,20 +224,23 @@ class _HistoryPageState extends State<HistoryScreen> {
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
-                      SizedBox(height: 15,),
+                      SizedBox(
+                        height: 15,
+                      ),
                       Row(
-                        children:[
+                        children: [
                           GestureDetector(
-                              onTap: (){
+                              onTap: () {
                                 setState(() {
                                   monthandYear = "March 2021";
                                   changeMonth = false;
                                 });
                               },
                               child: Container(
-                                  alignment: Alignment.center,margin: EdgeInsets.only(top: 8),width: 70,
-                                  child: Icon(Icons.arrow_back_ios))
-                          ),
+                                  alignment: Alignment.center,
+                                  margin: EdgeInsets.only(top: 8),
+                                  width: 70,
+                                  child: Icon(Icons.arrow_back_ios))),
                           Container(
                             alignment: Alignment.center,
                             width: 220,
@@ -224,7 +248,9 @@ class _HistoryPageState extends State<HistoryScreen> {
                             child: Center(
                               child: Row(
                                 children: [
-                                  SizedBox(width: 25,),
+                                  SizedBox(
+                                    width: 25,
+                                  ),
                                   Text(
                                     monthandYear,
                                     style: TextStyle(
@@ -234,7 +260,9 @@ class _HistoryPageState extends State<HistoryScreen> {
                                       fontWeight: FontWeight.w500,
                                     ),
                                   ),
-                                  SizedBox(width: 25,),
+                                  SizedBox(
+                                    width: 25,
+                                  ),
                                   Container(
                                     height: 35,
                                     child: Card(
@@ -256,87 +284,113 @@ class _HistoryPageState extends State<HistoryScreen> {
                             ),
                           ),
                           GestureDetector(
-                              onTap: (){
+                              onTap: () {
                                 setState(() {
                                   monthandYear = "April 2021";
                                   changeMonth = true;
                                 });
                               },
                               child: Container(
-                                  alignment: Alignment.center,width: 70,child: Icon(Icons.arrow_forward_ios_rounded))
-                          ),
+                                  alignment: Alignment.center,
+                                  width: 70,
+                                  child:
+                                      Icon(Icons.arrow_forward_ios_rounded))),
                         ],
                       ),
-                      SizedBox(height: 10,),
+                      SizedBox(
+                        height: 10,
+                      ),
                       Container(
                         margin: EdgeInsets.only(top: 20),
                         color: Colors.black.withOpacity(0.3),
                         width: MediaQuery.of(context).size.width,
                         height: 1,
                       ),
-                      changeMonth ? Container(
-                        width: MediaQuery.of(context).size.width,
-                        child: Column(children: [
-                          Container(
-                              margin: EdgeInsets.only(left: 10,top: 15),
-                              alignment: Alignment.topLeft,
-                              child: Row(
-                                children: [
-                                  Text('Tổng doanh thu :',style: TextStyle(fontSize: 20),),
-                                  Text(' 22.360.000 đ',style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold),),
-                                ],
-                              )),
-                          Container(
-                            margin: EdgeInsets.only(top: 20),
-                            color: Colors.black.withOpacity(0.3),
-                            width: MediaQuery.of(context).size.width,
-                            height: 1,
-                          ),
-                          Container(
+                      changeMonth
+                          ? Container(
                               width: MediaQuery.of(context).size.width,
-                              height: 40,
-                              // color: Colors.grey.withOpacity(0.3),
-                              margin: EdgeInsets.only(top: 5),
-                              alignment: Alignment.topLeft,
-                              child: Padding(
-                                padding: const EdgeInsets.all(4.0),
-                                child: Text('   Hoàn thành 22 giao dịch',style: TextStyle(fontSize: 18)),
-                              )
-                          )
-                        ],
-                        ),
-                      ) : Container(
-                        width: MediaQuery.of(context).size.width,
-                        child: Column(children: [
-                          Container(
-                              margin: EdgeInsets.only(left: 10,top: 15),
-                              alignment: Alignment.topLeft,
-                              child: Row(
+                              child: Column(
                                 children: [
-                                  Text('Tổng doanh thu :',style: TextStyle(fontSize: 20),),
-                                  Text(' 19.860.000 đ',style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold),),
+                                  Container(
+                                      margin:
+                                          EdgeInsets.only(left: 10, top: 15),
+                                      alignment: Alignment.topLeft,
+                                      child: Row(
+                                        children: [
+                                          Text(
+                                            'Tổng doanh thu :',
+                                            style: TextStyle(fontSize: 20),
+                                          ),
+                                          Text(
+                                            ' 22.360.000 đ',
+                                            style: TextStyle(
+                                                fontSize: 20,
+                                                fontWeight: FontWeight.bold),
+                                          ),
+                                        ],
+                                      )),
+                                  Container(
+                                    margin: EdgeInsets.only(top: 20),
+                                    color: Colors.black.withOpacity(0.3),
+                                    width: MediaQuery.of(context).size.width,
+                                    height: 1,
+                                  ),
+                                  Container(
+                                      width: MediaQuery.of(context).size.width,
+                                      height: 40,
+                                      // color: Colors.grey.withOpacity(0.3),
+                                      margin: EdgeInsets.only(top: 5),
+                                      alignment: Alignment.topLeft,
+                                      child: Padding(
+                                        padding: const EdgeInsets.all(4.0),
+                                        child: Text('   Hoàn thành 22 đơn',
+                                            style: TextStyle(fontSize: 18)),
+                                      ))
                                 ],
-                              )),
-                          Container(
-                            margin: EdgeInsets.only(top: 20),
-                            color: Colors.black.withOpacity(0.3),
-                            width: MediaQuery.of(context).size.width,
-                            height: 1,
-                          ),
-                          Container(
+                              ),
+                            )
+                          : Container(
                               width: MediaQuery.of(context).size.width,
-                              height: 40,
-                              // color: Colors.grey.withOpacity(0.3),
-                              margin: EdgeInsets.only(top: 5),
-                              alignment: Alignment.topLeft,
-                              child: Padding(
-                                padding: const EdgeInsets.all(4.0),
-                                child: Text('   Hoàn thành 27 giao dịch',style: TextStyle(fontSize: 18)),
-                              )
-                          )
-                        ],
-                        ),
-                      ),
+                              child: Column(
+                                children: [
+                                  Container(
+                                      margin:
+                                          EdgeInsets.only(left: 10, top: 15),
+                                      alignment: Alignment.topLeft,
+                                      child: Row(
+                                        children: [
+                                          Text(
+                                            'Tổng doanh thu :',
+                                            style: TextStyle(fontSize: 20),
+                                          ),
+                                          Text(
+                                            ' 19.860.000 đ',
+                                            style: TextStyle(
+                                                fontSize: 20,
+                                                fontWeight: FontWeight.bold),
+                                          ),
+                                        ],
+                                      )),
+                                  Container(
+                                    margin: EdgeInsets.only(top: 20),
+                                    color: Colors.black.withOpacity(0.3),
+                                    width: MediaQuery.of(context).size.width,
+                                    height: 1,
+                                  ),
+                                  Container(
+                                      width: MediaQuery.of(context).size.width,
+                                      height: 40,
+                                      // color: Colors.grey.withOpacity(0.3),
+                                      margin: EdgeInsets.only(top: 5),
+                                      alignment: Alignment.topLeft,
+                                      child: Padding(
+                                        padding: const EdgeInsets.all(4.0),
+                                        child: Text('   Hoàn thành 27 đơn',
+                                            style: TextStyle(fontSize: 18)),
+                                      ))
+                                ],
+                              ),
+                            ),
                       changeMonth ? LoadHistory() : LoadHistoryNextDate()
                     ],
                   ),
@@ -354,10 +408,8 @@ class _HistoryPageState extends State<HistoryScreen> {
   }
 }
 
-
-
 class HistoryUsed {
-  final String userName, payment ,price;
+  final String userName, payment, price;
   final bool promo;
 
   HistoryUsed({
@@ -443,69 +495,75 @@ class LoadHistory extends StatelessWidget {
                           child: Row(
                             children: <Widget>[
                               Container(
-                                width: MediaQuery.of(context).size.width*0.6,
+                                width: MediaQuery.of(context).size.width * 0.6,
                                 margin: EdgeInsets.only(top: 5),
                                 height: 50,
                                 child: Column(
-                                    children: [
-                                      Container(
-                                        margin: EdgeInsets.only(left: 15),
-                                        alignment: Alignment.topLeft,
-                                        child: Text(
-                                          history.userName.toUpperCase(),
-                                          style: TextStyle(
-                                              fontWeight: FontWeight.bold,
-                                              fontSize: 15,
-                                              color: Colors.black.withOpacity(0.7)),
-                                        ),
+                                  children: [
+                                    Container(
+                                      margin: EdgeInsets.only(left: 15),
+                                      alignment: Alignment.topLeft,
+                                      child: Text(
+                                        history.userName.toUpperCase(),
+                                        style: TextStyle(
+                                            fontWeight: FontWeight.bold,
+                                            fontSize: 15,
+                                            color:
+                                                Colors.black.withOpacity(0.7)),
                                       ),
-                                      Container(
-                                        margin: EdgeInsets.only(left: 15),
-                                        alignment: Alignment.topLeft,
-                                        child: Row(
-                                          children: [
-                                            Card(
-                                              color: Color(0xff707DB9),
-                                              child: Padding(
-                                                padding: const EdgeInsets.all(4),
-                                                child: Text(
-                                                    history.payment,
-                                                  style: TextStyle(
-                                                      fontWeight: FontWeight.bold,
-                                                      fontSize: 10,
-                                                      color: Colors.white),
-                                                ),
+                                    ),
+                                    Container(
+                                      margin: EdgeInsets.only(left: 15),
+                                      alignment: Alignment.topLeft,
+                                      child: Row(
+                                        children: [
+                                          Card(
+                                            color: Color(0xff707DB9),
+                                            child: Padding(
+                                              padding: const EdgeInsets.all(4),
+                                              child: Text(
+                                                history.payment,
+                                                style: TextStyle(
+                                                    fontWeight: FontWeight.bold,
+                                                    fontSize: 10,
+                                                    color: Colors.white),
                                               ),
                                             ),
-                                            if(history.promo == true) Card(
+                                          ),
+                                          if (history.promo == true)
+                                            Card(
                                               color: Colors.yellow,
                                               child: Padding(
-                                                padding: const EdgeInsets.all(4),
+                                                padding:
+                                                    const EdgeInsets.all(4),
                                                 child: Text(
                                                   'Promo',
                                                   style: TextStyle(
-                                                      fontWeight: FontWeight.bold,
+                                                      fontWeight:
+                                                          FontWeight.bold,
                                                       fontSize: 10,
                                                       color: Colors.white),
                                                 ),
                                               ),
                                             ),
-                                          ],
-                                        ),
+                                        ],
                                       ),
-                                    ],
-                                  ),
+                                    ),
+                                  ],
+                                ),
                               ),
                               Container(
-                                alignment: Alignment.topRight,
-                                  width: MediaQuery.of(context).size.width * 0.3,
+                                  alignment: Alignment.topRight,
+                                  width:
+                                      MediaQuery.of(context).size.width * 0.3,
                                   child: Column(
                                     children: [
                                       Text(
                                         '${history.price} đ',
                                         style: TextStyle(
                                           fontSize: 15,
-                                          color: Colors.lightBlue.withOpacity(0.8),
+                                          color:
+                                              Colors.lightBlue.withOpacity(0.8),
                                         ),
                                         textAlign: TextAlign.left,
                                       ),
@@ -544,11 +602,10 @@ class LoadHistoryNextDate extends StatelessWidget {
       promo: true,
     ),
     HistoryUsed(
-      userName: 'Cao Quỳnh Trang',
-      payment: 'MOMOPAY',
-      price: '250.000',
-      promo: false
-    ),
+        userName: 'Cao Quỳnh Trang',
+        payment: 'MOMOPAY',
+        price: '250.000',
+        promo: false),
     HistoryUsed(
       userName: 'Huỳnh Thế Hiển',
       payment: 'AIRPAY',
@@ -604,7 +661,7 @@ class LoadHistoryNextDate extends StatelessWidget {
                           child: Row(
                             children: <Widget>[
                               Container(
-                                width: MediaQuery.of(context).size.width*0.6,
+                                width: MediaQuery.of(context).size.width * 0.6,
                                 margin: EdgeInsets.only(top: 5),
                                 height: 50,
                                 child: Column(
@@ -617,7 +674,8 @@ class LoadHistoryNextDate extends StatelessWidget {
                                         style: TextStyle(
                                             fontWeight: FontWeight.bold,
                                             fontSize: 15,
-                                            color: Colors.black.withOpacity(0.7)),
+                                            color:
+                                                Colors.black.withOpacity(0.7)),
                                       ),
                                     ),
                                     Container(
@@ -638,19 +696,22 @@ class LoadHistoryNextDate extends StatelessWidget {
                                               ),
                                             ),
                                           ),
-                                          if(history.promo == true) Card(
-                                            color: Colors.yellow,
-                                            child: Padding(
-                                              padding: const EdgeInsets.all(4),
-                                              child: Text(
-                                                'Promo',
-                                                style: TextStyle(
-                                                    fontWeight: FontWeight.bold,
-                                                    fontSize: 10,
-                                                    color: Colors.white),
+                                          if (history.promo == true)
+                                            Card(
+                                              color: Colors.yellow,
+                                              child: Padding(
+                                                padding:
+                                                    const EdgeInsets.all(4),
+                                                child: Text(
+                                                  'Promo',
+                                                  style: TextStyle(
+                                                      fontWeight:
+                                                          FontWeight.bold,
+                                                      fontSize: 10,
+                                                      color: Colors.white),
+                                                ),
                                               ),
                                             ),
-                                          ),
                                         ],
                                       ),
                                     ),
@@ -659,14 +720,16 @@ class LoadHistoryNextDate extends StatelessWidget {
                               ),
                               Container(
                                   alignment: Alignment.topRight,
-                                  width: MediaQuery.of(context).size.width * 0.3,
+                                  width:
+                                      MediaQuery.of(context).size.width * 0.3,
                                   child: Column(
                                     children: [
                                       Text(
                                         '${history.price} đ',
                                         style: TextStyle(
                                           fontSize: 15,
-                                          color: Colors.lightBlue.withOpacity(0.8),
+                                          color:
+                                              Colors.lightBlue.withOpacity(0.8),
                                         ),
                                         textAlign: TextAlign.left,
                                       ),

@@ -15,10 +15,10 @@ class ServiceDetailScreen2 extends StatefulWidget {
 }
 
 class _ServiceDetailScreenState extends State<ServiceDetailScreen2> {
-
   File _file;
-  void pickImage() async{
-    PickedFile pickedFile = await ImagePicker().getImage(source: ImageSource.gallery);
+  void pickImage() async {
+    PickedFile pickedFile =
+        await ImagePicker().getImage(source: ImageSource.gallery);
     setState(() {
       _file = File(pickedFile.path);
     });
@@ -40,38 +40,42 @@ class _ServiceDetailScreenState extends State<ServiceDetailScreen2> {
                     height: 200.0,
                     width: MediaQuery.of(context).size.width,
                     margin: EdgeInsets.only(bottom: 1.0),
-                    decoration: BoxDecoration(
-                      boxShadow: [
-                        BoxShadow(
-                            color: Colors.black26,
-                            offset: Offset(0.0, 2.0),
-                            blurRadius: 6.0
-                        ),
-                      ],
-                    ),
+                    color: Colors.black12,
                     child: Hero(
                       tag: _file == null ? widget.service.image : _file,
                       child: ClipRRect(
-                        child: _file == null ? Image(
-                          image:  AssetImage(widget.service.image), fit: BoxFit.cover,)
-                            : Image.file(_file,fit: BoxFit.cover,),
+                        child: _file == null
+                            ? Image(
+                                image: NetworkImage(widget.service.image),
+                                fit: BoxFit.cover,
+                              )
+                            : Image.file(
+                                _file,
+                                fit: BoxFit.cover,
+                              ),
                       ),
                     ),
                   ),
                   Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 5.0, vertical: 25.0),
+                    padding:
+                        EdgeInsets.symmetric(horizontal: 5.0, vertical: 25.0),
                     child: Row(
                       children: <Widget>[
                         IconButton(
-                          icon: Icon(Icons.cancel, color: Colors.white,),
+                          icon: Icon(
+                            Icons.cancel,
+                            color: Colors.white,
+                          ),
                           iconSize: 30.0,
                           color: Colors.black,
                           onPressed: () => Navigator.pop(context),
                         ),
-                      ],),
+                      ],
+                    ),
                   ),
                   Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 5.0, vertical: 20.0),
+                    padding:
+                        EdgeInsets.symmetric(horizontal: 5.0, vertical: 20.0),
                     child: Container(
                       height: 170.0,
                       alignment: Alignment.bottomRight,
@@ -83,7 +87,10 @@ class _ServiceDetailScreenState extends State<ServiceDetailScreen2> {
                           ),
                         ),
                         child: IconButton(
-                          icon: Icon(Icons.add , color: Colors.black.withOpacity(0.6),),
+                          icon: Icon(
+                            Icons.add,
+                            color: Colors.black.withOpacity(0.6),
+                          ),
                           iconSize: 25.0,
                           color: Colors.black,
                           //onPressed: getImage,
@@ -105,17 +112,22 @@ class _ServiceDetailScreenState extends State<ServiceDetailScreen2> {
               SizedBox(height: 35),
               GestureDetector(
                 onTap: () {
-                  Navigator.of(context).push(MaterialPageRoute(builder: (context) => ProviderManagerScreen(),));
+                  Navigator.of(context).push(MaterialPageRoute(
+                    builder: (context) => ProviderManagerScreen(),
+                  ));
                 },
                 child: Container(
-                  width: MediaQuery.of(context).size.width*0.9,
+                  width: MediaQuery.of(context).size.width * 0.9,
                   child: FloatingActionButton.extended(
                     shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.all(Radius.circular(1.0),
+                      borderRadius: BorderRadius.all(
+                        Radius.circular(1.0),
                       ),
                     ),
-                    backgroundColor: Colors.grey,
-                    label: Text('Lưu thay đổi', style: TextStyle(color: Colors.white, letterSpacing: 4),
+                    backgroundColor: Colors.blue[400],
+                    label: Text(
+                      'Lưu thay đổi',
+                      style: TextStyle(color: Colors.white, letterSpacing: 4),
                     ),
                   ),
                 ),

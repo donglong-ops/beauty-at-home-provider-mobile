@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_app/src/models/cart_item.dart';
 import 'package:flutter_app/src/utils/widgets_utils.dart';
+import 'package:flutter_app/src/view/cancel_reason.dart';
 import 'package:flutter_app/src/view/provider_newOrder_Screen.dart';
 import 'package:flutter_app/src/widgets/google_map_service/google_service.dart';
 import 'package:flutter_app/src/widgets/shared_widget.dart';
@@ -11,24 +12,18 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:geocoder/geocoder.dart';
 import 'package:location/location.dart';
 
-class ProviderScreen extends StatelessWidget {
+class ProviderScreen extends StatefulWidget {
+  final bool noContent;
+
+  const ProviderScreen({Key key, this.noContent = false}) : super(key: key);
+
   @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      home: DemoApp(),
-    );
-  }
+  State<StatefulWidget> createState() => _ProviderScreenState();
 }
 
 String currentAddress = "";
 
-class DemoApp extends StatefulWidget {
-  @override
-  _DemoAppState createState() => _DemoAppState();
-}
-
-final List<ServiceCusDetail> listDetail = List.from(<ServiceCusDetail>[
+List<ServiceCusDetail> listDetailTest = List.from(<ServiceCusDetail>[
   ServiceCusDetail(
     cusID: 'GF -267',
     cusName: 'Hữu Long',
@@ -57,7 +52,7 @@ final List<ServiceCusDetail> listDetail = List.from(<ServiceCusDetail>[
   ),
 ]);
 
-class _DemoAppState extends State<DemoApp> {
+class _ProviderScreenState extends State<ProviderScreen> {
   bool isSwiched = true;
   int tab = 1;
   String status = "CHUẨN BỊ XONG";
@@ -66,6 +61,7 @@ class _DemoAppState extends State<DemoApp> {
   Color colorTap2 = Colors.white;
   Color colorTap3 = Colors.white;
   Color colorTap4 = Colors.white;
+  List<ServiceCusDetail> listDetail = listDetailTest;
 
   @override
   void initState() {
@@ -369,470 +365,499 @@ class _DemoAppState extends State<DemoApp> {
               ),
               // tab > 0 ? LoadAllBooking(status: status) : null,
               Expanded(
-                child: ListView.builder(
-                    physics: BouncingScrollPhysics(),
-                    itemCount: listDetail.length,
-                    itemBuilder: (BuildContext buildContext, int index) {
-                      ServiceCusDetail service = listDetail[index];
-                      return OutlinedCard(
-                        margin: EdgeInsets.only(top: 15),
-                        padding: EdgeInsets.only(left: 4, right: 4),
-                        width: 360,
-                        sections: [
-                          Container(
-                            child: Column(
-                              children: <Widget>[
-                                Row(
+                child: widget.noContent
+                    ? SizedBox()
+                    : ListView.builder(
+                        physics: BouncingScrollPhysics(),
+                        itemCount: listDetail.length,
+                        itemBuilder: (BuildContext buildContext, int index) {
+                          ServiceCusDetail service = listDetail[index];
+                          return OutlinedCard(
+                            margin: EdgeInsets.only(top: 15),
+                            padding: EdgeInsets.only(left: 4, right: 4),
+                            width: 360,
+                            sections: [
+                              Container(
+                                child: Column(
                                   children: <Widget>[
-                                    Container(
-                                      width: 270,
-                                      child: Row(
-                                        children: [
-                                          Text(service.cusID),
-                                          Card(
-                                            color: Color(0xff707DB9),
-                                            child: Padding(
-                                              padding: const EdgeInsets.all(4),
-                                              child: Text(
-                                                statusBooking,
-                                                style: TextStyle(
-                                                    fontWeight: FontWeight.bold,
-                                                    fontSize: 10,
-                                                    color: Colors.white),
+                                    Row(
+                                      children: <Widget>[
+                                        Container(
+                                          width: 270,
+                                          child: Row(
+                                            children: [
+                                              Text(service.cusID),
+                                              Card(
+                                                color: Color(0xff707DB9),
+                                                child: Padding(
+                                                  padding:
+                                                      const EdgeInsets.all(4),
+                                                  child: Text(
+                                                    statusBooking,
+                                                    style: TextStyle(
+                                                        fontWeight:
+                                                            FontWeight.bold,
+                                                        fontSize: 10,
+                                                        color: Colors.white),
+                                                  ),
+                                                ),
                                               ),
-                                            ),
+                                              SizedBox(
+                                                width: 100,
+                                              ),
+                                            ],
                                           ),
-                                          SizedBox(
-                                            width: 100,
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-                                    Container(
-                                        width: 60,
-                                        child: Text(
-                                          service.time,
-                                          style: TextStyle(
-                                              fontWeight: FontWeight.bold),
-                                        ))
-                                  ],
-                                ),
-                                Row(
-                                  children: <Widget>[
-                                    Container(
-                                      width: 300,
-                                      child: Row(
-                                        children: [
-                                          Icon(Icons.face),
-                                          Text(
-                                            ' Khách đặt: ',
-                                            style: TextStyle(
-                                                fontWeight: FontWeight.bold,
-                                                fontSize: 14),
-                                          ),
-                                          Text('${service.cusName}  '),
-                                          Text('(${service.timeMove})'),
-                                        ],
-                                      ),
-                                    ),
-                                    Container(
-                                      width: 30,
-                                      child: Icon(
-                                        Icons.keyboard_arrow_up,
-                                        size: 35,
-                                      ),
-                                    )
-                                  ],
-                                )
-                              ],
-                            ),
-                          ),
-                          Column(
-                            children: [
-                              Column(
-                                children: [
-                                  Row(children: [
-                                    Container(
-                                        margin:
-                                            EdgeInsets.only(left: 15, right: 5),
-                                        child:
-                                            Icon(Icons.local_library_rounded)),
-                                    Container(
-                                      width: 270,
-                                      child: Text(
-                                        service.address,
-                                        style: TextStyle(fontSize: 13),
-                                      ),
-                                    ),
-                                  ]),
-                                  GestureDetector(
-                                    onTap: () {
-                                      MapUtils4.openMap(
-                                          currentAddress, service.address);
-                                    },
-                                    child: Row(
-                                      children: [
-                                        SizedBox(
-                                          width: 44,
                                         ),
-                                        Text(
-                                          'XEM BẢN ĐỒ',
-                                          style: TextStyle(
-                                              color: Color(0xff0DB5B4),
-                                              fontSize: 11),
-                                        ),
-                                        Icon(
-                                          Icons.arrow_right,
-                                          color: Color(0xff0DB5B4),
-                                        )
+                                        Container(
+                                            width: 60,
+                                            child: Text(
+                                              service.time,
+                                              style: TextStyle(
+                                                  fontWeight: FontWeight.bold),
+                                            ))
                                       ],
                                     ),
+                                    Row(
+                                      children: <Widget>[
+                                        Container(
+                                          width: 300,
+                                          child: Row(
+                                            children: [
+                                              Icon(Icons.face),
+                                              Text(
+                                                ' Khách đặt: ',
+                                                style: TextStyle(
+                                                    fontWeight: FontWeight.bold,
+                                                    fontSize: 14),
+                                              ),
+                                              Text('${service.cusName}  '),
+                                              Text('(${service.timeMove})'),
+                                            ],
+                                          ),
+                                        ),
+                                        Container(
+                                          width: 30,
+                                          child: Icon(
+                                            Icons.keyboard_arrow_up,
+                                            size: 35,
+                                          ),
+                                        )
+                                      ],
+                                    )
+                                  ],
+                                ),
+                              ),
+                              Column(
+                                children: [
+                                  Column(
+                                    children: [
+                                      Row(children: [
+                                        Container(
+                                            margin: EdgeInsets.only(
+                                                left: 15, right: 5),
+                                            child: Icon(
+                                                Icons.local_library_rounded)),
+                                        Container(
+                                          width: 270,
+                                          child: Text(
+                                            service.address,
+                                            style: TextStyle(fontSize: 13),
+                                          ),
+                                        ),
+                                      ]),
+                                      GestureDetector(
+                                        onTap: () {
+                                          MapUtils4.openMap(
+                                              currentAddress, service.address);
+                                        },
+                                        child: Row(
+                                          children: [
+                                            SizedBox(
+                                              width: 44,
+                                            ),
+                                            Text(
+                                              'XEM BẢN ĐỒ',
+                                              style: TextStyle(
+                                                  color: Color(0xff0DB5B4),
+                                                  fontSize: 11),
+                                            ),
+                                            Icon(
+                                              Icons.arrow_right,
+                                              color: Color(0xff0DB5B4),
+                                            )
+                                          ],
+                                        ),
+                                      )
+                                    ],
+                                  ),
+                                  SizedBox(
+                                    height: 10,
+                                  ),
+                                  Row(
+                                    children: [
+                                      Container(
+                                          margin: EdgeInsets.only(
+                                              left: 15, right: 5),
+                                          child:
+                                              Icon(Icons.description_outlined)),
+                                      Container(
+                                          width: 270,
+                                          child: Text(
+                                            'Ghi chú: ${service.note}',
+                                            style: TextStyle(fontSize: 13),
+                                          ))
+                                    ],
                                   )
                                 ],
                               ),
-                              SizedBox(
-                                height: 10,
-                              ),
-                              Row(
-                                children: [
-                                  Container(
-                                      margin:
-                                          EdgeInsets.only(left: 15, right: 5),
-                                      child: Icon(Icons.description_outlined)),
-                                  Container(
-                                      width: 270,
-                                      child: Text(
-                                        'Ghi chú: ${service.note}',
-                                        style: TextStyle(fontSize: 13),
-                                      ))
-                                ],
-                              )
-                            ],
-                          ),
-                          Container(
-                            padding: EdgeInsets.symmetric(horizontal: 7),
-                            child: ListView.separated(
-                              shrinkWrap: true,
-                              itemCount: service.listItem.length,
-                              separatorBuilder: (context, index) => SizedBox(
-                                height: 6,
-                              ),
-                              itemBuilder: (context, index) => Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: [
-                                  Row(
-                                    children: [
-                                      Text(
-                                        '${service.listItem[index].quantity}  x',
-                                        style: TextStyle(
-                                          fontWeight: FontWeight.bold,
-                                          fontSize: 14,
-                                        ),
-                                      ),
-                                      Container(
-                                        margin: EdgeInsets.only(left: 15),
-                                        child: Text(
-                                          service.listItem[index].content,
-                                          style: TextStyle(
-                                            fontWeight: FontWeight.bold,
-                                            fontSize: 14,
-                                          ),
-                                        ),
-                                      ),
-                                    ],
+                              Container(
+                                padding: EdgeInsets.symmetric(horizontal: 7),
+                                child: ListView.separated(
+                                  shrinkWrap: true,
+                                  itemCount: service.listItem.length,
+                                  separatorBuilder: (context, index) =>
+                                      SizedBox(
+                                    height: 6,
                                   ),
-                                  Text(service.listItem[index].price + " đ")
-                                ],
-                              ),
-                            ),
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.only(bottom: 10),
-                            child: Column(
-                              children: [
-                                Row(
-                                  children: [
-                                    Container(
-                                      width: 300,
-                                      child: Row(
+                                  itemBuilder: (context, index) => Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Row(
                                         children: [
-                                          Text('Tổng đơn: '),
                                           Text(
-                                            service.totalBill + " đ",
+                                            '${service.listItem[index].quantity}  x',
+                                            style: TextStyle(
+                                              fontWeight: FontWeight.bold,
+                                              fontSize: 14,
+                                            ),
                                           ),
-                                          Card(
-                                            color: Color(0xffC4C4C4),
-                                            child: Padding(
-                                              padding: const EdgeInsets.all(6),
-                                              child: Text(
-                                                service.payment,
-                                                style: TextStyle(
-                                                    fontWeight: FontWeight.bold,
-                                                    fontSize: 12),
+                                          Container(
+                                            margin: EdgeInsets.only(left: 15),
+                                            child: Text(
+                                              service.listItem[index].content,
+                                              style: TextStyle(
+                                                fontWeight: FontWeight.bold,
+                                                fontSize: 14,
                                               ),
                                             ),
                                           ),
                                         ],
                                       ),
-                                    ),
-                                    Container(
-                                      width: 30,
-                                      child: Icon(
-                                        Icons.keyboard_arrow_down_sharp,
-                                        size: 35,
-                                      ),
-                                    )
-                                  ],
+                                      Text(service.listItem[index].price + " đ")
+                                    ],
+                                  ),
                                 ),
-                                SizedBox(
-                                  height: 10,
-                                ),
-                                status.contains("ĐÃ ĐẾN NƠI")
-                                    ? GestureDetector(
-                                        onTap: () {
-                                          showDialog(
-                                            context: context,
-                                            barrierDismissible: false,
-                                            builder: (context) {
-                                              return AlertDialog(
-                                                  title: Center(
-                                                      child: Text(
-                                                    'Chọn lý do hủy đơn ? ',
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.only(bottom: 10),
+                                child: Column(
+                                  children: [
+                                    Row(
+                                      children: [
+                                        Container(
+                                          width: 300,
+                                          child: Row(
+                                            children: [
+                                              Text('Tổng đơn: '),
+                                              Text(
+                                                service.totalBill + " đ",
+                                              ),
+                                              Card(
+                                                color: Color(0xffC4C4C4),
+                                                child: Padding(
+                                                  padding:
+                                                      const EdgeInsets.all(6),
+                                                  child: Text(
+                                                    service.payment,
                                                     style: TextStyle(
                                                         fontWeight:
-                                                            FontWeight.bold),
-                                                  )),
-                                                  content:
-                                                      SingleChildScrollView(
-                                                    child: Container(
-                                                      // height: MediaQuery.of(context).size.height*0.2,
-                                                      child: Column(
-                                                        children: <Widget>[
-                                                          DropDownField(
-                                                            onValueChanged:
-                                                                (dynamic
-                                                                    value) {
-                                                              reason = value;
-                                                            },
-                                                            value: reason,
-                                                            required: false,
-                                                            // hintText: 'Chọn lý do hủy đơn',
-                                                            labelText:
-                                                                'Lý do hủy đơn',
-                                                            items: listReason,
-                                                          ),
-                                                          SizedBox(
-                                                            height: 20,
-                                                          ),
-                                                          Container(
-                                                            width: 270,
-                                                            child: Row(
-                                                              children: [
-                                                                Container(
-                                                                  color: Colors
-                                                                      .lightBlueAccent
-                                                                      .withOpacity(
-                                                                          0.5),
-                                                                  width: MediaQuery.of(
-                                                                              context)
-                                                                          .size
-                                                                          .width *
-                                                                      0.3,
-                                                                  child:
-                                                                      FlatButton(
-                                                                    child:
-                                                                        Padding(
-                                                                      padding:
-                                                                          const EdgeInsets.all(
-                                                                              8.0),
-                                                                      child: Text(
-                                                                          'Quay lại',
+                                                            FontWeight.bold,
+                                                        fontSize: 12),
+                                                  ),
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                        Container(
+                                          width: 30,
+                                          child: Icon(
+                                            Icons.keyboard_arrow_down_sharp,
+                                            size: 35,
+                                          ),
+                                        )
+                                      ],
+                                    ),
+                                    SizedBox(
+                                      height: 10,
+                                    ),
+                                    status.contains("ĐÃ ĐẾN NƠI")
+                                        ? GestureDetector(
+                                            onTap: () {
+                                              showDialog(
+                                                context: context,
+                                                barrierDismissible: false,
+                                                builder: (context) {
+                                                  return AlertDialog(
+                                                      title: Center(
+                                                          child: Text(
+                                                        'Chọn lý do hủy đơn ? ',
+                                                        style: TextStyle(
+                                                            fontWeight:
+                                                                FontWeight
+                                                                    .bold),
+                                                      )),
+                                                      content:
+                                                          SingleChildScrollView(
+                                                        child: Container(
+                                                          // height: MediaQuery.of(context).size.height*0.2,
+                                                          child: Column(
+                                                            children: <Widget>[
+                                                              DropDownField(
+                                                                onValueChanged:
+                                                                    (dynamic
+                                                                        value) {
+                                                                  reason =
+                                                                      value;
+                                                                },
+                                                                value: reason,
+                                                                required: false,
+                                                                // hintText: 'Chọn lý do hủy đơn',
+                                                                labelText:
+                                                                    'Lý do hủy đơn',
+                                                                items:
+                                                                    listReason,
+                                                              ),
+                                                              SizedBox(
+                                                                height: 20,
+                                                              ),
+                                                              Container(
+                                                                width: 270,
+                                                                child: Row(
+                                                                  children: [
+                                                                    Container(
+                                                                      color: Colors
+                                                                          .lightBlueAccent
+                                                                          .withOpacity(
+                                                                              0.5),
+                                                                      width: MediaQuery.of(context)
+                                                                              .size
+                                                                              .width *
+                                                                          0.3,
+                                                                      child:
+                                                                          FlatButton(
+                                                                        child:
+                                                                            Padding(
+                                                                          padding:
+                                                                              const EdgeInsets.all(8.0),
+                                                                          child: Text(
+                                                                              'Quay lại',
+                                                                              style: TextStyle(fontSize: 16, color: Colors.black.withOpacity(0.6))),
+                                                                        ),
+                                                                        onPressed:
+                                                                            () =>
+                                                                                Navigator.pop(context),
+                                                                      ),
+                                                                    ),
+                                                                    SizedBox(
+                                                                      width: 10,
+                                                                    ),
+                                                                    Container(
+                                                                      color: Colors
+                                                                          .redAccent,
+                                                                      width: MediaQuery.of(context)
+                                                                              .size
+                                                                              .width *
+                                                                          0.3,
+                                                                      child: FlatButton(
+                                                                          child: Padding(
+                                                                        padding:
+                                                                            const EdgeInsets.all(7.0),
+                                                                        child:
+                                                                            Text(
+                                                                          'HỦY ĐƠN',
                                                                           style: TextStyle(
                                                                               fontSize: 16,
-                                                                              color: Colors.black.withOpacity(0.6))),
+                                                                              color: Colors.black.withOpacity(0.6)),
+                                                                        ),
+                                                                      )),
                                                                     ),
-                                                                    onPressed: () =>
-                                                                        Navigator.pop(
-                                                                            context),
-                                                                  ),
+                                                                  ],
                                                                 ),
-                                                                SizedBox(
-                                                                  width: 10,
-                                                                ),
-                                                                Container(
-                                                                  color: Colors
-                                                                      .redAccent,
-                                                                  width: MediaQuery.of(
-                                                                              context)
-                                                                          .size
-                                                                          .width *
-                                                                      0.3,
-                                                                  child:
-                                                                      FlatButton(
-                                                                          child:
-                                                                              Padding(
-                                                                    padding:
-                                                                        const EdgeInsets.all(
-                                                                            7.0),
-                                                                    child: Text(
-                                                                      'HỦY ĐƠN',
-                                                                      style: TextStyle(
-                                                                          fontSize:
-                                                                              16,
-                                                                          color: Colors
-                                                                              .black
-                                                                              .withOpacity(0.6)),
-                                                                    ),
-                                                                  )),
-                                                                ),
-                                                              ],
-                                                            ),
+                                                              ),
+                                                            ],
+                                                          ),
+                                                        ),
+                                                      ));
+                                                },
+                                              );
+                                            },
+                                            child: SizedBox(
+                                                width: 336,
+                                                height: 30,
+                                                child: OutlinedButton(
+                                                  onPressed: () {
+                                                    showDialog(
+                                                      context: context,
+                                                      barrierDismissible: false,
+                                                      builder: (context) =>
+                                                          AlertDialog(
+                                                        // title: Text("Bạn có chắc muốn hủy đơn?"),
+                                                        content: Text(
+                                                          "Bạn có muốn hủy đơn không?",
+                                                        ),
+                                                        actions: [
+                                                          FlatButton(
+                                                            textColor: Color(
+                                                                0xFF6200EE),
+                                                            onPressed: () {
+                                                              Navigator.of(
+                                                                      context)
+                                                                  .pop();
+                                                            },
+                                                            child:
+                                                                Text('Không'),
+                                                          ),
+                                                          FlatButton(
+                                                            textColor: Color(
+                                                                0xFF6200EE),
+                                                            onPressed:
+                                                                () async {
+                                                              final result = await Navigator
+                                                                      .of(
+                                                                          context)
+                                                                  .pushReplacement(
+                                                                      MaterialPageRoute(
+                                                                builder:
+                                                                    (context) =>
+                                                                        CancelReason(),
+                                                              ));
+                                                            },
+                                                            child:
+                                                                Text('Đồng ý'),
                                                           ),
                                                         ],
                                                       ),
+                                                    );
+                                                  },
+                                                  child: Text("HỦY ĐƠN"),
+                                                )),
+                                          )
+                                        : SizedBox(
+                                            height: 1,
+                                          ),
+                                    // status.contains("CHUẨN BỊ XONG")
+                                    //     ? GestureDetector(
+                                    //         onTap: () {
+                                    //           MapUtils4.openMap(
+                                    //               currentAddress, service.address);
+                                    //         },
+                                    //         child: SizedBox(
+                                    //           width: 336,
+                                    //           height: 30,
+                                    //           child: Material(
+                                    //             color: Colors.lightBlueAccent
+                                    //                 .withOpacity(0.8),
+                                    //             borderRadius:
+                                    //                 BorderRadius.circular(5),
+                                    //             clipBehavior: Clip.antiAlias,
+                                    //             child: Padding(
+                                    //               padding: const EdgeInsets.only(
+                                    //                 left: 87,
+                                    //                 right: 88,
+                                    //                 top: 8,
+                                    //                 bottom: 9,
+                                    //               ),
+                                    //               child: Text(
+                                    //                 "XEM BẢN ĐỒ",
+                                    //                 textAlign: TextAlign.center,
+                                    //                 style: TextStyle(
+                                    //                   color: Colors.white,
+                                    //                   fontSize: 14,
+                                    //                 ),
+                                    //               ),
+                                    //             ),
+                                    //           ),
+                                    //         ),
+                                    //       )
+                                    //     : SizedBox(
+                                    //         height: 1,
+                                    //       ),
+                                    SizedBox(
+                                      height: 5,
+                                    ),
+                                    GestureDetector(
+                                      onTap: () {
+                                        if (status.contains("ĐÃ ĐẾN NƠI")) {
+                                          setState(() {
+                                            tab = 3;
+                                            status = "ĐÃ HOÀN THÀNH";
+                                            statusBooking = "DOING";
+                                            colorTap3 = Color(0x2d27beba);
+                                            colorTap1 = Colors.white;
+                                            colorTap2 = Colors.white;
+                                            colorTap4 = Colors.white;
+                                          });
+                                        } else if (status
+                                            .contains("ĐÃ HOÀN THÀNH")) {
+                                          setState(() {
+                                            tab = 4;
+                                            status = "XEM CHI TIẾT";
+                                            statusBooking = "DONE";
+                                            colorTap4 = Color(0x2d27beba);
+                                            colorTap2 = Colors.white;
+                                            colorTap3 = Colors.white;
+                                            colorTap1 = Colors.white;
+                                          });
+                                        } else if (status
+                                            .contains("CHUẨN BỊ XONG")) {
+                                          setState(() {
+                                            status = "ĐÃ ĐẾN NƠI";
+                                            colorTap2 = Color(0x2d27beba);
+                                            colorTap1 = Colors.white;
+                                            colorTap3 = Colors.white;
+                                            colorTap4 = Colors.white;
+                                            statusBooking = "ON THE WAY";
+                                          });
+                                        }
+                                      },
+                                      child: status.contains("XEM CHI TIẾT")
+                                          ? SizedBox()
+                                          : SizedBox(
+                                              width: 336,
+                                              height: 40,
+                                              child: Material(
+                                                color: Color(0xff7899D4),
+                                                borderRadius:
+                                                    BorderRadius.circular(5),
+                                                clipBehavior: Clip.antiAlias,
+                                                child: Padding(
+                                                  padding:
+                                                      const EdgeInsets.only(
+                                                    left: 87,
+                                                    right: 88,
+                                                    top: 10,
+                                                    bottom: 9,
+                                                  ),
+                                                  child: Text(
+                                                    status,
+                                                    textAlign: TextAlign.center,
+                                                    style: TextStyle(
+                                                      color: Colors.white,
+                                                      fontSize: 15,
                                                     ),
-                                                  ));
-                                            },
-                                          );
-                                        },
-                                        child: SizedBox(
-                                          width: 336,
-                                          height: 30,
-                                          child: Material(
-                                            color: Colors.redAccent,
-                                            borderRadius:
-                                                BorderRadius.circular(5),
-                                            clipBehavior: Clip.antiAlias,
-                                            child: Padding(
-                                              padding: const EdgeInsets.only(
-                                                left: 87,
-                                                right: 88,
-                                                top: 8,
-                                                bottom: 9,
-                                              ),
-                                              child: Text(
-                                                "HỦY ĐƠN",
-                                                textAlign: TextAlign.center,
-                                                style: TextStyle(
-                                                  color: Colors.white,
-                                                  fontSize: 14,
+                                                  ),
                                                 ),
                                               ),
                                             ),
-                                          ),
-                                        ),
-                                      )
-                                    : SizedBox(
-                                        height: 1,
-                                      ),
-                                // status.contains("CHUẨN BỊ XONG")
-                                //     ? GestureDetector(
-                                //         onTap: () {
-                                //           MapUtils4.openMap(
-                                //               currentAddress, service.address);
-                                //         },
-                                //         child: SizedBox(
-                                //           width: 336,
-                                //           height: 30,
-                                //           child: Material(
-                                //             color: Colors.lightBlueAccent
-                                //                 .withOpacity(0.8),
-                                //             borderRadius:
-                                //                 BorderRadius.circular(5),
-                                //             clipBehavior: Clip.antiAlias,
-                                //             child: Padding(
-                                //               padding: const EdgeInsets.only(
-                                //                 left: 87,
-                                //                 right: 88,
-                                //                 top: 8,
-                                //                 bottom: 9,
-                                //               ),
-                                //               child: Text(
-                                //                 "XEM BẢN ĐỒ",
-                                //                 textAlign: TextAlign.center,
-                                //                 style: TextStyle(
-                                //                   color: Colors.white,
-                                //                   fontSize: 14,
-                                //                 ),
-                                //               ),
-                                //             ),
-                                //           ),
-                                //         ),
-                                //       )
-                                //     : SizedBox(
-                                //         height: 1,
-                                //       ),
-                                SizedBox(
-                                  height: 5,
-                                ),
-                                GestureDetector(
-                                  onTap: () {
-                                    if (status.contains("ĐÃ ĐẾN NƠI")) {
-                                      setState(() {
-                                        tab = 3;
-                                        status = "ĐÃ HOÀN THÀNH";
-                                        statusBooking = "DOING";
-                                        colorTap3 = Color(0x2d27beba);
-                                        colorTap1 = Colors.white;
-                                        colorTap2 = Colors.white;
-                                        colorTap4 = Colors.white;
-                                      });
-                                    } else if (status
-                                        .contains("ĐÃ HOÀN THÀNH")) {
-                                      setState(() {
-                                        tab = 4;
-                                        status = "XEM CHI TIẾT";
-                                        statusBooking = "DONE";
-                                        colorTap4 = Color(0x2d27beba);
-                                        colorTap2 = Colors.white;
-                                        colorTap3 = Colors.white;
-                                        colorTap1 = Colors.white;
-                                      });
-                                    } else if (status
-                                        .contains("CHUẨN BỊ XONG")) {
-                                      setState(() {
-                                        status = "ĐÃ ĐẾN NƠI";
-                                        colorTap2 = Color(0x2d27beba);
-                                        colorTap1 = Colors.white;
-                                        colorTap3 = Colors.white;
-                                        colorTap4 = Colors.white;
-                                        statusBooking = "ON THE WAY";
-                                      });
-                                    }
-                                  },
-                                  child: SizedBox(
-                                    width: 336,
-                                    height: 40,
-                                    child: Material(
-                                      color: Color(0xff7899D4),
-                                      borderRadius: BorderRadius.circular(5),
-                                      clipBehavior: Clip.antiAlias,
-                                      child: Padding(
-                                        padding: const EdgeInsets.only(
-                                          left: 87,
-                                          right: 88,
-                                          top: 10,
-                                          bottom: 9,
-                                        ),
-                                        child: Text(
-                                          status,
-                                          textAlign: TextAlign.center,
-                                          style: TextStyle(
-                                            color: Colors.white,
-                                            fontSize: 15,
-                                          ),
-                                        ),
-                                      ),
                                     ),
-                                  ),
+                                  ],
                                 ),
-                              ],
-                            ),
-                          ),
-                        ],
-                      );
-                    }),
+                              ),
+                            ],
+                          );
+                        }),
               )
             ],
           ),
@@ -919,7 +944,7 @@ class LoadAllBooking extends StatelessWidget {
           physics: BouncingScrollPhysics(),
           itemCount: listDetail.length,
           itemBuilder: (BuildContext buildContext, int index) {
-            ServiceCusDetail service = listDetail[index];
+            ServiceCusDetail service = listDetailTest[index];
             return OutlinedCard(
               margin: EdgeInsets.only(top: 15),
               padding: EdgeInsets.only(left: 4, right: 4),

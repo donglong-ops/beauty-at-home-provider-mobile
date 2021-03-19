@@ -24,7 +24,7 @@ class ServiceDetailDescription extends StatelessWidget {
                 Container(
                     width: MediaQuery.of(context).size.width * 0.6,
                     child: TextFormField(
-                       initialValue: name,
+                      initialValue: name,
                       decoration: InputDecoration(
                         border: OutlineInputBorder(),
                       ),
@@ -41,15 +41,14 @@ class ServiceDetailDescription extends StatelessWidget {
             ),
           ),
           Container(
-            width: MediaQuery.of(context).size.width,
+              width: MediaQuery.of(context).size.width,
               padding: const EdgeInsets.all(4.0),
               child: TextFormField(
                 initialValue: note,
                 decoration: InputDecoration(
                   border: OutlineInputBorder(),
                 ),
-              )
-          ),
+              )),
         ],
       ),
     );
