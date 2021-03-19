@@ -15,10 +15,10 @@ class AddNewServiceScreen extends StatefulWidget {
 }
 
 class _AddNewServiceScreenState extends State<AddNewServiceScreen> {
-
   File _file;
-  void pickImage() async{
-    PickedFile pickedFile = await ImagePicker().getImage(source: ImageSource.gallery);
+  void pickImage() async {
+    PickedFile pickedFile =
+        await ImagePicker().getImage(source: ImageSource.gallery);
     setState(() {
       _file = File(pickedFile.path);
     });
@@ -40,44 +40,52 @@ class _AddNewServiceScreenState extends State<AddNewServiceScreen> {
                     height: 200.0,
                     width: MediaQuery.of(context).size.width,
                     margin: EdgeInsets.only(bottom: 1.0),
-                    decoration: BoxDecoration(
-                      boxShadow: [
-                        BoxShadow(
-                            color: Colors.black26,
-                            offset: Offset(0.0, 2.0),
-                            blurRadius: 6.0
-                        ),
-                      ],
-                    ),
+                    padding: EdgeInsets.only(bottom: 20),
+                    decoration: BoxDecoration(border: Border.all(width: 0.5)),
                     child: Container(
                       child: ClipRRect(
-                        child:
-                        _file == null ? GestureDetector(
-                          onTap: pickImage,
-                          child: Image(
-                            image: AssetImage('public/img/upload.jpg'),
-                            fit: BoxFit.fitHeight,
-                          ),
-                        ):
-                        Image.file(_file,fit: BoxFit.cover,),
-                       // Image.asset(_file.path,fit: BoxFit.cover,)
+                        child: _file == null
+                            ? GestureDetector(
+                                onTap: pickImage,
+                                child: Container(
+                                  height: 50,
+                                  padding: EdgeInsets.only(top: 15),
+                                  child: Image(
+                                    image: AssetImage(
+                                      'public/img/Image.png',
+                                    ),
+                                    fit: BoxFit.fitHeight,
+                                  ),
+                                ),
+                              )
+                            : Image.file(
+                                _file,
+                                fit: BoxFit.cover,
+                              ),
+                        // Image.asset(_file.path,fit: BoxFit.cover,)
                       ),
                     ),
                   ),
                   Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 5.0, vertical: 25.0),
+                    padding:
+                        EdgeInsets.symmetric(horizontal: 5.0, vertical: 25.0),
                     child: Row(
                       children: <Widget>[
-                      IconButton(
-                        icon: Icon(Icons.cancel, color: Colors.black.withOpacity(0.6),),
-                        iconSize: 30.0,
-                        color: Colors.black,
-                        onPressed: () => Navigator.pop(context),
-                      )
-                    ],),
+                        IconButton(
+                          icon: Icon(
+                            Icons.cancel,
+                            color: Colors.black.withOpacity(0.6),
+                          ),
+                          iconSize: 30.0,
+                          color: Colors.black,
+                          onPressed: () => Navigator.pop(context),
+                        )
+                      ],
+                    ),
                   ),
                   Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 5.0, vertical: 20.0),
+                    padding:
+                        EdgeInsets.symmetric(horizontal: 5.0, vertical: 20.0),
                     child: Container(
                       height: 170.0,
                       alignment: Alignment.bottomRight,
@@ -89,7 +97,10 @@ class _AddNewServiceScreenState extends State<AddNewServiceScreen> {
                           ),
                         ),
                         child: IconButton(
-                          icon: Icon(Icons.add , color: Colors.black.withOpacity(0.6),),
+                          icon: Icon(
+                            Icons.add,
+                            color: Colors.black.withOpacity(0.6),
+                          ),
                           iconSize: 25.0,
                           color: Colors.black,
                           //onPressed: getImage,
@@ -101,7 +112,7 @@ class _AddNewServiceScreenState extends State<AddNewServiceScreen> {
                 ],
               ),
               Container(
-                margin: EdgeInsets.only(bottom: 15.0,top:5),
+                margin: EdgeInsets.only(bottom: 15.0, top: 5),
                 height: MediaQuery.of(context).size.height * 0.17,
                 width: MediaQuery.of(context).size.width,
                 child: Column(
@@ -111,31 +122,33 @@ class _AddNewServiceScreenState extends State<AddNewServiceScreen> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: <Widget>[
                         Padding(
-                          padding: const EdgeInsets.only(left: 4,top: 4,right: 0,bottom: 4),
+                          padding: const EdgeInsets.only(
+                              left: 4, top: 4, right: 0, bottom: 4),
                           child: Container(
-                              width: MediaQuery.of(context).size.width * 0.6,
-                              child:
-                              TextField(
-                                textInputAction: TextInputAction.done,
-                                decoration: InputDecoration(
-                                    contentPadding: EdgeInsets.only(top: 3,left: 15),
-                                    border: OutlineInputBorder(),
-                                    labelText: 'Tên dịch vụ',
-                                ),
+                            width: MediaQuery.of(context).size.width * 0.6,
+                            child: TextField(
+                              textInputAction: TextInputAction.done,
+                              decoration: InputDecoration(
+                                contentPadding:
+                                    EdgeInsets.only(top: 3, left: 15),
+                                border: OutlineInputBorder(),
+                                labelText: 'Tên dịch vụ',
                               ),
+                            ),
                           ),
                         ),
                         Padding(
-                          padding: const EdgeInsets.only(left: 0,top: 4,right: 4,bottom: 4),
+                          padding: const EdgeInsets.only(
+                              left: 0, top: 4, right: 4, bottom: 4),
                           child: Container(
-                              width: MediaQuery.of(context).size.width * 0.35,
-                              child:
-                             TextField(
-                               keyboardType: TextInputType.number,
-                               decoration: InputDecoration(
-                                  contentPadding: EdgeInsets.only(top: 3,left: 15),
-                                  border: OutlineInputBorder(),
-                                  labelText: 'Giá (VND)',
+                            width: MediaQuery.of(context).size.width * 0.35,
+                            child: TextField(
+                              keyboardType: TextInputType.number,
+                              decoration: InputDecoration(
+                                contentPadding:
+                                    EdgeInsets.only(top: 3, left: 15),
+                                border: OutlineInputBorder(),
+                                labelText: 'Giá (VND)',
                               ),
                             ),
                           ),
@@ -150,7 +163,7 @@ class _AddNewServiceScreenState extends State<AddNewServiceScreen> {
                         child: TextField(
                           textInputAction: TextInputAction.done,
                           decoration: InputDecoration(
-                            contentPadding: EdgeInsets.only(top: 3,left: 15),
+                            contentPadding: EdgeInsets.only(top: 3, left: 15),
                             labelText: 'Miêu tả dịch vụ (nếu có)*',
                             border: OutlineInputBorder(),
                           ),
@@ -206,7 +219,8 @@ class _AddNewServiceScreenState extends State<AddNewServiceScreen> {
                     backgroundColor: Colors.black.withOpacity(0.5),
                     label: Text(
                       'Lưu mới',
-                      style: TextStyle(fontSize: 17,color: Colors.white, letterSpacing: 4),
+                      style: TextStyle(
+                          fontSize: 17, color: Colors.white, letterSpacing: 4),
                     ),
                   ),
                 ),
