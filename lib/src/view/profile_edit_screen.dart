@@ -113,7 +113,6 @@ class ProfileEditScreenState extends  State<ProfileEditScreen> {
               buildTextField("Name", "Huỳnh Thế Hiển", false),
               buildTextField("Địa chỉ Email", "thehienvag@gmail.com", false),
               buildTextField("Số điện thoại", "0918455666", false),
-              buildTextField("Địa chỉ (Không bắt buộc)", " ", false),
               SizedBox(height: 35,),
             ],
           ),

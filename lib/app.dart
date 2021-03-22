@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_app/src/view/provider_confirm_screen.dart';
+import 'package:flutter_app/src/view/provider_newOrder_Screen.dart';
 
 class App extends StatelessWidget {
   const App({
@@ -14,7 +15,7 @@ class App extends StatelessWidget {
       initialRoute: '/',
       routes: {
         // When navigating to the "/" route, build the FirstScreen widget.
-        '/': (context) => ProviderScreen(),
+        '/': (context) => ProviderNewOderScreen(),
         //'/': (context) => CheckoutScreen(),
         //'/': (context) => PaymentScreen(),
         // '/': (context) => NotificationScreen(),

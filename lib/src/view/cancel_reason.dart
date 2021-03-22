@@ -35,6 +35,7 @@ class _CancelReasonState extends State<CancelReason> {
             Navigator.of(context).pushReplacement(MaterialPageRoute(
               builder: (context) => ProviderScreen(noContent: true),
             ));
+
           },
           child: Text('XÁC NHẬN HỦY ĐƠN'),
         ),

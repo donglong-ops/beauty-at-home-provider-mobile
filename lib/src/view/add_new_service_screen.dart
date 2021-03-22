@@ -1,8 +1,11 @@
+import 'dart:convert';
 import 'dart:io';
-
 import 'package:flutter/material.dart';
+import 'package:flutter_app/src/apis/provider_api/simple_api.dart';
+import 'package:http/http.dart';
+import 'package:provider/provider.dart';
+import 'package:flutter_app/src/providers/serviceType_provider.dart';
 import 'package:flutter_app/src/view/provider_manager_service_screen.dart';
-import 'package:flutter_app/src/widgets/shared_widget/style.dart';
 import 'package:image_picker/image_picker.dart';
 
 class AddNewServiceScreen extends StatefulWidget {
@@ -15,14 +18,26 @@ class AddNewServiceScreen extends StatefulWidget {
 }
 
 class _AddNewServiceScreenState extends State<AddNewServiceScreen> {
+  List serviceType =['Gội đầu','Chăm sóc tóc','Massage','Makeup - Trang điểm','Chăm sóc da','Cắt tóc','Nails - Làm móng'];
+  String serviceName;
+  String servicePrice;
+  String serviceSumary;
+  String serviceTypeId;
+  String serviceDescription;
+
+
   File _file;
   void pickImage() async {
-    PickedFile pickedFile =
-        await ImagePicker().getImage(source: ImageSource.gallery);
+    PickedFile pickedFile = await ImagePicker().getImage(source: ImageSource.gallery);
     setState(() {
       _file = File(pickedFile.path);
     });
     print("linkkkkkkkkkeeeee: " + _file.path);
+  }
+  @override
+  void initState() {
+    // context.read<ServiceTypeProvider>().initAllServiceType("https://beautyathome2.azurewebsites.net/api/v1.0/servicetypes");
+    super.initState();
   }
 
   @override
@@ -56,11 +71,7 @@ class _AddNewServiceScreenState extends State<AddNewServiceScreen> {
                                 ),
                               ),
                             )
-                          : ClipRRect(
-                              child: Image.file(
-                                _file,
-                                fit: BoxFit.cover,
-                              ),
+                          : ClipRRect(child: Image.file(_file, fit: BoxFit.cover,),
                               // Image.asset(_file.path,fit: BoxFit.cover,)
                             ),
                     ),
@@ -111,7 +122,7 @@ class _AddNewServiceScreenState extends State<AddNewServiceScreen> {
                 ],
               ),
               Container(
-                margin: EdgeInsets.only(bottom: 15.0, top: 5),
+                margin: EdgeInsets.only( top: 5),
                 height: MediaQuery.of(context).size.height * 0.17,
                 width: MediaQuery.of(context).size.width,
                 child: Column(
@@ -128,11 +139,15 @@ class _AddNewServiceScreenState extends State<AddNewServiceScreen> {
                             child: TextField(
                               textInputAction: TextInputAction.done,
                               decoration: InputDecoration(
-                                contentPadding:
-                                    EdgeInsets.only(top: 3, left: 15),
+                                contentPadding: EdgeInsets.only(top: 3, left: 15),
                                 border: OutlineInputBorder(),
                                 labelText: 'Tên dịch vụ',
                               ),
+                              onChanged: (value){
+                                setState(() {
+                                  serviceName = value;
+                                });
+                              },
                             ),
                           ),
                         ),
@@ -145,10 +160,15 @@ class _AddNewServiceScreenState extends State<AddNewServiceScreen> {
                               keyboardType: TextInputType.number,
                               decoration: InputDecoration(
                                 contentPadding:
-                                    EdgeInsets.only(top: 3, left: 15),
+                                EdgeInsets.only(top: 3, left: 15),
                                 border: OutlineInputBorder(),
                                 labelText: 'Giá (VND)',
                               ),
+                              onChanged: (value){
+                                setState(() {
+                                  servicePrice = value;
+                                });
+                              },
                             ),
                           ),
                         ),
@@ -163,9 +183,14 @@ class _AddNewServiceScreenState extends State<AddNewServiceScreen> {
                           textInputAction: TextInputAction.done,
                           decoration: InputDecoration(
                             contentPadding: EdgeInsets.only(top: 3, left: 15),
-                            labelText: 'Mô tả dịch vụ (nếu có)*',
+                            labelText: 'Mô tả dịch vụ (Yêu cầu)*',
                             border: OutlineInputBorder(),
                           ),
+                          onChanged: (value){
+                            setState(() {
+                              serviceSumary = value;
+                            });
+                          },
                         ),
                       ),
                     ),
@@ -175,13 +200,42 @@ class _AddNewServiceScreenState extends State<AddNewServiceScreen> {
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
+                  Row(
+                    children: [
+                      Container(
+                        margin: EdgeInsets.only(right: 5,left: 7),
+                          child: Text("Chọn loại dịch vụ* : ",
+                            style: TextStyle(fontSize: 18,
+                            color: Colors.black.withOpacity(0.6)),)),
+                      Container(
+                        child: Padding(
+                          padding: const EdgeInsets.all(4.0),
+                          child: DropdownButton(
+                            icon: Icon(Icons.arrow_drop_down,size: 25,),
+                            value: serviceTypeId,
+                            onChanged: (newValue){
+                              setState(() {
+                                serviceTypeId = newValue;
+                              });
+                            },
+                            items: serviceType.map((valueType){
+                                return DropdownMenuItem(
+                                  value: valueType,
+                                  child: Text(valueType),
+                                );
+                          }).toList(),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
                   Container(
                     color: Colors.white,
-                    padding: EdgeInsets.only(left: 10.0, bottom: 10.0),
+                    padding: EdgeInsets.only(left: 10.0, bottom: 4),
                     child: Text(
-                      'CÁC BƯỚC LÀM DỊCH VỤ',
+                      'Các bước làm dịch vụ*',
                       style: TextStyle(
-                          fontSize: 15.0, fontWeight: FontWeight.bold),
+                          fontSize: 16.0),
                     ),
                   ),
                   Padding(
@@ -196,6 +250,9 @@ class _AddNewServiceScreenState extends State<AddNewServiceScreen> {
                           border: OutlineInputBorder(),
                         ),
                         maxLines: 9,
+                        onChanged: (value){
+                          serviceDescription = value;
+                        },
                       ),
                     ),
                   ),
@@ -203,9 +260,16 @@ class _AddNewServiceScreenState extends State<AddNewServiceScreen> {
               ),
               GestureDetector(
                 onTap: () {
-                  Navigator.of(context).push(MaterialPageRoute(
-                    builder: (context) => ProviderManagerScreen(),
-                  ));
+                  if(serviceName.isNotEmpty && servicePrice.isNotEmpty && serviceSumary.isNotEmpty
+                      && serviceDescription.isNotEmpty && serviceTypeId.isNotEmpty){
+
+                    SimpleAPI.postFile('services', description: serviceDescription,
+                                      price: servicePrice,summary: serviceSumary,
+                                      estimateTime: "30",serviceName: serviceName,serviceTypeId: "3", accountId: "3", path: _file.path);
+                    Navigator.of(context).push(MaterialPageRoute(
+                      builder: (context) => ProviderManagerScreen(),
+                    ));
+                  }
                 },
                 child: Container(
                   width: MediaQuery.of(context).size.width * 0.9,

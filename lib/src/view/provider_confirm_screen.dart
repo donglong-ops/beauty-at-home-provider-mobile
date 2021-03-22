@@ -1,8 +1,12 @@
-import 'package:dropdownfield/dropdownfield.dart';
+import 'dart:convert';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_app/src/models/cart_item.dart';
+import 'package:flutter_app/src/apis/provider_api/simple_api.dart';
+import 'package:flutter_app/src/models-new/booking_model.dart';
+import 'package:flutter_app/src/providers/booking_provider.dart';
+import 'package:flutter_app/src/utils/utils.dart';
 import 'package:flutter_app/src/utils/widgets_utils.dart';
 import 'package:flutter_app/src/view/cancel_reason.dart';
 import 'package:flutter_app/src/view/provider_newOrder_Screen.dart';
@@ -10,68 +14,44 @@ import 'package:flutter_app/src/widgets/google_map_service/google_service.dart';
 import 'package:flutter_app/src/widgets/shared_widget.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:geocoder/geocoder.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:location/location.dart';
-
+import 'package:provider/provider.dart';
+import 'package:intl/intl.dart';
 class ProviderScreen extends StatefulWidget {
   final bool noContent;
+  final bool isSwiched;
 
-  const ProviderScreen({Key key, this.noContent = false}) : super(key: key);
-
+  const ProviderScreen({Key key, this.noContent = false, this.isSwiched}) : super(key: key);
   @override
   State<StatefulWidget> createState() => _ProviderScreenState();
 }
 
 String currentAddress = "";
 
-List<ServiceCusDetail> listDetailTest = List.from(<ServiceCusDetail>[
-  ServiceCusDetail(
-    cusID: 'GF -267',
-    cusName: 'Hữu Long',
-    address: '10 Võ Văn Hát, Long Trường, Quận 9, Thành phố Hồ Chí Minh',
-    status: 'ON THE WAY',
-    note:
-        'Làm sao để có một bản ghi chú hiệu quả mà không mất quá nhiều thời gian',
-    time: '7:37 PM',
-    timeMove: '20 mins - 5km',
-    payment: 'CASH',
-    totalBill: '740.000',
-    listItem: List.from(
-      <CartItem>[
-        CartItem(
-          content: 'Trang điểm dự tiệc',
-          quantity: 1,
-          price: '470.000',
-        ),
-        CartItem(
-          content: 'Cắt móng uốn cong',
-          quantity: 1,
-          price: '270.000',
-        ),
-      ],
-    ),
-  ),
-]);
-
 class _ProviderScreenState extends State<ProviderScreen> {
-  bool isSwiched = true;
   int tab = 1;
-  String status = "CHUẨN BỊ XONG";
-  String statusBooking = "ON THE WAY";
   Color colorTap1 = Color(0x2d27beba);
   Color colorTap2 = Colors.white;
   Color colorTap3 = Colors.white;
   Color colorTap4 = Colors.white;
-  List<ServiceCusDetail> listDetail = listDetailTest;
+  int index = 0;
+  bool isSwiched = true;
 
   @override
   void initState() {
+    // super.initState();
     getUserLocation();
+    if(widget.isSwiched != null) {
+      isSwiched = widget.isSwiched;
+    }
+    context.read<BookingProvider>().initAllBooking("https://beautyathome2.azurewebsites.net/api/v1.0/bookings?BeautyArtistAccountId=3");
     super.initState();
   }
 
   getUserLocation() async {
-    LocationData myLocation;
     Location location = new Location();
+    LocationData myLocation;
     try {
       myLocation = await location.getLocation();
     } on PlatformException catch (e) {
@@ -87,17 +67,18 @@ class _ProviderScreenState extends State<ProviderScreen> {
     });
   }
 
-  String reason;
-  List<String> listReason = [
-    "Tôi thay đổi ý định",
-    "Tôi bận lúc đó",
-    "Tôi không có đủ đồ nghề",
-    "Tôi sẽ nhận lại sau",
-    "Lý do khác ..."
-  ];
+  getDistance() async {
+    Location location = new Location();
+    LocationData myLocation;
+    myLocation = await location.getLocation();
+    // Geocoder geocoder = new Geocoder(this, addRess);
+    //final double distance = Geolocator.distanceBetween(10.8418324, 106.8071312, myLocation.latitude, myLocation.longitude);
+    final double distance = Geolocator.distanceBetween(10.8418324, 106.8071312, 10.8220246, 106.80624);
+    print("nè nè : " + (distance / 1000).toString());
+  }
 
   Widget title(BuildContext context) {
-    if (isSwiched == true)
+    if (this.isSwiched == true)
       return (Row(
         children: [
           Card(
@@ -181,18 +162,16 @@ class _ProviderScreenState extends State<ProviderScreen> {
           ),
         ],
       ),
-      body: Stack(children: [
-        Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Column(
+      body: Consumer <BookingProvider>(
+        builder: (context, value, child) => value.bookings == null ? Text(" Bạn không có đơn nào ")
+            : Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Column(
             children: <Widget>[
               Container(
                   alignment: Alignment.topLeft,
-                  child: Text(' Đơn đã chấp nhận',
-                      style: TextStyle(
-                          color: Colors.black,
-                          fontSize: 20,
-                          fontWeight: FontWeight.bold))),
+                  child: Text(' Đơn của bạn',
+                      style: TextStyle(color: Colors.black, fontSize: 20, fontWeight: FontWeight.bold))),
               SizedBox(height: 10),
               Container(
                 width: MediaQuery.of(context).size.width,
@@ -206,15 +185,15 @@ class _ProviderScreenState extends State<ProviderScreen> {
                       onTap: () {
                         setState(() {
                           tab = 1;
-                          status = "CHUẨN BỊ XONG";
                           colorTap1 = Color(0x2d27beba);
                           colorTap2 = Colors.white;
                           colorTap3 = Colors.white;
                           colorTap4 = Colors.white;
+                          index = 0;
                         });
                       },
                       child: SizedBox(
-                        width: 63,
+                        width: 80,
                         height: 24,
                         child: Material(
                           color: colorTap1,
@@ -222,14 +201,9 @@ class _ProviderScreenState extends State<ProviderScreen> {
                             borderRadius: BorderRadius.circular(6),
                           ),
                           child: Padding(
-                            padding: const EdgeInsets.only(
-                              left: 10,
-                              right: 6,
-                              top: 6,
-                              bottom: 5,
-                            ),
+                            padding: const EdgeInsets.only(top: 4),
                             child: Text(
-                              "Tất cả (${listDetail.length})",
+                              'Chấp nhận (' + value.bookings.where((element) => element.status == 'Xác nhận').length.toString() + ')',
                               textAlign: TextAlign.center,
                               style: TextStyle(
                                 color: Color(0x7f000000),
@@ -245,16 +219,15 @@ class _ProviderScreenState extends State<ProviderScreen> {
                       onTap: () {
                         setState(() {
                           tab = 2;
-                          status = "ĐÃ ĐẾN NƠI";
                           colorTap2 = Color(0x2d27beba);
                           colorTap1 = Colors.white;
                           colorTap3 = Colors.white;
                           colorTap4 = Colors.white;
-                          statusBooking = "ON THE WAY";
+                          index = 1;
                         });
                       },
                       child: SizedBox(
-                        width: 93,
+                        width: 80,
                         height: 24,
                         child: Material(
                           color: colorTap2,
@@ -262,14 +235,9 @@ class _ProviderScreenState extends State<ProviderScreen> {
                             borderRadius: BorderRadius.circular(6),
                           ),
                           child: Padding(
-                            padding: const EdgeInsets.only(
-                              left: 17,
-                              right: 16,
-                              top: 6,
-                              bottom: 5,
-                            ),
+                            padding: const EdgeInsets.only(top: 4),
                             child: Text(
-                              "Chuẩn bị (1)",
+                              'Chuẩn bị (' + value.bookings.where((element) => element.status == 'Đang trên đường').length.toString() + ')',
                               textAlign: TextAlign.center,
                               style: TextStyle(
                                 color: Color(0x7f000000),
@@ -285,12 +253,11 @@ class _ProviderScreenState extends State<ProviderScreen> {
                       onTap: () {
                         setState(() {
                           tab = 3;
-                          status = "ĐÃ HOÀN THÀNH";
                           colorTap3 = Color(0x2d27beba);
                           colorTap1 = Colors.white;
                           colorTap2 = Colors.white;
                           colorTap4 = Colors.white;
-                          statusBooking = "DOING";
+                          index = 2;
                         });
                       },
                       child: SizedBox(
@@ -302,14 +269,9 @@ class _ProviderScreenState extends State<ProviderScreen> {
                             borderRadius: BorderRadius.circular(6),
                           ),
                           child: Padding(
-                            padding: const EdgeInsets.only(
-                              left: 12,
-                              right: 5,
-                              top: 6,
-                              bottom: 4,
-                            ),
+                            padding: const EdgeInsets.only(top: 4),
                             child: Text(
-                              "Đang làm (1)",
+                              'Đang làm (' + value.bookings.where((element) => element.status == 'Đang làm').length.toString() + ')',
                               textAlign: TextAlign.center,
                               style: TextStyle(
                                 color: Color(0x7f000000),
@@ -325,16 +287,15 @@ class _ProviderScreenState extends State<ProviderScreen> {
                       onTap: () {
                         setState(() {
                           tab = 4;
-                          status = "XEM CHI TIẾT";
                           colorTap4 = Color(0x2d27beba);
                           colorTap2 = Colors.white;
                           colorTap3 = Colors.white;
                           colorTap1 = Colors.white;
-                          statusBooking = "DONE";
+                          index = 3;
                         });
                       },
                       child: SizedBox(
-                        width: 92,
+                        width: 88,
                         height: 24,
                         child: Material(
                           color: colorTap4,
@@ -342,14 +303,9 @@ class _ProviderScreenState extends State<ProviderScreen> {
                             borderRadius: BorderRadius.circular(6),
                           ),
                           child: Padding(
-                            padding: const EdgeInsets.only(
-                              left: 7,
-                              right: 8,
-                              top: 6,
-                              bottom: 4,
-                            ),
+                            padding: const EdgeInsets.all(4),
                             child: Text(
-                              "Hoàn thành (3)",
+                              'Hoàn thành (' + value.bookings.where((element) => element.status == 'Hoàn thành').length.toString() + ')',
                               textAlign: TextAlign.center,
                               style: TextStyle(
                                 color: Color(0x7f000000),
@@ -363,469 +319,11 @@ class _ProviderScreenState extends State<ProviderScreen> {
                   ],
                 ),
               ),
-              // tab > 0 ? LoadAllBooking(status: status) : null,
-              Expanded(
-                child: widget.noContent
-                    ? SizedBox()
-                    : ListView.builder(
-                        physics: BouncingScrollPhysics(),
-                        itemCount: listDetail.length,
-                        itemBuilder: (BuildContext buildContext, int index) {
-                          ServiceCusDetail service = listDetail[index];
-                          return OutlinedCard(
-                            margin: EdgeInsets.only(top: 15),
-                            padding: EdgeInsets.only(left: 4, right: 4),
-                            width: 360,
-                            sections: [
-                              Container(
-                                child: Column(
-                                  children: <Widget>[
-                                    Row(
-                                      children: <Widget>[
-                                        Container(
-                                          width: 270,
-                                          child: Row(
-                                            children: [
-                                              Text(service.cusID),
-                                              Card(
-                                                color: Color(0xff707DB9),
-                                                child: Padding(
-                                                  padding:
-                                                      const EdgeInsets.all(4),
-                                                  child: Text(
-                                                    statusBooking,
-                                                    style: TextStyle(
-                                                        fontWeight:
-                                                            FontWeight.bold,
-                                                        fontSize: 10,
-                                                        color: Colors.white),
-                                                  ),
-                                                ),
-                                              ),
-                                              SizedBox(
-                                                width: 100,
-                                              ),
-                                            ],
-                                          ),
-                                        ),
-                                        Container(
-                                            width: 60,
-                                            child: Text(
-                                              service.time,
-                                              style: TextStyle(
-                                                  fontWeight: FontWeight.bold),
-                                            ))
-                                      ],
-                                    ),
-                                    Row(
-                                      children: <Widget>[
-                                        Container(
-                                          width: 300,
-                                          child: Row(
-                                            children: [
-                                              Icon(Icons.face),
-                                              Text(
-                                                ' Khách đặt: ',
-                                                style: TextStyle(
-                                                    fontWeight: FontWeight.bold,
-                                                    fontSize: 14),
-                                              ),
-                                              Text('${service.cusName}  '),
-                                              Text('(${service.timeMove})'),
-                                            ],
-                                          ),
-                                        ),
-                                        Container(
-                                          width: 30,
-                                          child: Icon(
-                                            Icons.keyboard_arrow_up,
-                                            size: 35,
-                                          ),
-                                        )
-                                      ],
-                                    )
-                                  ],
-                                ),
-                              ),
-                              Column(
-                                children: [
-                                  Column(
-                                    children: [
-                                      Row(children: [
-                                        Container(
-                                            margin: EdgeInsets.only(
-                                                left: 15, right: 5),
-                                            child: Icon(
-                                                Icons.local_library_rounded)),
-                                        Container(
-                                          width: 270,
-                                          child: Text(
-                                            service.address,
-                                            style: TextStyle(fontSize: 13),
-                                          ),
-                                        ),
-                                      ]),
-                                      GestureDetector(
-                                        onTap: () {
-                                          MapUtils4.openMap(
-                                              currentAddress, service.address);
-                                        },
-                                        child: Row(
-                                          children: [
-                                            SizedBox(
-                                              width: 44,
-                                            ),
-                                            Text(
-                                              'XEM BẢN ĐỒ',
-                                              style: TextStyle(
-                                                  color: Color(0xff0DB5B4),
-                                                  fontSize: 11),
-                                            ),
-                                            Icon(
-                                              Icons.arrow_right,
-                                              color: Color(0xff0DB5B4),
-                                            )
-                                          ],
-                                        ),
-                                      )
-                                    ],
-                                  ),
-                                  SizedBox(
-                                    height: 10,
-                                  ),
-                                  Row(
-                                    children: [
-                                      Container(
-                                          margin: EdgeInsets.only(
-                                              left: 15, right: 5),
-                                          child:
-                                              Icon(Icons.description_outlined)),
-                                      Container(
-                                          width: 270,
-                                          child: Text(
-                                            'Ghi chú: ${service.note}',
-                                            style: TextStyle(fontSize: 13),
-                                          ))
-                                    ],
-                                  )
-                                ],
-                              ),
-                              Container(
-                                padding: EdgeInsets.symmetric(horizontal: 7),
-                                child: ListView.separated(
-                                  shrinkWrap: true,
-                                  itemCount: service.listItem.length,
-                                  separatorBuilder: (context, index) =>
-                                      SizedBox(
-                                    height: 6,
-                                  ),
-                                  itemBuilder: (context, index) => Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      Row(
-                                        children: [
-                                          Text(
-                                            '${service.listItem[index].quantity}  x',
-                                            style: TextStyle(
-                                              fontWeight: FontWeight.bold,
-                                              fontSize: 14,
-                                            ),
-                                          ),
-                                          Container(
-                                            margin: EdgeInsets.only(left: 15),
-                                            child: Text(
-                                              service.listItem[index].content,
-                                              style: TextStyle(
-                                                fontWeight: FontWeight.bold,
-                                                fontSize: 14,
-                                              ),
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                      Text(service.listItem[index].price + " đ")
-                                    ],
-                                  ),
-                                ),
-                              ),
-                              Padding(
-                                padding: const EdgeInsets.only(bottom: 10),
-                                child: Column(
-                                  children: [
-                                    Row(
-                                      children: [
-                                        Container(
-                                          width: 300,
-                                          child: Row(
-                                            children: [
-                                              Text('Tổng đơn: '),
-                                              Text(
-                                                service.totalBill + " đ",
-                                              ),
-                                              Card(
-                                                color: Color(0xffC4C4C4),
-                                                child: Padding(
-                                                  padding:
-                                                      const EdgeInsets.all(6),
-                                                  child: Text(
-                                                    service.payment,
-                                                    style: TextStyle(
-                                                        fontWeight:
-                                                            FontWeight.bold,
-                                                        fontSize: 12),
-                                                  ),
-                                                ),
-                                              ),
-                                            ],
-                                          ),
-                                        ),
-                                        Container(
-                                          width: 30,
-                                          child: Icon(
-                                            Icons.keyboard_arrow_down_sharp,
-                                            size: 35,
-                                          ),
-                                        )
-                                      ],
-                                    ),
-                                    SizedBox(
-                                      height: 10,
-                                    ),
-                                    status.contains("ĐÃ ĐẾN NƠI")
-                                        ? GestureDetector(
-                                            onTap: () {
-                                              showDialog(
-                                                context: context,
-                                                barrierDismissible: false,
-                                                builder: (context) {
-                                                  return AlertDialog(
-                                                      title: Center(
-                                                          child: Text(
-                                                        'Chọn lý do hủy đơn ? ',
-                                                        style: TextStyle(
-                                                            fontWeight:
-                                                                FontWeight
-                                                                    .bold),
-                                                      )),
-                                                      content:
-                                                          SingleChildScrollView(
-                                                        child: Container(
-                                                          // height: MediaQuery.of(context).size.height*0.2,
-                                                          child: Column(
-                                                            children: <Widget>[
-                                                              DropDownField(
-                                                                onValueChanged:
-                                                                    (dynamic
-                                                                        value) {
-                                                                  reason =
-                                                                      value;
-                                                                },
-                                                                value: reason,
-                                                                required: false,
-                                                                // hintText: 'Chọn lý do hủy đơn',
-                                                                labelText:
-                                                                    'Lý do hủy đơn',
-                                                                items:
-                                                                    listReason,
-                                                              ),
-                                                              SizedBox(
-                                                                height: 20,
-                                                              ),
-                                                              Container(
-                                                                width: 270,
-                                                                child: Row(
-                                                                  children: [
-                                                                    Container(
-                                                                      color: Colors
-                                                                          .lightBlueAccent
-                                                                          .withOpacity(
-                                                                              0.5),
-                                                                      width: MediaQuery.of(context)
-                                                                              .size
-                                                                              .width *
-                                                                          0.3,
-                                                                      child:
-                                                                          FlatButton(
-                                                                        child:
-                                                                            Padding(
-                                                                          padding:
-                                                                              const EdgeInsets.all(8.0),
-                                                                          child: Text(
-                                                                              'Quay lại',
-                                                                              style: TextStyle(fontSize: 16, color: Colors.black.withOpacity(0.6))),
-                                                                        ),
-                                                                        onPressed:
-                                                                            () =>
-                                                                                Navigator.pop(context),
-                                                                      ),
-                                                                    ),
-                                                                    SizedBox(
-                                                                      width: 10,
-                                                                    ),
-                                                                    Container(
-                                                                      color: Colors
-                                                                          .redAccent,
-                                                                      width: MediaQuery.of(context)
-                                                                              .size
-                                                                              .width *
-                                                                          0.3,
-                                                                      child: FlatButton(
-                                                                          child: Padding(
-                                                                        padding:
-                                                                            const EdgeInsets.all(7.0),
-                                                                        child:
-                                                                            Text(
-                                                                          'HỦY ĐƠN',
-                                                                          style: TextStyle(
-                                                                              fontSize: 16,
-                                                                              color: Colors.black.withOpacity(0.6)),
-                                                                        ),
-                                                                      )),
-                                                                    ),
-                                                                  ],
-                                                                ),
-                                                              ),
-                                                            ],
-                                                          ),
-                                                        ),
-                                                      ));
-                                                },
-                                              );
-                                            },
-                                            child: SizedBox(
-                                                width: 336,
-                                                height: 30,
-                                                child: OutlinedButton(
-                                                  onPressed: () {
-                                                    showDialog(
-                                                      context: context,
-                                                      barrierDismissible: false,
-                                                      builder: (context) =>
-                                                          AlertDialog(
-                                                        // title: Text("Bạn có chắc muốn hủy đơn?"),
-                                                        content: Text(
-                                                          "Bạn có muốn hủy đơn không?",
-                                                        ),
-                                                        actions: [
-                                                          FlatButton(
-                                                            textColor: Color(
-                                                                0xFF6200EE),
-                                                            onPressed: () {
-                                                              Navigator.of(
-                                                                      context)
-                                                                  .pop();
-                                                            },
-                                                            child:
-                                                                Text('Không'),
-                                                          ),
-                                                          FlatButton(
-                                                            textColor: Color(
-                                                                0xFF6200EE),
-                                                            onPressed:
-                                                                () async {
-                                                              final result = await Navigator
-                                                                      .of(
-                                                                          context)
-                                                                  .pushReplacement(
-                                                                      MaterialPageRoute(
-                                                                builder:
-                                                                    (context) =>
-                                                                        CancelReason(),
-                                                              ));
-                                                            },
-                                                            child:
-                                                                Text('Đồng ý'),
-                                                          ),
-                                                        ],
-                                                      ),
-                                                    );
-                                                  },
-                                                  child: Text("HỦY ĐƠN"),
-                                                )),
-                                          )
-                                        : SizedBox(
-                                            height: 1,
-                                          ),
-                                    SizedBox(
-                                      height: 5,
-                                    ),
-                                    GestureDetector(
-                                      onTap: () {
-                                        if (status.contains("ĐÃ ĐẾN NƠI")) {
-                                          setState(() {
-                                            tab = 3;
-                                            status = "ĐÃ HOÀN THÀNH";
-                                            statusBooking = "DOING";
-                                            colorTap3 = Color(0x2d27beba);
-                                            colorTap1 = Colors.white;
-                                            colorTap2 = Colors.white;
-                                            colorTap4 = Colors.white;
-                                          });
-                                        } else if (status
-                                            .contains("ĐÃ HOÀN THÀNH")) {
-                                          setState(() {
-                                            tab = 4;
-                                            status = "XEM CHI TIẾT";
-                                            statusBooking = "DONE";
-                                            colorTap4 = Color(0x2d27beba);
-                                            colorTap2 = Colors.white;
-                                            colorTap3 = Colors.white;
-                                            colorTap1 = Colors.white;
-                                          });
-                                        } else if (status
-                                            .contains("CHUẨN BỊ XONG")) {
-                                          setState(() {
-                                            status = "ĐÃ ĐẾN NƠI";
-                                            colorTap2 = Color(0x2d27beba);
-                                            colorTap1 = Colors.white;
-                                            colorTap3 = Colors.white;
-                                            colorTap4 = Colors.white;
-                                            statusBooking = "ON THE WAY";
-                                          });
-                                        }
-                                      },
-                                      child: status.contains("XEM CHI TIẾT")
-                                          ? SizedBox()
-                                          : SizedBox(
-                                              width: 336,
-                                              height: 40,
-                                              child: Material(
-                                                color: Color(0xff7899D4),
-                                                borderRadius:
-                                                    BorderRadius.circular(5),
-                                                clipBehavior: Clip.antiAlias,
-                                                child: Padding(
-                                                  padding:
-                                                      const EdgeInsets.only(
-                                                    left: 87,
-                                                    right: 88,
-                                                    top: 10,
-                                                    bottom: 9,
-                                                  ),
-                                                  child: Text(
-                                                    status,
-                                                    textAlign: TextAlign.center,
-                                                    style: TextStyle(
-                                                      color: Colors.white,
-                                                      fontSize: 15,
-                                                    ),
-                                                  ),
-                                                ),
-                                              ),
-                                            ),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ],
-                          );
-                        }),
-              )
+              _buildComponent(index,value),
             ],
+            ),
           ),
-        ),
-      ]),
+      ),
       floatingActionButton: (isSwiched == true)
           ? Container(
               width: MediaQuery.of(context).size.width * 0.9,
@@ -847,7 +345,7 @@ class _ProviderScreenState extends State<ProviderScreen> {
                       width: 15,
                     ),
                     Text(
-                      '4 Đơn Mới',
+                      'Đơn Mới',
                       style: TextStyle(color: Colors.white, letterSpacing: 4),
                     ),
                     SizedBox(
@@ -891,223 +389,146 @@ class _ProviderScreenState extends State<ProviderScreen> {
                 ),
               ),
             ),
-      bottomNavigationBar: WidgetUtils.appBottomNavigationBar(0),
+      bottomNavigationBar: WidgetUtils.appBottomNavigationBar(1),
     );
   }
-}
 
-class LoadAllBooking extends StatelessWidget {
-  final String status;
-  LoadAllBooking({this.status = "CHUẨN BỊ XONG"});
+  Widget _buildComponent(int index, BookingProvider value) {
+    switch (index) {
+      case 0:
+        return _buildAllBooking(value);
+        break;
+      case 1:
+        return _buildPrepareBooking(value);
+        break;
+      case 2:
+        return _buildDoingBooking(value);
+        break;
+      case 3:
+        return _buildFinishBooking(value);
+        break;
+    }
+  }
 
-  @override
-  Widget build(BuildContext context) {
-    return Expanded(
-      child: ListView.builder(
+  Widget _buildAllBooking(BookingProvider value){
+    return  Expanded(
+      child: widget.noContent ? SizedBox()
+          : ListView.builder(
           physics: BouncingScrollPhysics(),
-          itemCount: listDetail.length,
+          itemCount: value.bookings.length,
           itemBuilder: (BuildContext buildContext, int index) {
-            ServiceCusDetail service = listDetailTest[index];
-            return OutlinedCard(
-              margin: EdgeInsets.only(top: 15),
-              padding: EdgeInsets.only(left: 4, right: 4),
-              width: 360,
-              sections: [
-                Container(
-                  child: Column(
-                    children: <Widget>[
-                      Row(
-                        children: <Widget>[
-                          Container(
-                            width: 270,
-                            child: Row(
-                              children: [
-                                Text(service.cusID),
-                                Card(
-                                  color: Color(0xff707DB9),
-                                  child: Padding(
-                                    padding: const EdgeInsets.all(4),
-                                    child: Text(
-                                      service.status,
-                                      style: TextStyle(
-                                          fontWeight: FontWeight.bold,
-                                          fontSize: 10,
-                                          color: Colors.white),
+            BookingModel booking = value.bookings[index];
+            return
+              (value.bookings[index].status.contains("Xác nhận"))
+                  ? OutlinedCard(
+                margin: EdgeInsets.only(top: 15),
+                padding: EdgeInsets.only(left: 4, right: 4),
+                width: 360,
+                sections: [
+                  Container(
+                    child: Column(
+                      children: <Widget>[
+                        Row(
+                          children: <Widget>[
+                            Container(
+                              width: MediaQuery.of(context).size.width*0.42,
+                              child: Row(
+                                children: [
+                                  Text('SHA-' + booking.id ),
+                                  Card(
+                                    color: Color(0xff707DB9),
+                                    child: Padding(
+                                      padding:
+                                      const EdgeInsets.all(4),
+                                      child: Text(
+                                        booking.status,
+                                        style: TextStyle(
+                                            fontWeight:
+                                            FontWeight.bold,
+                                            fontSize: 10,
+                                            color: Colors.white),
+                                      ),
                                     ),
                                   ),
-                                ),
-                                SizedBox(
-                                  width: 100,
-                                ),
-                              ],
-                            ),
-                          ),
-                          Container(
-                              width: 60,
-                              child: Text(
-                                service.time,
-                                style: TextStyle(fontWeight: FontWeight.bold),
-                              ))
-                        ],
-                      ),
-                      Row(
-                        children: <Widget>[
-                          Container(
-                            width: 300,
-                            child: Row(
-                              children: [
-                                Icon(Icons.face),
-                                Text(
-                                  ' Khách đặt: ',
-                                  style: TextStyle(
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 14),
-                                ),
-                                Text('${service.cusName}  '),
-                                Text('(${service.timeMove})'),
-                              ],
-                            ),
-                          ),
-                          Container(
-                            width: 30,
-                            child: Icon(
-                              Icons.keyboard_arrow_up,
-                              size: 35,
-                            ),
-                          )
-                        ],
-                      )
-                    ],
-                  ),
-                ),
-                Column(
-                  children: [
-                    Column(
-                      children: [
-                        Row(children: [
-                          Container(
-                              margin: EdgeInsets.only(left: 15, right: 5),
-                              child: Icon(Icons.local_library_rounded)),
-                          Container(
-                            width: 270,
-                            child: Text(
-                              service.address,
-                              style: TextStyle(fontSize: 13),
-                            ),
-                          ),
-                        ]),
-                        GestureDetector(
-                          onTap: () {
-                            MapUtils4.openMap(currentAddress, service.address);
-                          },
-                          child: Row(
-                            children: [
-                              SizedBox(
-                                width: 44,
-                              ),
-                              Text(
-                                'XEM BẢN ĐỒ',
-                                style: TextStyle(
-                                    color: Color(0xff0DB5B4), fontSize: 11),
-                              ),
-                              Icon(
-                                Icons.arrow_right,
-                                color: Color(0xff0DB5B4),
-                              )
-                            ],
-                          ),
-                        )
-                      ],
-                    ),
-                    SizedBox(
-                      height: 10,
-                    ),
-                    Row(
-                      children: [
-                        Container(
-                            margin: EdgeInsets.only(left: 15, right: 5),
-                            child: Icon(Icons.description_outlined)),
-                        Container(
-                            width: 270,
-                            child: Text(
-                              'Ghi chú: ${service.note}',
-                              style: TextStyle(fontSize: 13),
-                            ))
-                      ],
-                    )
-                  ],
-                ),
-                Container(
-                  padding: EdgeInsets.symmetric(horizontal: 7),
-                  child: ListView.separated(
-                    shrinkWrap: true,
-                    itemCount: service.listItem.length,
-                    separatorBuilder: (context, index) => SizedBox(
-                      height: 6,
-                    ),
-                    itemBuilder: (context, index) => Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Row(
-                          children: [
-                            Text(
-                              '${service.listItem[index].quantity}  x',
-                              style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                                fontSize: 14,
+                                ],
                               ),
                             ),
                             Container(
-                              margin: EdgeInsets.only(left: 15),
-                              child: Text(
-                                service.listItem[index].content,
-                                style: TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 14,
-                                ),
-                              ),
-                            ),
+                                alignment: Alignment.topRight,
+                                width: MediaQuery.of(context).size.width*0.5,
+                                child: Text(DateFormat('hh:mm dd-MM-yyyy').format(DateTime.parse(value.bookings[index].createDate)),
+                                  style: TextStyle(fontWeight: FontWeight.bold,fontSize: 15),
+                                ))
                           ],
                         ),
-                        Text(service.listItem[index].price + " đ")
+                        Row(
+                          children: <Widget>[
+                            Container(
+                              width: 310,
+                              child: Row(
+                                children: [
+                                  Icon(Icons.face),
+                                  Text(
+                                    ' Khách đặt: ',
+                                    style: TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 14),
+                                  ),
+                                  Text('${booking.customerAccount.name}'),
+                                  Text(' (20 phút)'),
+                                ],
+                              ),
+                            ),
+                            Container(
+                              width: 20,
+                              child: Icon(
+                                Icons.keyboard_arrow_up,
+                                size: 35,
+                              ),
+                            )
+                          ],
+                        )
                       ],
                     ),
                   ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(bottom: 10),
-                  child: Column(
+                  Column(
                     children: [
-                      Row(
+                      Column(
                         children: [
-                          Container(
-                            width: 300,
+                          Row(children: [
+                            Container(
+                                margin: EdgeInsets.only(
+                                    left: 15, right: 5),
+                                child: Icon(
+                                    Icons.local_library_rounded)),
+                            Container(
+                              width: 270,
+                              child: Text(
+                                booking.endAddress,
+                                style: TextStyle(fontSize: 13),
+                              ),
+                            ),
+                          ]),
+                          GestureDetector(
+                            onTap: () {
+                              MapUtils4.openMap(currentAddress, booking.endAddress);
+                            },
                             child: Row(
                               children: [
-                                Text('Tổng đơn: '),
+                                SizedBox(
+                                  width: 44,
+                                ),
                                 Text(
-                                  service.totalBill + " đ",
+                                  'XEM BẢN ĐỒ',
+                                  style: TextStyle(
+                                      color: Color(0xff0DB5B4),
+                                      fontSize: 11),
                                 ),
-                                Card(
-                                  color: Color(0xffC4C4C4),
-                                  child: Padding(
-                                    padding: const EdgeInsets.all(6),
-                                    child: Text(
-                                      service.payment,
-                                      style: TextStyle(
-                                          fontWeight: FontWeight.bold,
-                                          fontSize: 12),
-                                    ),
-                                  ),
-                                ),
+                                Icon(
+                                  Icons.arrow_right,
+                                  color: Color(0xff0DB5B4),
+                                )
                               ],
-                            ),
-                          ),
-                          Container(
-                            width: 30,
-                            child: Icon(
-                              Icons.keyboard_arrow_down_sharp,
-                              size: 35,
                             ),
                           )
                         ],
@@ -1115,77 +536,1000 @@ class LoadAllBooking extends StatelessWidget {
                       SizedBox(
                         height: 10,
                       ),
-                      GestureDetector(
-                        onTap: () {
-                          if (status.contains("CHUẨN BỊ XONG")) {
-                            // setState(() {
-                            //   tab = 3;
-                            //   status = "Đã hoàn thành dịch vụ";
-                            //   colorTap3 = Color(0x2d27beba);
-                            //   colorTap1 = Colors.white;
-                            //   colorTap2 = Colors.white;
-                            //   colorTap4 = Colors.white;
-                            // });
-                          }
-                        },
-                        child: SizedBox(
-                          width: 336,
-                          height: 30,
-                          child: Material(
-                            color: Color(0xff7899D4),
-                            borderRadius: BorderRadius.circular(5),
-                            clipBehavior: Clip.antiAlias,
-                            child: Padding(
-                              padding: const EdgeInsets.only(
-                                left: 87,
-                                right: 88,
-                                top: 8,
-                                bottom: 9,
-                              ),
+                      Row(
+                        children: [
+                          Container(
+                              margin: EdgeInsets.only(
+                                  left: 15, right: 5),
+                              child:
+                              Icon(Icons.description_outlined)),
+                          Container(
+                              width: 270,
                               child: Text(
-                                status,
-                                textAlign: TextAlign.center,
+                                'Ghi chú: ${booking.note}',
+                                style: TextStyle(fontSize: 13),
+                              ))
+                        ],
+                      )
+                    ],
+                  ),
+                  Container(
+                    padding: EdgeInsets.symmetric(horizontal: 7),
+                    child: ListView.separated(
+                      shrinkWrap: true,
+                      itemCount: booking.bookingDetails.length,
+                      separatorBuilder: (context, index) =>
+                          SizedBox(
+                            height: 6,
+                          ),
+                      itemBuilder: (context, index) =>  Row(
+                        mainAxisAlignment:
+                        MainAxisAlignment.spaceBetween,
+                        children: [
+                          Row(
+                            children: [
+                              Text(
+                                '${booking.bookingDetails[index].quantity}  x',
                                 style: TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 13,
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 14,
+                                ),
+                              ),
+                              Container(
+                                margin: EdgeInsets.only(left: 15),
+                                child: Text(
+                                  booking.bookingDetails[index].serviceName,
+                                  style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 13,
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                          Text(Utils.calculatePrice(booking.bookingDetails[index].servicePrice, booking.bookingDetails[index].quantity)),
+                        ],
+                      ),
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(bottom: 10),
+                    child: Column(
+                      children: [
+                        Row(
+                          children: [
+                            Container(
+                              width: 315,
+                              child: Row(
+                                children: [
+                                  Text('Tổng đơn: '),
+                                  Text( Utils.formatPrice(booking.totalFee) ),
+                                  Card(
+                                    color: Color(0xffC4C4C4),
+                                    child: Padding(
+                                      padding:
+                                      const EdgeInsets.all(6),
+                                      child: Text(
+                                        "CASH",
+                                        style: TextStyle(
+                                            fontWeight:
+                                            FontWeight.bold,
+                                            fontSize: 12),
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                            Container(
+                              width: 20,
+                              child: Icon(
+                                Icons.keyboard_arrow_down_sharp,
+                                size: 35,
+                              ),
+                            )
+                          ],
+                        ),
+                        SizedBox(
+                          height: 15,
+                        ),
+                        GestureDetector(
+                          onTap: () {
+                            setState(() {
+                              this.index = 1;
+                              colorTap2 = Color(0x2d27beba);
+                              colorTap1 = Colors.white;
+                              colorTap3 = Colors.white;
+                              colorTap4 = Colors.white;
+                            });
+                            SimpleAPI.put('bookings', booking.id,headers: {
+                              "Accept": "application/json",
+                              "content-type": "application/json"
+                            },
+                              body: jsonEncode(<String, String>{
+                                'id': booking.id,
+                                'status': 'Đang trên đường',
+                              }), );
+                          },
+                          child: SizedBox(
+                            width: 336,
+                            height: 40,
+                            child: Material(
+                              color: Color(0xff7899D4),
+                              borderRadius:
+                              BorderRadius.circular(5),
+                              clipBehavior: Clip.antiAlias,
+                              child: Padding(
+                                padding:
+                                const EdgeInsets.only(
+                                  left: 87,
+                                  right: 88,
+                                  top: 10,
+                                  bottom: 9,
+                                ),
+                                child: Text(
+                                  'Chuẩn Bị Xong',
+                                  textAlign: TextAlign.center,
+                                  style: TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 15,
+                                  ),
                                 ),
                               ),
                             ),
                           ),
                         ),
+                      ],
+                    ),
+                  ),
+                ],
+              ): SizedBox(height: 1);
+          }),
+    );
+  }
+
+  Widget _buildPrepareBooking(BookingProvider value){
+    return  Expanded(
+      child: widget.noContent ? SizedBox()
+          : ListView.builder(
+          physics: BouncingScrollPhysics(),
+          itemCount: value.bookings.length,
+          itemBuilder: (BuildContext buildContext, int index) {
+            BookingModel booking = value.bookings[index];
+            return
+              (value.bookings[index].status.contains("Đang trên đường"))
+                  ? OutlinedCard(
+                margin: EdgeInsets.only(top: 15),
+                padding: EdgeInsets.only(left: 4, right: 4),
+                width: 360,
+                sections: [
+                  Container(
+                    child: Column(
+                      children: <Widget>[
+                        Row(
+                          children: <Widget>[
+                            Container(
+                              width: MediaQuery.of(context).size.width*0.42,
+                              child: Row(
+                                children: [
+                                  Text('SHA-' + booking.id ),
+                                  Card(
+                                    color: Color(0xff707DB9),
+                                    child: Padding(
+                                      padding:
+                                      const EdgeInsets.all(4),
+                                      child: Text(
+                                        booking.status,
+                                        style: TextStyle(
+                                            fontWeight:
+                                            FontWeight.bold,
+                                            fontSize: 10,
+                                            color: Colors.white),
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                            Container(
+                              alignment: Alignment.topRight,
+                                width: MediaQuery.of(context).size.width*0.5,
+                                child: Text(DateFormat('hh:mm dd-MM-yyyy').format(DateTime.parse(value.bookings[index].createDate)),
+                                  style: TextStyle(fontWeight: FontWeight.bold,fontSize: 15),
+                                ))
+                          ],
+                        ),
+                        Row(
+                          children: <Widget>[
+                            Container(
+                              width: 315,
+                              child: Row(
+                                children: [
+                                  Icon(Icons.face),
+                                  Text(
+                                    ' Khách đặt: ',
+                                    style: TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 14),
+                                  ),
+                                  Text('${booking.customerAccount.name} '),
+                                  Text(' (20 phút)'),
+                                ],
+                              ),
+                            ),
+                            Container(
+                              width: 20,
+                              child: Icon(
+                                Icons.keyboard_arrow_up,
+                                size: 35,
+                              ),
+                            )
+                          ],
+                        )
+                      ],
+                    ),
+                  ),
+                  Column(
+                    children: [
+                      Column(
+                        children: [
+                          Row(children: [
+                            Container(
+                                margin: EdgeInsets.only(
+                                    left: 15, right: 5),
+                                child: Icon(
+                                    Icons.local_library_rounded)),
+                            Container(
+                              width: 270,
+                              child: Text(
+                                booking.endAddress,
+                                style: TextStyle(fontSize: 13),
+                              ),
+                            ),
+                          ]),
+                          GestureDetector(
+                            onTap: () {
+                              MapUtils4.openMap(currentAddress, booking.endAddress);
+                            },
+                            child: Row(
+                              children: [
+                                SizedBox(
+                                  width: 44,
+                                ),
+                                Text(
+                                  'XEM BẢN ĐỒ',
+                                  style: TextStyle(
+                                      color: Color(0xff0DB5B4),
+                                      fontSize: 11),
+                                ),
+                                Icon(
+                                  Icons.arrow_right,
+                                  color: Color(0xff0DB5B4),
+                                )
+                              ],
+                            ),
+                          )
+                        ],
                       ),
+                      SizedBox(
+                        height: 10,
+                      ),
+                      Row(
+                        children: [
+                          Container(
+                              margin: EdgeInsets.only(
+                                  left: 15, right: 5),
+                              child:
+                              Icon(Icons.description_outlined)),
+                          Container(
+                              width: 270,
+                              child: Text(
+                                'Ghi chú: ${booking.note}',
+                                style: TextStyle(fontSize: 13),
+                              ))
+                        ],
+                      )
                     ],
                   ),
-                ),
-              ],
-            );
+                  Container(
+                    padding: EdgeInsets.symmetric(horizontal: 7),
+                    child: ListView.separated(
+                      shrinkWrap: true,
+                      itemCount: booking.bookingDetails.length,
+                      separatorBuilder: (context, index) =>
+                          SizedBox(
+                            height: 6,
+                          ),
+                      itemBuilder: (context, index) =>  Row(
+                        mainAxisAlignment:
+                        MainAxisAlignment.spaceBetween,
+                        children: [
+                          Row(
+                            children: [
+                              Text(
+                                '${booking.bookingDetails[index].quantity}  x',
+                                style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 14,
+                                ),
+                              ),
+                              Container(
+                                margin: EdgeInsets.only(left: 15),
+                                child: Text(
+                                  booking.bookingDetails[index].serviceName,
+                                  style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 14,
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                          Text(Utils.formatPrice(booking.bookingDetails[index].servicePrice)),
+                        ],
+                      ),
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(bottom: 10),
+                    child: Column(
+                      children: [
+                        Row(
+                          children: [
+                            Container(
+                              width: 300,
+                              child: Row(
+                                children: [
+                                  Text('Tổng đơn: '),
+                                  Text( Utils.formatPrice(booking.totalFee) ),
+                                  Card(
+                                    color: Color(0xffC4C4C4),
+                                    child: Padding(
+                                      padding:
+                                      const EdgeInsets.all(6),
+                                      child: Text(
+                                        "CASH",
+                                        style: TextStyle(
+                                            fontWeight:
+                                            FontWeight.bold,
+                                            fontSize: 12),
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                            Container(
+                              width: 20,
+                              child: Icon(
+                                Icons.keyboard_arrow_down_sharp,
+                                size: 35,
+                              ),
+                            )
+                          ],
+                        ),
+                        SizedBox(
+                          height: 10,
+                        ),
+                       GestureDetector(
+                          child: SizedBox(
+                              width: 336,
+                              height: 30,
+                              child: OutlinedButton(
+                                onPressed: () {
+                                  showDialog(
+                                    context: context,
+                                    barrierDismissible: false,
+                                    builder: (context) =>
+                                        AlertDialog(
+                                          content: Text("Bạn có muốn hủy đơn không?",),
+                                          actions: [
+                                            FlatButton(
+                                              textColor: Color(0xFF6200EE),
+                                              onPressed: () {
+                                                Navigator.of(context).pop();
+                                              },
+                                              child: Text('Không'),
+                                            ),
+                                            FlatButton(
+                                              textColor: Color(0xFF6200EE),
+                                              onPressed: () {
+                                                 Navigator.of(context).pushReplacement(
+                                                    MaterialPageRoute(builder: (context) => CancelReason(),));
+                                                SimpleAPI.put('bookings', booking.id,headers: {
+                                                  "Accept": "application/json",
+                                                  "content-type": "application/json"
+                                                },
+                                                  body: jsonEncode(<String, String>{
+                                                    'id': booking.id,
+                                                    'status': 'Đã hủy',
+                                                  }), );
+                                              },
+                                              child:
+                                              Text('Đồng ý'),
+                                            ),
+                                          ],
+                                        ),
+                                  );
+                                },
+                                child: Text("HỦY ĐƠN"),
+                              )),
+                        ),
+                        SizedBox(
+                          height: 5,
+                        ),
+                        GestureDetector(
+                          onTap: (){
+                            setState(() {
+                              this.index = 2;
+                              colorTap3 = Color(0x2d27beba);
+                              colorTap1 = Colors.white;
+                              colorTap2 = Colors.white;
+                              colorTap4 = Colors.white;
+                            });
+                            SimpleAPI.put('bookings', booking.id,headers: {
+                              "Accept": "application/json",
+                              "content-type": "application/json"
+                            },
+                              body: jsonEncode(<String, String>{
+                                'id': booking.id,
+                                'status': 'Đang làm',
+                              }), );
+                          },
+
+                          child: SizedBox(
+                            width: 336,
+                            height: 40,
+                            child: Material(
+                              color: Color(0xff7899D4),
+                              borderRadius:
+                              BorderRadius.circular(5),
+                              clipBehavior: Clip.antiAlias,
+                              child: Padding(
+                                padding:
+                                const EdgeInsets.only(
+                                  left: 87,
+                                  right: 88,
+                                  top: 10,
+                                  bottom: 9,
+                                ),
+                                child: Text(
+                                  'Đã Đến Nơi',
+                                  textAlign: TextAlign.center,
+                                  style: TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 15,
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+              ) : SizedBox(height: 1);
+          }),
+    );
+  }
+
+  Widget _buildDoingBooking(BookingProvider value){
+    return  Expanded(
+      child: widget.noContent ? SizedBox()
+          : ListView.builder(
+          physics: BouncingScrollPhysics(),
+          itemCount: value.bookings.length,
+          itemBuilder: (BuildContext buildContext, int index) {
+            BookingModel booking = value.bookings[index];
+            return
+              (value.bookings[index].status.contains("Đang làm"))
+                  ? OutlinedCard(
+                margin: EdgeInsets.only(top: 15),
+                padding: EdgeInsets.only(left: 4, right: 4),
+                width: 360,
+                sections: [
+                  Container(
+                    child: Column(
+                      children: <Widget>[
+                        Row(
+                          children: <Widget>[
+                            Container(
+                              width: 210,
+                              child: Row(
+                                children: [
+                                  Text('SHA-' + booking.id ),
+                                  Card(
+                                    color: Color(0xff707DB9),
+                                    child: Padding(
+                                      padding:
+                                      const EdgeInsets.all(4),
+                                      child: Text(
+                                        booking.status,
+                                        style: TextStyle(
+                                            fontWeight:
+                                            FontWeight.bold,
+                                            fontSize: 10,
+                                            color: Colors.white),
+                                      ),
+                                    ),
+                                  ),
+                                  SizedBox(
+                                    width: 50,
+                                  ),
+                                ],
+                              ),
+                            ),
+                            Container(
+                                width: 120,
+                                child: value.bookings[index].createDate != null
+                                    ? Text(DateFormat('hh:mm dd-MM-yyyy').format(DateTime.parse(value.bookings[index].createDate)),
+                                  style: TextStyle(fontWeight: FontWeight.bold),
+                                ): Text('9AM - 8PM'))
+                          ],
+                        ),
+                        Row(
+                          children: <Widget>[
+                            Container(
+                              width: 300,
+                              child: Row(
+                                children: [
+                                  Icon(Icons.face),
+                                  Text(
+                                    ' Khách đặt: ',
+                                    style: TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 14),
+                                  ),
+                                  Text('${booking.customerAccount.name} '),
+                                  Text(' (20 phút)'),
+                                ],
+                              ),
+                            ),
+                            Container(
+                              width: 20,
+                              child: Icon(
+                                Icons.keyboard_arrow_up,
+                                size: 35,
+                              ),
+                            )
+                          ],
+                        )
+                      ],
+                    ),
+                  ),
+                  Column(
+                    children: [
+                      Column(
+                        children: [
+                          Row(children: [
+                            Container(
+                                margin: EdgeInsets.only(
+                                    left: 15, right: 5),
+                                child: Icon(
+                                    Icons.local_library_rounded)),
+                            Container(
+                              width: 270,
+                              child: Text(
+                                booking.endAddress,
+                                style: TextStyle(fontSize: 13),
+                              ),
+                            ),
+                          ]),
+                          GestureDetector(
+                            onTap: () {
+                              MapUtils4.openMap(currentAddress, booking.endAddress);
+                            },
+                            child: Row(
+                              children: [
+                                SizedBox(
+                                  width: 44,
+                                ),
+                                Text(
+                                  'XEM BẢN ĐỒ',
+                                  style: TextStyle(
+                                      color: Color(0xff0DB5B4),
+                                      fontSize: 11),
+                                ),
+                                Icon(
+                                  Icons.arrow_right,
+                                  color: Color(0xff0DB5B4),
+                                )
+                              ],
+                            ),
+                          )
+                        ],
+                      ),
+                      SizedBox(
+                        height: 10,
+                      ),
+                      Row(
+                        children: [
+                          Container(
+                              margin: EdgeInsets.only(
+                                  left: 15, right: 5),
+                              child:
+                              Icon(Icons.description_outlined)),
+                          Container(
+                              width: 270,
+                              child: Text(
+                                'Ghi chú: ${booking.note}',
+                                style: TextStyle(fontSize: 13),
+                              ))
+                        ],
+                      )
+                    ],
+                  ),
+                  Container(
+                    padding: EdgeInsets.symmetric(horizontal: 7),
+                    child: ListView.separated(
+                      shrinkWrap: true,
+                      itemCount: booking.bookingDetails.length,
+                      separatorBuilder: (context, index) =>
+                          SizedBox(
+                            height: 6,
+                          ),
+                      itemBuilder: (context, index) =>  Row(
+                        mainAxisAlignment:
+                        MainAxisAlignment.spaceBetween,
+                        children: [
+                          Row(
+                            children: [
+                              Text(
+                                '${booking.bookingDetails[index].quantity}  x',
+                                style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 14,
+                                ),
+                              ),
+                              Container(
+                                margin: EdgeInsets.only(left: 15),
+                                child: Text(
+                                  booking.bookingDetails[index].serviceName,
+                                  style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 14,
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                          Text(Utils.formatPrice(booking.bookingDetails[index].servicePrice)),
+                        ],
+                      ),
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(bottom: 10),
+                    child: Column(
+                      children: [
+                        Row(
+                          children: [
+                            Container(
+                              width: 300,
+                              child: Row(
+                                children: [
+                                  Text('Tổng đơn: '),
+                                  Text( Utils.formatPrice(booking.totalFee) ),
+                                  Card(
+                                    color: Color(0xffC4C4C4),
+                                    child: Padding(
+                                      padding:
+                                      const EdgeInsets.all(6),
+                                      child: Text(
+                                        "CASH",
+                                        style: TextStyle(
+                                            fontWeight:
+                                            FontWeight.bold,
+                                            fontSize: 12),
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                            Container(
+                              width: 20,
+                              child: Icon(
+                                Icons.keyboard_arrow_down_sharp,
+                                size: 35,
+                              ),
+                            )
+                          ],
+                        ),
+                        SizedBox(
+                          height: 10,
+                        ),
+                        SizedBox(
+                          height: 5,
+                        ),
+                        GestureDetector(
+                          onTap: (){
+                            setState(() {
+                              this.index = 3;
+                              this.isSwiched = true;
+                              colorTap4 = Color(0x2d27beba);
+                              colorTap2 = Colors.white;
+                              colorTap3 = Colors.white;
+                              colorTap1 = Colors.white;
+                            });
+                            SimpleAPI.put('bookings', booking.id,headers: {
+                              "Accept": "application/json",
+                              "content-type": "application/json"
+                            },
+                              body: jsonEncode(<String, String>{
+                                'id': booking.id,
+                                'status': 'Hoàn thành',
+                              }), );
+                          },
+                          child: SizedBox(
+                            width: 336,
+                            height: 40,
+                            child: Material(
+                              color: Color(0xff7899D4),
+                              borderRadius:
+                              BorderRadius.circular(5),
+                              clipBehavior: Clip.antiAlias,
+                              child: Padding(
+                                padding:
+                                const EdgeInsets.only(
+                                  left: 87,
+                                  right: 88,
+                                  top: 10,
+                                  bottom: 9,
+                                ),
+                                child: Text(
+                                  "Đã Hoàn Thành",
+                                  textAlign: TextAlign.center,
+                                  style: TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 15,
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+              ) : SizedBox(height: 1);
+          }),
+    );
+  }
+
+  Widget _buildFinishBooking(BookingProvider value){
+    return  Expanded(
+      child: widget.noContent ? SizedBox()
+          : ListView.builder(
+          physics: BouncingScrollPhysics(),
+          itemCount: value.bookings.length,
+          itemBuilder: (BuildContext buildContext, int index) {
+            BookingModel booking = value.bookings[index];
+            return
+              (value.bookings[index].status.contains("Finish")
+                  || value.bookings[index].status.contains("Hoàn thành"))
+                  ? OutlinedCard(
+                margin: EdgeInsets.only(top: 15),
+                padding: EdgeInsets.only(left: 4, right: 4),
+                width: 360,
+                sections: [
+                  Container(
+                    child: Column(
+                      children: <Widget>[
+                        Row(
+                          children: <Widget>[
+                            Container(
+                              width: MediaQuery.of(context).size.width*0.42,
+                              child: Row(
+                                children: [
+                                  Text('SHA-' + booking.id ),
+                                  Card(
+                                    color: Color(0xff707DB9),
+                                    child: Padding(
+                                      padding:
+                                      const EdgeInsets.all(4),
+                                      child: Text(
+                                        booking.status,
+                                        style: TextStyle(
+                                            fontWeight:
+                                            FontWeight.bold,
+                                            fontSize: 10,
+                                            color: Colors.white),
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                            Container(
+                                width: MediaQuery.of(context).size.width*0.5,
+                                child: Text("Ngày hoàn thành: " +DateFormat('dd-MM-yyyy').format(DateTime.parse(value.bookings[index].updateDate)),
+                                  style: TextStyle(fontWeight: FontWeight.bold,fontSize: 13),
+                                ))
+                          ],
+                        ),
+                        Row(
+                          children: <Widget>[
+                            Container(
+                              width: 300,
+                              child: Row(
+                                children: [
+                                  Icon(Icons.face),
+                                  Text(
+                                    ' Khách đặt: ',
+                                    style: TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 14),
+                                  ),
+                                  Text('${booking.customerAccount.name}'),
+                                  Text(' (20 phút)'),
+                                ],
+                              ),
+                            ),
+                            Container(
+                              width: 20,
+                              child: Icon(
+                                Icons.keyboard_arrow_up,
+                                size: 35,
+                              ),
+                            )
+                          ],
+                        )
+                      ],
+                    ),
+                  ),
+                  Column(
+                    children: [
+                      Column(
+                        children: [
+                          Row(children: [
+                            Container(
+                                margin: EdgeInsets.only(
+                                    left: 15, right: 5),
+                                child: Icon(
+                                    Icons.local_library_rounded)),
+                            Container(
+                              width: 270,
+                              child: Text(
+                                booking.endAddress,
+                                style: TextStyle(fontSize: 13),
+                              ),
+                            ),
+                          ]),
+                          GestureDetector(
+                            onTap: () {
+                              MapUtils4.openMap(currentAddress, booking.endAddress);
+                            },
+                            child: Row(
+                              children: [
+                                SizedBox(
+                                  width: 44,
+                                ),
+                                Text(
+                                  'XEM BẢN ĐỒ',
+                                  style: TextStyle(
+                                      color: Color(0xff0DB5B4),
+                                      fontSize: 11),
+                                ),
+                                Icon(
+                                  Icons.arrow_right,
+                                  color: Color(0xff0DB5B4),
+                                )
+                              ],
+                            ),
+                          )
+                        ],
+                      ),
+                      SizedBox(
+                        height: 10,
+                      ),
+                      Row(
+                        children: [
+                          Container(
+                              margin: EdgeInsets.only(
+                                  left: 15, right: 5),
+                              child:
+                              Icon(Icons.description_outlined)),
+                          Container(
+                              width: 270,
+                              child: Text(
+                                'Ghi chú: ${booking.note}',
+                                style: TextStyle(fontSize: 13),
+                              ))
+                        ],
+                      )
+                    ],
+                  ),
+                  Container(
+                    padding: EdgeInsets.symmetric(horizontal: 7),
+                    child: ListView.separated(
+                      shrinkWrap: true,
+                      itemCount: booking.bookingDetails.length,
+                      separatorBuilder: (context, index) =>
+                          SizedBox(
+                            height: 6,
+                          ),
+                      itemBuilder: (context, index) =>  Row(
+                        mainAxisAlignment:
+                        MainAxisAlignment.spaceBetween,
+                        children: [
+                          Row(
+                            children: [
+                              Text(
+                                '${booking.bookingDetails[index].quantity}  x',
+                                style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 14,
+                                ),
+                              ),
+                              Container(
+                                margin: EdgeInsets.only(left: 15),
+                                child: Text(
+                                  booking.bookingDetails[index].serviceName,
+                                  style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 14,
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                          Text(Utils.formatPrice(booking.bookingDetails[index].servicePrice)),
+                        ],
+                      ),
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(bottom: 10),
+                    child: Column(
+                      children: [
+                        Row(
+                          children: [
+                            Container(
+                              width: 300,
+                              child: Row(
+                                children: [
+                                  Text('Tổng đơn: '),
+                                  Text( Utils.formatPrice(booking.totalFee) ),
+                                  Card(
+                                    color: Color(0xffC4C4C4),
+                                    child: Padding(
+                                      padding:
+                                      const EdgeInsets.all(6),
+                                      child: Text(
+                                        "CASH",
+                                        style: TextStyle(
+                                            fontWeight:
+                                            FontWeight.bold,
+                                            fontSize: 12),
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                            Container(
+                              width: 20,
+                              child: Icon(
+                                Icons.keyboard_arrow_down_sharp,
+                                size: 35,
+                              ),
+                            )
+                          ],
+                        ),
+                        SizedBox(
+                          height: 10,
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+              ) : SizedBox(height: 1);
           }),
     );
   }
 }
 
-class ServiceCusDetail {
-  String cusName; // hưu long
-  String cusID; // GF-267
-  String address; // 5/3 đường số 9 , phước bình , quận 9 . tp hcm
-  String status; // on the way
-  String note; // LÀM Sao để có 1 bản ghi chú hiệu quả
-  String time; // 7.37 PM
-  String timeMove; // 20 mins - 5km
-  String totalBill;
-  String payment;
-  List<CartItem> listItem; // trang điểm dự tiệc
 
-  ServiceCusDetail({
-    this.cusName,
-    this.cusID,
-    this.address,
-    this.status,
-    this.note,
-    this.time,
-    this.timeMove,
-    this.totalBill,
-    this.payment,
-    this.listItem,
-  });
-}
