@@ -44,8 +44,6 @@ class LoginScreen extends StatelessWidget {
                   ),
                   SizedBox(height: 70),
                   _loginWithGoogle(context),
-                  SizedBox(height: 12),
-                  _loginWithPhone(context),
                 ],
               ),
             ),

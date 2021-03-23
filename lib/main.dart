@@ -3,6 +3,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter_app/app.dart';
 import 'package:flutter_app/src/providers/booking_provider.dart';
 import 'package:flutter_app/src/providers/service_provider.dart';
+import 'package:flutter_app/src/providers/user_profile.dart';
+import 'package:flutter_app/src/providers/user_provider.dart';
 import 'package:provider/provider.dart';
 
 void main() async {
@@ -13,6 +15,8 @@ void main() async {
       providers: [
         ChangeNotifierProvider(create: (context) => BookingProvider()),
         ChangeNotifierProvider(create: (context) => ServiceProvider()),
+        ChangeNotifierProvider(create: (context) => AccountProvider()),
+        ChangeNotifierProvider(create: (context) => UserProfile()),
       ],
       child: App(),
     ),

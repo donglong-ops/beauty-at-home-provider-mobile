@@ -113,12 +113,9 @@ class SimpleAPI {
 
   static Future<bool> put(String entityEndpoint, String id, {Map<String, String> headers, dynamic body,}) async {
     final uri = Uri.parse(baseUrl + "$entityEndpoint/$id");
-    print("url nè : " + uri.toString());
-    print("body nè: " + body);
     http.Response response = await http.put(uri, headers: headers, body: body);
     print("lỗi nè: " + response.statusCode.toString());
     if (response.statusCode == 204) {
-      print("status 204");
       return true;
     }
   }
@@ -127,10 +124,7 @@ class SimpleAPI {
     dynamic body,
     Map<String, String> headers,
   }) async {
-    Uri uri = Uri.https(
-      baseUrl,
-      entityEndpoint,
-    );
+    Uri uri = Uri.https(baseUrl, entityEndpoint,);
     http.Response response = await http.post(uri, headers: headers, body: body);
     if (response.statusCode == 201) {
       return ApiModel<T>.fromJson(jsonDecode(response.body));

@@ -71,9 +71,7 @@ class _AddNewServiceScreenState extends State<AddNewServiceScreen> {
                                 ),
                               ),
                             )
-                          : ClipRRect(child: Image.file(_file, fit: BoxFit.cover,),
-                              // Image.asset(_file.path,fit: BoxFit.cover,)
-                            ),
+                          : ClipRRect(child: Image.file(_file, fit: BoxFit.cover)),
                     ),
                   ),
                   Padding(
