@@ -6,6 +6,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_app/src/apis/provider_api/simple_api.dart';
 import 'package:flutter_app/src/models-new/booking_model.dart';
 import 'package:flutter_app/src/providers/booking_provider.dart';
+import 'package:flutter_app/src/utils/utils.dart';
 import 'package:flutter_app/src/utils/widgets_utils.dart';
 import 'package:flutter_app/src/view/provider_confirm_screen.dart';
 import 'package:flutter_app/src/widgets/google_map_service/google_service.dart';
@@ -247,7 +248,7 @@ class _providerNewOderScreenState extends State<ProviderNewOderScreen> {
                                       ),
                                     ],
                                   ),
-                                  Text(booking.bookingDetails[index].servicePrice + " đ")
+                                  Text(Utils.formatPrice(booking.bookingDetails[index].servicePrice))
                                 ],
                               ),
                             ),

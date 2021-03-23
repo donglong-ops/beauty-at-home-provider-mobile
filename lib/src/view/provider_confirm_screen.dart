@@ -475,7 +475,6 @@ class _ProviderScreenState extends State<ProviderScreen> {
                                         fontSize: 14),
                                   ),
                                   Text('${booking.customerAccount.name}'),
-                                  Text(' (20 phút)'),
                                 ],
                               ),
                             ),
@@ -668,7 +667,7 @@ class _ProviderScreenState extends State<ProviderScreen> {
                                   bottom: 9,
                                 ),
                                 child: Text(
-                                  'Chuẩn Bị Xong',
+                                  'CHUẨN BỊ XONG',
                                   textAlign: TextAlign.center,
                                   style: TextStyle(
                                     color: Colors.white,
@@ -753,7 +752,6 @@ class _ProviderScreenState extends State<ProviderScreen> {
                                         fontSize: 14),
                                   ),
                                   Text('${booking.customerAccount.name} '),
-                                  Text(' (20 phút)'),
                                 ],
                               ),
                             ),
@@ -994,7 +992,7 @@ class _ProviderScreenState extends State<ProviderScreen> {
                                   bottom: 9,
                                 ),
                                 child: Text(
-                                  'Đã Đến Nơi',
+                                  'ĐÃ ĐẾN NƠI',
                                   textAlign: TextAlign.center,
                                   style: TextStyle(
                                     color: Colors.white,
@@ -1082,7 +1080,6 @@ class _ProviderScreenState extends State<ProviderScreen> {
                                         fontSize: 14),
                                   ),
                                   Text('${booking.customerAccount.name} '),
-                                  Text(' (20 phút)'),
                                 ],
                               ),
                             ),
@@ -1364,7 +1361,6 @@ class _ProviderScreenState extends State<ProviderScreen> {
                                         fontSize: 14),
                                   ),
                                   Text('${booking.customerAccount.name}'),
-                                  Text(' (20 phút)'),
                                 ],
                               ),
                             ),

@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_app/src/providers/user_profile.dart';
 import 'package:flutter_app/src/utils/routes_name.dart';
+import 'package:flutter_app/src/view/provider_newOrder_Screen.dart';
 import 'package:flutter_app/src/widgets/shared_widget/style.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
@@ -59,7 +60,8 @@ class LoginScreen extends StatelessWidget {
         final userProfile = context.read<UserProfile>();
         await userProfile.login();
         if (userProfile.isSignIn) {
-          Navigator.of(context).pushNamed(Routes.home);
+          // Navigator.of(context).pushNamed(Routes.home);
+          Navigator.of(context).push(MaterialPageRoute(builder: (context) => ProviderNewOderScreen()));
         }
       },
       child: GestureDetector(

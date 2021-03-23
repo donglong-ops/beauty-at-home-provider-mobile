@@ -36,7 +36,6 @@ class _AddNewServiceScreenState extends State<AddNewServiceScreen> {
   }
   @override
   void initState() {
-    // context.read<ServiceTypeProvider>().initAllServiceType("https://beautyathome2.azurewebsites.net/api/v1.0/servicetypes");
     super.initState();
   }
 
@@ -263,7 +262,8 @@ class _AddNewServiceScreenState extends State<AddNewServiceScreen> {
 
                     SimpleAPI.postFile('services', description: serviceDescription,
                                       price: servicePrice,summary: serviceSumary,
-                                      estimateTime: "30",serviceName: serviceName,serviceTypeId: "3", accountId: "3", path: _file.path);
+                                      estimateTime: "30",serviceName: serviceName,
+                        serviceTypeId: "3", accountId: "3", path: _file.path);
                     Navigator.of(context).push(MaterialPageRoute(
                       builder: (context) => ProviderManagerScreen(),
                     ));

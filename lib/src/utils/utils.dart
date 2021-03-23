@@ -23,7 +23,7 @@ class Utils {
     String result = review.toString();
     var formatter = NumberFormat('###,000');
     String formatString = formatter.format(double.parse(result));
-    return formatString.replaceAll(new RegExp(r','), '.') + "đ";
+    return formatString.replaceAll(new RegExp(r','), '.') + " đ";
   }
   static String calculatePrice(String unitPrice, String quantity) {
     double total = 0;

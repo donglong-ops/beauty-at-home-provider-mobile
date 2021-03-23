@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:developer';
 import 'dart:io';
+import 'package:flutter_app/src/models-new/account_model2.dart';
 import 'package:flutter_app/src/models-new/api_list_model.dart';
 import 'package:flutter_app/src/models-new/api_model.dart';
 import 'package:flutter_app/src/utils/api_constants.dart';
@@ -85,6 +86,77 @@ class SimpleAPI {
       else
         {
           print('Insert failed: ' + value.statusCode.toString()),
+        }
+    });
+    return null;
+  }
+
+  static Future<ServiceModel> putServiceModel <ServiceModel>(
+      String entityEndpoint, {
+        dynamic body,
+        Map<String, String> headers,
+        String id,
+        String description,
+        String summary,
+        String serviceName,
+        String price,
+        String accountId,
+        String serviceTypeId,
+        String estimateTime,
+        String status,
+        String path,
+      }) async {
+    final uri = Uri.parse(baseUrl + "/$entityEndpoint/$id");
+    var request = new http.MultipartRequest("PUT", uri)..
+    fields['id'] = id..
+    fields['description'] = description..
+    fields['serviceName'] = serviceName..
+    fields['price'] = price..
+    fields['estimateTime'] = estimateTime..
+    fields['accountId'] = accountId..
+    fields['serviceTypeId'] = serviceTypeId..
+    fields['summary'] = summary..
+    fields['status'] = status..
+    files.add(await http.MultipartFile.fromPath("file", path, contentType: MediaType('application', 'x-tar')));
+
+    request.send().then((value) => {
+      if (value.statusCode == 201)
+        {
+          print('Update success'),
+        }
+      else
+        {
+          print('Update failed: ' + value.statusCode.toString()),
+        }
+    });
+    return null;
+  }
+
+  static Future<AccountModel2> putAccountModel <AccountModel2>(
+      String entityEndpoint, {
+        dynamic body,
+        Map<String, String> headers,
+        String id,
+        String displayName,
+        String phone,
+        String status,
+        String path,
+      }) async {
+    final uri = Uri.parse(baseUrl + "/$entityEndpoint/$id");
+    var request = new http.MultipartRequest("PUT", uri)..
+    fields['id'] = id..
+    fields['displayName'] = displayName..
+    fields['phone'] = phone..
+    fields['status'] = status..
+    files.add(await http.MultipartFile.fromPath("file", path, contentType: MediaType('application', 'x-tar')));
+    request.send().then((value) => {
+      if (value.statusCode == 201)
+        {
+          print('Update success'),
+        }
+      else
+        {
+          print('Update failed: ' + value.statusCode.toString()),
         }
     });
     return null;

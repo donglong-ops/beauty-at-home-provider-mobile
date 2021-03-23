@@ -57,15 +57,9 @@ class ProfileEditScreenState extends  State<ProfileEditScreen> {
           GestureDetector(
             onTap: () {
               if(userName != null && userPhone != null) {
-                SimpleAPI.put('accounts', '21', headers: {
-                  "Accept": "application/json",
-                  "content-type": "application/json"
-                },
-                  body: jsonEncode(<String, String>{
-                    'displayName': userName,
-                    'phone': userPhone,
-                    'status': 'Active',
-                  }),);
+                SimpleAPI.putAccountModel('accounts',id: '21', displayName: userName,
+                    phone: userPhone, status: 'Active',path: _file.path);
+
                 Navigator.of(context).push(MaterialPageRoute(
                   builder: (context) => ProfileScreen(),
                 ));
