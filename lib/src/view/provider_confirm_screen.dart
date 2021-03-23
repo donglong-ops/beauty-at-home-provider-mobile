@@ -40,13 +40,13 @@ class _ProviderScreenState extends State<ProviderScreen> {
 
   @override
   void initState() {
-    // super.initState();
+    super.initState();
     getUserLocation();
     if(widget.isSwiched != null) {
       isSwiched = widget.isSwiched;
     }
     context.read<BookingProvider>().initAllBooking("https://beautyathome2.azurewebsites.net/api/v1.0/bookings?BeautyArtistAccountId=3");
-    super.initState();
+
   }
 
   getUserLocation() async {
@@ -140,6 +140,7 @@ class _ProviderScreenState extends State<ProviderScreen> {
 
   @override
   Widget build(BuildContext context) {
+    String status;
     return Scaffold(
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
       appBar: AppBar(
@@ -155,10 +156,23 @@ class _ProviderScreenState extends State<ProviderScreen> {
             inactiveTrackColor: Color(0xff979797),
             value: isSwiched,
             onChanged: (value) {
+              if(value) {
+                status = 'ACTIVE';
+              }else{
+                status = "INACTIVE";
+              }
+
+              SimpleAPI.putAccountModel('accounts',
+                  id: '21',
+                  displayName: "Đồng Long",
+                  phone: '0931180303',
+                  status: status,
+                  path: null
+              );
               setState(() {
-                isSwiched = value;
+               isSwiched = value;
               });
-            },
+            }
           ),
         ],
       ),
@@ -1258,6 +1272,13 @@ class _ProviderScreenState extends State<ProviderScreen> {
                                 'id': booking.id,
                                 'status': 'Hoàn thành',
                               }), );
+                            SimpleAPI.putAccountModel('accounts',
+                                id: '21',
+                                displayName: "Đồng Long",
+                                phone: '0931180303',
+                                status: "ACTIVE",
+                                path: null,
+                            );
                           },
                           child: SizedBox(
                             width: 336,

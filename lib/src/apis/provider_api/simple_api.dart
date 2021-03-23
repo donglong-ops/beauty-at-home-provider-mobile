@@ -1,9 +1,7 @@
 import 'dart:convert';
 import 'dart:developer';
-import 'dart:io';
-import 'package:flutter_app/src/models-new/account_model2.dart';
-import 'package:flutter_app/src/models-new/api_list_model.dart';
 import 'package:flutter_app/src/models-new/api_model.dart';
+import 'package:flutter_app/src/models-new/service_type_model.dart';
 import 'package:flutter_app/src/utils/api_constants.dart';
 import 'package:http/http.dart' as http;
 import 'package:http_parser/http_parser.dart';
@@ -27,6 +25,19 @@ class SimpleAPI {
     return list;
   }
   static Future<List<T>> getAllNew<T>(Function(Map<String , dynamic>) fromMap, String uri) async {
+    http.Response response = await http.get(uri);
+    List<T> list = new List();
+    dynamic jsonRaw = json.decode(response.body);
+    print(response.body);
+    List<dynamic> content = jsonRaw['content'];
+    if (content.length > 0) {
+      content.forEach((element) {
+        list.add(fromMap(element));
+      });
+    }
+    return list;
+  }
+  static Future<List<T>> getAllServiceType<T>(Function(Map<String , dynamic>) fromMap, String uri) async {
     http.Response response = await http.get(uri);
     List<T> list = new List();
     dynamic jsonRaw = json.decode(response.body);
@@ -101,34 +112,60 @@ class SimpleAPI {
         String serviceName,
         String price,
         String accountId,
+        String galleryId,
         String serviceTypeId,
         String estimateTime,
         String status,
         String path,
       }) async {
     final uri = Uri.parse(baseUrl + "/$entityEndpoint/$id");
-    var request = new http.MultipartRequest("PUT", uri)..
-    fields['id'] = id..
-    fields['description'] = description..
-    fields['serviceName'] = serviceName..
-    fields['price'] = price..
-    fields['estimateTime'] = estimateTime..
-    fields['accountId'] = accountId..
-    fields['serviceTypeId'] = serviceTypeId..
-    fields['summary'] = summary..
-    fields['status'] = status..
-    files.add(await http.MultipartFile.fromPath("file", path, contentType: MediaType('application', 'x-tar')));
+    if(path != null){
+      var request = new http.MultipartRequest("PUT", uri)..
+      fields['id'] = id..
+      fields['description'] = description..
+      fields['summary'] = summary..
+      fields['serviceName'] = serviceName..
+      fields['price'] = price..
+      fields['estimateTime'] = estimateTime..
+      fields['accountId'] = accountId..
+      fields['serviceTypeId'] = serviceTypeId..
+      fields['status'] = status..
+      fields['galleryId'] = galleryId..
+      files.add(await http.MultipartFile.fromPath("file", path, contentType: MediaType('application', 'x-tar')));
 
-    request.send().then((value) => {
-      if (value.statusCode == 201)
-        {
-          print('Update success'),
-        }
-      else
-        {
-          print('Update failed: ' + value.statusCode.toString()),
-        }
-    });
+      request.send().then((value) => {
+        if (value.statusCode == 204)
+          {
+            print('Update success'),
+          }
+        else
+          {
+            print('Update failed 1: ' + value.statusCode.toString()),
+          }
+      });
+    }else{
+      var request = new http.MultipartRequest("PUT", uri)..
+      fields['id'] = id..
+      fields['description'] = description..
+      fields['summary'] = summary..
+      fields['serviceName'] = serviceName..
+      fields['price'] = price..
+      fields['estimateTime'] = estimateTime..
+      fields['accountId'] = accountId..
+      fields['serviceTypeId'] = serviceTypeId..
+      fields['status'] = status..
+      fields['galleryId'] = galleryId;
+      request.send().then((value) => {
+        if (value.statusCode == 204)
+          {
+            print('Update success'),
+          }
+        else
+          {
+            print('Update failed 2: ' + value.statusCode.toString()),
+          }
+      });
+    }
     return null;
   }
 
@@ -143,22 +180,42 @@ class SimpleAPI {
         String path,
       }) async {
     final uri = Uri.parse(baseUrl + "/$entityEndpoint/$id");
-    var request = new http.MultipartRequest("PUT", uri)..
-    fields['id'] = id..
-    fields['displayName'] = displayName..
-    fields['phone'] = phone..
-    fields['status'] = status..
-    files.add(await http.MultipartFile.fromPath("file", path, contentType: MediaType('application', 'x-tar')));
-    request.send().then((value) => {
-      if (value.statusCode == 201)
-        {
-          print('Update success'),
-        }
-      else
-        {
-          print('Update failed: ' + value.statusCode.toString()),
-        }
-    });
+    if(path != null){
+      var request = new http.MultipartRequest("PUT", uri)..
+      fields['id'] = id..
+      fields['displayName'] = displayName..
+      fields['phone'] = phone..
+      fields['status'] = status..
+      files.add(await http.MultipartFile.fromPath("file", path, contentType: MediaType('application', 'x-tar')));
+      request.send().then((value) => {
+        if (value.statusCode == 204)
+          {
+            print('Update success'),
+          }
+        else
+          {
+            print('Update failed: ' + value.statusCode.toString()),
+          }
+      });
+    } else {
+      var request = new http.MultipartRequest("PUT", uri)..
+      fields['id'] = id..
+      fields['displayName'] = displayName..
+      fields['phone'] = phone..
+      fields['status'] = status;
+      request.send().then((value) => {
+        if (value.statusCode == 204)
+          {
+            print('Update success'),
+          }
+        else
+          {
+            print('Update failed: ' + value.statusCode.toString()),
+          }
+      });
+    }
+
+
     return null;
   }
 

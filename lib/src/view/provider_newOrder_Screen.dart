@@ -127,7 +127,7 @@ class _providerNewOderScreenState extends State<ProviderNewOderScreen> {
                                 Row(
                                   children: <Widget>[
                                     Container(
-                                      width: 330,
+                                      width: 310,
                                       child: Row(
                                         children: [
                                           Icon(Icons.face),
@@ -138,14 +138,13 @@ class _providerNewOderScreenState extends State<ProviderNewOderScreen> {
                                                 fontSize: 14),
                                           ),
                                           Text('${booking.customerAccount.name}'),
-                                          Text('(20 phút)'),
                                         ],
                                       ),
                                     ),
                                     Container(
-                                      width: 30,
+                                      width: 10,
                                       child: Icon(
-                                        Icons.keyboard_arrow_up,
+                                        Icons.keyboard_arrow_down_sharp,
                                         size: 35,
                                       ),
                                     )
@@ -391,6 +390,13 @@ class _providerNewOderScreenState extends State<ProviderNewOderScreen> {
                                                               'id': booking.id,
                                                               'status': 'Xác nhận',
                                                       }), );
+                                                      SimpleAPI.putAccountModel('accounts',
+                                                        id: '21',
+                                                        displayName: "Đồng Long",
+                                                        phone: '0931180303',
+                                                        status: "INACTIVE",
+                                                        path: null,
+                                                      );
                                                       Navigator.of(context).pushReplacement(
                                                           MaterialPageRoute(builder: (context) => ProviderScreen(isSwiched: false,)));
                                                     },

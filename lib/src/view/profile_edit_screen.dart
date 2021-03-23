@@ -33,7 +33,6 @@ class ProfileEditScreenState extends  State<ProfileEditScreen> {
 
   @override
   void initState() {
-    context.read<AccountProvider>().initAccount("https://beautyathome2.azurewebsites.net/api/v1.0/accounts?Id=3");
     super.initState();
   }
 
@@ -57,8 +56,11 @@ class ProfileEditScreenState extends  State<ProfileEditScreen> {
           GestureDetector(
             onTap: () {
               if(userName != null && userPhone != null) {
-                SimpleAPI.putAccountModel('accounts',id: '21', displayName: userName,
-                    phone: userPhone, status: 'Active',path: _file.path);
+                SimpleAPI.putAccountModel('accounts',id: '21',
+                    displayName: userName,
+                    phone: userPhone,
+                    status: 'Active',
+                    path: _file.path);
 
                 Navigator.of(context).push(MaterialPageRoute(
                   builder: (context) => ProfileScreen(),
