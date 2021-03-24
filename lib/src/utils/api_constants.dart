@@ -9,6 +9,7 @@ class ProviderAPIConstant {
 class BookingAPIConstant {}
 
 class EntityEndpoint {
+  static const String AUTH_LOGIN = "auth/login";
   static const String BOOKING = "bookings";
   static const String SERVICE = "services";
 }
