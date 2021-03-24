@@ -630,6 +630,7 @@ class _ProviderScreenState extends State<ProviderScreen> {
                                         'status': 'Đang trên đường',
                                       }),
                                     );
+                                    initState();
                                   },
                                   child: SizedBox(
                                     width: 336,
@@ -969,6 +970,7 @@ class _ProviderScreenState extends State<ProviderScreen> {
                                         'status': 'Đang làm',
                                       }),
                                     );
+                                    initState();
                                   },
                                   child: SizedBox(
                                     width: 336,
@@ -1258,6 +1260,7 @@ class _ProviderScreenState extends State<ProviderScreen> {
                                       status: "ACTIVE",
                                       path: null,
                                     );
+                                    initState();
                                   },
                                   child: SizedBox(
                                     width: 336,

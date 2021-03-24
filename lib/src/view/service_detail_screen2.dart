@@ -4,6 +4,7 @@ import 'package:flutter_app/src/apis/provider_api/simple_api.dart';
 import 'package:flutter_app/src/models-new/service_model_new.dart';
 import 'package:flutter_app/src/models-new/service_type_model.dart';
 import 'package:flutter_app/src/providers/service_type_provider.dart';
+import 'package:flutter_app/src/providers/user_profile.dart';
 import 'package:flutter_app/src/view/provider_manager_service_screen.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
@@ -18,7 +19,7 @@ class ServiceDetailScreen2 extends StatefulWidget {
 }
 
 class _ServiceDetailScreenState extends State<ServiceDetailScreen2> {
-  List serviceType =['Gội đầu','Chăm sóc tóc','Massage','Makeup - Trang điểm','Chăm sóc da','Cắt tóc','Nails - Làm móng'];
+  //List serviceType =['Gội đầu','Chăm sóc tóc','Massage','Makeup - Trang điểm','Chăm sóc da','Cắt tóc','Nails - Làm móng'];
 
   String serviceName ;
   String servicePrice;
@@ -26,6 +27,7 @@ class _ServiceDetailScreenState extends State<ServiceDetailScreen2> {
   String serviceTypeId;
   // String serviceTypeName;
   String serviceDescription;
+  String accountId;
 
   File _file;
   String url;
@@ -45,9 +47,9 @@ class _ServiceDetailScreenState extends State<ServiceDetailScreen2> {
     serviceSumary= widget.service.summary;
     // serviceTypeName= widget.service.serviceType.name;
     serviceTypeId= widget.service.serviceType.id;
-    print('serviceType  ban đầu nè : ' + serviceTypeId);
     serviceDescription = widget.service.description;
     super.initState();
+    accountId = context.read<UserProfile>().profile.uid.toString();
     context.read<ServiceTypeProvider>().initAllServiceType("https://beautyathome2.azurewebsites.net/api/v1.0/service-types");
     var serviceType = context.read<ServiceTypeProvider>();
     listStyle = serviceType.serviceTypes;
@@ -282,7 +284,7 @@ class _ServiceDetailScreenState extends State<ServiceDetailScreen2> {
                         price: servicePrice,estimateTime: '30',
                         status: 'Active', description: serviceDescription,
                         galleryId: widget.service.gallery.id.toString(),
-                        accountId: '3',serviceTypeId: servTypeId,
+                        accountId: accountId,serviceTypeId: servTypeId,
                         path: _file == null ? null : _file.path
                     );
                   }

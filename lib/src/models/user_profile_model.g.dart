@@ -10,7 +10,7 @@ UserProfileModel _$UserProfileModelFromJson(Map<String, dynamic> json) {
   return UserProfileModel(
     gallery: json['gallery'] == null
         ? null
-        : GalleryModel.fromJson(json['gallery'] as String),
+        : GalleryModel.fromMap(json['gallery']),
     uid: json['uid'] as int,
     displayName: json['displayName'] as String,
     email: json['email'] as String,

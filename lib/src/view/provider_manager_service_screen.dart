@@ -7,6 +7,7 @@ import 'package:flutter_app/src/models-new/service_model_new.dart';
 import 'package:flutter_app/src/models-new/service_type_model.dart';
 import 'package:flutter_app/src/providers/service_provider.dart';
 import 'package:flutter_app/src/providers/service_type_provider.dart';
+import 'package:flutter_app/src/providers/user_profile.dart';
 import 'package:flutter_app/src/utils/utils.dart';
 import 'package:flutter_app/src/utils/widgets_utils.dart';
 import 'package:flutter_app/src/view/add_new_service_screen.dart';
@@ -25,13 +26,14 @@ class _ProviderManagerScreenStage extends State<ProviderManagerScreen> {
   int count;
   Color bgColorActive = Color(0x2d27beba);
   Color bgColorDis = Colors.white;
+  String accountId;
 
 
   @override
   void initState() {
+    accountId = context.read<UserProfile>().profile.uid.toString();
+    context.read<ServiceProvider>().initAllService("https://beautyathome2.azurewebsites.net/api/v1.0/services?AccountId="+ accountId);
     super.initState();
-    context.read<ServiceProvider>().initAllService("https://beautyathome2.azurewebsites.net/api/v1.0/services?AccountId=3");
-
   }
 
 
@@ -175,7 +177,7 @@ class _ProviderManagerScreenStage extends State<ProviderManagerScreen> {
                               height: 26,
                               child:
                               Switch(
-                                value: (service.status) == 'Active' ? true : false,
+                                value: service.status == 'Active' ? true : false,
                                 onChanged: (value) {
                                   String status = "";
                                   print(service.serviceType.name);

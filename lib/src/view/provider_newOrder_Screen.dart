@@ -124,12 +124,11 @@ class ProviderNewOderScreenState extends State<ProviderNewOderScreen> {
   String currentAddress = "";
   @override
   void initState() {
+    initPushNotification();
     getUserLocation();
     String accountId = context.read<UserProfile>().profile.uid.toString();
     context.read<BookingProvider>().initAllNewBooking(
-        "https://beautyathome2.azurewebsites.net/api/v1.0/bookings?status=Mới&BeautyArtistAccountId=" +
-            accountId);
-    super.initState();
+        "https://beautyathome2.azurewebsites.net/api/v1.0/bookings?status=Mới&BeautyArtistAccountId=" + accountId);
   }
 
   getUserLocation() async {
@@ -185,8 +184,7 @@ class ProviderNewOderScreenState extends State<ProviderNewOderScreen> {
                             itemBuilder:
                                 (BuildContext buildContext, int index) {
                               BookingModel booking = value.bookings[index];
-                              return (value.bookings[index].status
-                                      .contains("Mới"))
+                              return (value.bookings[index].status.contains("Mới"))
                                   ? OutlinedCard(
                                       margin: EdgeInsets.only(top: 4),
                                       padding:
@@ -202,8 +200,7 @@ class ProviderNewOderScreenState extends State<ProviderNewOderScreen> {
                                                     width: 210,
                                                     child: Row(
                                                       children: [
-                                                        Text('SHA-' +
-                                                            booking.id),
+                                                        Text('SHA-' + booking.id),
                                                         Card(
                                                           color:
                                                               Color(0xff707DB9),

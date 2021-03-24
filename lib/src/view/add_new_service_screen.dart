@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_app/src/apis/provider_api/simple_api.dart';
 import 'package:flutter_app/src/models-new/service_type_model.dart';
 import 'package:flutter_app/src/providers/service_type_provider.dart';
+import 'package:flutter_app/src/providers/user_profile.dart';
 import 'package:flutter_app/src/view/provider_manager_service_screen.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
@@ -17,7 +18,7 @@ class _AddNewServiceScreenState extends State<AddNewServiceScreen> {
   String servicePrice;
   String serviceSumary;
   String serviceDescription;
-
+  String accountId;
 
   File _file;
   List<ServiceTypeModel> listStyle;
@@ -31,6 +32,7 @@ class _AddNewServiceScreenState extends State<AddNewServiceScreen> {
   @override
   void initState() {
     super.initState();
+    accountId = context.read<UserProfile>().profile.uid.toString();
     context.read<ServiceTypeProvider>().initAllServiceType("https://beautyathome2.azurewebsites.net/api/v1.0/service-types");
     var serviceType = context.read<ServiceTypeProvider>();
     listStyle = serviceType.serviceTypes;
@@ -268,7 +270,7 @@ class _AddNewServiceScreenState extends State<AddNewServiceScreen> {
                       SimpleAPI.postFile('services', description: serviceDescription,
                           price: servicePrice,summary: serviceSumary,
                           estimateTime: "30",serviceName: serviceName,
-                          serviceTypeId: serviceTypeId, accountId: "3",
+                          serviceTypeId: serviceTypeId, accountId: accountId,
                           path: _file.path
                       );
                       Navigator.of(context).push(MaterialPageRoute(
