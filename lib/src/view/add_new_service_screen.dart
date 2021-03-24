@@ -266,9 +266,11 @@ class _AddNewServiceScreenState extends State<AddNewServiceScreen> {
                         && serviceDescription.isNotEmpty && serviceTypeId.isNotEmpty){
 
                       SimpleAPI.postFile('services', description: serviceDescription,
-                                        price: servicePrice,summary: serviceSumary,
-                                        estimateTime: "30",serviceName: serviceName,
-                          serviceTypeId: serviceTypeId, accountId: "3", path: _file.path);
+                          price: servicePrice,summary: serviceSumary,
+                          estimateTime: "30",serviceName: serviceName,
+                          serviceTypeId: serviceTypeId, accountId: "3",
+                          path: _file.path
+                      );
                       Navigator.of(context).push(MaterialPageRoute(
                         builder: (context) => ProviderManagerScreen(),
                       ));

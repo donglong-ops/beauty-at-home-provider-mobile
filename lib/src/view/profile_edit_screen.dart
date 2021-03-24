@@ -60,7 +60,7 @@ class ProfileEditScreenState extends  State<ProfileEditScreen> {
                     displayName: userName,
                     phone: userPhone,
                     status: 'Active',
-                    path: _file.path);
+                    path: _file == null ? null : _file.path);
 
                 Navigator.of(context).push(MaterialPageRoute(
                   builder: (context) => ProfileScreen(),
@@ -107,9 +107,7 @@ class ProfileEditScreenState extends  State<ProfileEditScreen> {
                                 DecorationImage(
                                     fit: BoxFit.cover,
                                     image: _file == null ? AssetImage('public/img/meo.jpg')
-                                   //: AssetImage(_file.path),
                                   : new FileImage(new File(_file.path))
-                                        // : ClipRRect(child: Image.file(_file, fit: BoxFit.cover)),
                                 )
                             ),
                           ),
