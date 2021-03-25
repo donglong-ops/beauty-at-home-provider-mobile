@@ -1,6 +1,6 @@
 import 'dart:async';
-
 import 'dart:developer';
+import "package:intl/intl.dart";
 
 class Utils {
   static Future sleep(int miliesSecond) {
@@ -18,5 +18,16 @@ class Utils {
     }
     await sleep(miliesSecond);
     afterTask.call();
+  }
+  static String formatPrice(String review) {
+    String result = review.toString();
+    var formatter = NumberFormat('###,000');
+    String formatString = formatter.format(double.parse(result));
+    return formatString.replaceAll(new RegExp(r','), '.') + " đ";
+  }
+  static String calculatePrice(String unitPrice, String quantity) {
+    double total = 0;
+    total = double.parse(unitPrice) * double.parse(quantity);
+    return formatPrice(total.toString());
   }
 }

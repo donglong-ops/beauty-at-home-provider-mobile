@@ -5,15 +5,17 @@ import 'package:flutter_app/src/widgets/shared_widget/style.dart';
 import 'package:flutter_map/flutter_map.dart';
 
 class ServiceDetailStepDescription extends StatelessWidget {
-  final List<String> description;
+  //final List<String> description;
+  final String description;
 
-  String getFromList(List<String> list) {
-    String list = "";
-    for (int i = 0; i < description.length; i++) {
-      list = list + description[i].toString() + '\n';
-    }
-    return list;
-  }
+
+  // String getFromList(List<String> list) {
+  //   String list = "";
+  //   for (int i = 0; i < description.length; i++) {
+  //     list = list + description[i].toString() + '\n';
+  //   }
+  //   return list;
+  // }
 
   const ServiceDetailStepDescription({Key key, this.description})
       : super(key: key);
@@ -42,13 +44,12 @@ class ServiceDetailStepDescription extends StatelessWidget {
                 child: Container(
                   color: Colors.white,
                   child: TextFormField(
-                    //initialValue: description[index],
-                    initialValue: getFromList(description),
+                    initialValue: description,
                     textInputAction: TextInputAction.done,
                     decoration: InputDecoration(
                       border: OutlineInputBorder(),
                     ),
-                    maxLines: 11,
+                    maxLines: 8,
                   ),
                 ),
               ),

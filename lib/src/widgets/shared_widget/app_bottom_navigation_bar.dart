@@ -12,8 +12,8 @@ class AppBottomNavigationBar extends StatelessWidget {
     this.currentActiveIndex,
   }) : super(key: key);
   final dynamic currentScreenState = {
-    0: ProviderScreen(),
-    1: ProviderNewOderScreen(),
+    0: ProviderNewOderScreen(),
+    1: ProviderScreen(),
     2: ProviderManagerScreen(),
     3: HistoryScreen(),
     4: ProfileScreen(),
@@ -33,13 +33,13 @@ class AppBottomNavigationBar extends StatelessWidget {
       },
       items: [
         BottomNavigationBarItem(
-          label: 'Đang làm',
+          label: 'Đơn mới',
           icon: Icon(
             Icons.book_outlined,
           ),
         ),
         BottomNavigationBarItem(
-          label: 'Đơn mới',
+          label: 'Đơn hàng',
           icon: Icon(Icons.list, size: 26),
         ),
         BottomNavigationBarItem(
