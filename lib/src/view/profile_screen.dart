@@ -11,20 +11,20 @@ import 'package:google_sign_in/google_sign_in.dart';
 import 'package:provider/provider.dart';
 import 'login_screen.dart';
 
-class ProfileScreen extends StatefulWidget  {
-
+class ProfileScreen extends StatefulWidget {
   @override
   ProfileScreenState createState() => ProfileScreenState();
-
 }
+
 UserProfile userFo;
+
 class ProfileScreenState extends State<ProfileScreen> {
   @override
   void initState() {
     userFo = context.read<UserProfile>();
     super.initState();
-
   }
+
   @override
   Widget build(BuildContext context) {
     return Consumer<AccountProvider>(
@@ -42,9 +42,9 @@ class ProfileScreenState extends State<ProfileScreen> {
                   child: Stack(
                     children: <Widget>[
                       CircleAvatar(
-                        radius: 10.0 * 5,
-                        backgroundImage: NetworkImage(userFo.profile.gallery.images[0].imageUrl)
-                      ),
+                          radius: 10.0 * 5,
+                          backgroundImage: NetworkImage(
+                              userFo.profile.gallery.images[0].imageUrl)),
                       GestureDetector(
                         onTap: () {
                           Navigator.of(context).push(MaterialPageRoute(
@@ -76,7 +76,7 @@ class ProfileScreenState extends State<ProfileScreen> {
                   ),
                 ),
                 SizedBox(height: 10.0 * 2),
-                Text('Huỳnh Thế Hiển',
+                Text(userFo.profile.displayName,
                     style: TextStyle(
                       fontSize: 10.0 * 2,
                       fontWeight: FontWeight.w600,
@@ -143,7 +143,8 @@ class ProfileScreenState extends State<ProfileScreen> {
                 ),
                 child: Row(
                   children: <Widget>[
-                    Icon(Icons.help, size: 10.0 * 2.5, color: Color(0xff28BEBA)),
+                    Icon(Icons.help,
+                        size: 10.0 * 2.5, color: Color(0xff28BEBA)),
                     SizedBox(width: 10.0 * 1.5),
                     Text('Trợ giúp và hỗ trợ',
                         style: TextStyle(

@@ -8,14 +8,8 @@ part of 'user_profile_model.dart';
 
 UserProfileModel _$UserProfileModelFromJson(Map<String, dynamic> json) {
   return UserProfileModel(
-<<<<<<< Updated upstream
-    gallery: json['gallery'] == null
-        ? null
-        : GalleryModel.fromMap(json['gallery']),
-=======
     gallery:
         json['gallery'] == null ? null : GalleryModel.fromMap(json['gallery']),
->>>>>>> Stashed changes
     uid: json['uid'] as int,
     displayName: json['displayName'] as String,
     email: json['email'] as String,
