@@ -30,6 +30,7 @@ class _ProviderManagerScreenStage extends State<ProviderManagerScreen> {
   @override
   void initState() {
     accountId = context.read<UserProfile>().profile.uid.toString();
+    context.read<ServiceTypeProvider>().initAllServiceType("https://beauty-at-home-4a5ss6e6yq-as.a.run.app/api/v1.0/service-types");
     context.read<ServiceProvider>().initAllService(
         "https://beauty-at-home-4a5ss6e6yq-as.a.run.app/api/v1.0/services?AccountId=" +
             accountId);
@@ -193,29 +194,39 @@ class _ProviderManagerScreenStage extends State<ProviderManagerScreen> {
                                           status = "Active";
                                         } else
                                           status = "Inactive";
-                                        SimpleAPI.put(
-                                          'services',
-                                          service.serviceID,
-                                          headers: {
-                                            "Accept": "application/json",
-                                            "content-type": "application/json"
-                                          },
-                                          body: jsonEncode(<String, String>{
-                                            'id': service.serviceID,
-                                            'description': service.description,
-                                            'summary': service.summary,
-                                            'price': service.price,
-                                            'serviceName': service.serviceName,
-                                            'estimateTime':
-                                                service.estimateTime,
-                                            'accountId': service.account.id,
-                                            'serviceTypeId': service
-                                                .serviceType.id
-                                                .toString(),
-                                            'status': status,
-                                            'galleryId':
-                                                service.gallery.id.toString(),
-                                          }),
+                                        // SimpleAPI.put(
+                                        //   'services',
+                                        //   service.serviceID,
+                                        //   headers: {
+                                        //     "Accept": "application/json",
+                                        //     "content-type": "application/json",
+                                        //   },
+                                        //   body: jsonEncode(<String, String>{
+                                        //     'id': service.serviceID,
+                                        //     'description': service.description,
+                                        //     'summary': service.summary,
+                                        //     'price': service.price,
+                                        //     'serviceName': service.serviceName,
+                                        //     'estimateTime': service.estimateTime,
+                                        //     'accountId': service.account.id,
+                                        //     'serviceTypeId': service.serviceType.id.toString(),
+                                        //     'status': status,
+                                        //     'galleryId': service.gallery.id.toString(),
+                                        //     'file': null,
+                                        //   }),
+                                        // );
+
+                                        SimpleAPI.putServiceModel('services',id:
+                                            service.serviceID,
+                                            serviceName: service.serviceName,
+                                            summary: service.summary ,
+                                            price: service.price,
+                                            estimateTime: '30',
+                                            status: status,
+                                            description: service.description,
+                                            galleryId: service.gallery.id.toString(),
+                                            accountId: service.account.id,
+                                            serviceTypeId: service.serviceType.id,
                                         );
                                         setState(() {
                                           if (value) {

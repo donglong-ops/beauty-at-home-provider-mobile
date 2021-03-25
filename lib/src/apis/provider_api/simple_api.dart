@@ -108,7 +108,7 @@ class SimpleAPI {
     String summary,
     String path,
   }) async {
-    final uri = Uri.parse(baseUrl + "/$entityEndpoint");
+    final uri = Uri.parse(baseUrl + "$entityEndpoint");
     var request = new http.MultipartRequest("POST", uri)
       ..fields['Description'] = description
       ..fields['ServiceName'] = serviceName
@@ -127,7 +127,7 @@ class SimpleAPI {
             }
           else
             {
-              print('Insert failed: ' + value.statusCode.toString()),
+              print('Insert failed:  ' + value.statusCode.toString()),
             }
         });
     return null;
@@ -149,7 +149,7 @@ class SimpleAPI {
     String status,
     String path,
   }) async {
-    final uri = Uri.parse(baseUrl + "/$entityEndpoint/$id");
+    final uri = Uri.parse(baseUrl + "$entityEndpoint/$id");
     if (path != null) {
       var request = new http.MultipartRequest("PUT", uri)
         ..fields['id'] = id
@@ -187,6 +187,14 @@ class SimpleAPI {
         ..fields['serviceTypeId'] = serviceTypeId
         ..fields['status'] = status
         ..fields['galleryId'] = galleryId;
+
+      print('id : ' + id);
+      print('description : ' + description);
+      print('summary : ' + summary);
+      print('serviceName : ' + serviceName);
+      print('serviceTypeId : ' + serviceTypeId);
+      print('status : ' + status);
+      print('price : ' + price);
       request.send().then((value) => {
             if (value.statusCode == 204)
               {
@@ -194,6 +202,8 @@ class SimpleAPI {
               }
             else
               {
+          print(value.request.toString()),
+
                 print('Update failed 2: ' + value.statusCode.toString()),
               }
           });
@@ -211,7 +221,7 @@ class SimpleAPI {
     String status,
     String path,
   }) async {
-    final uri = Uri.parse(baseUrl + "/$entityEndpoint/$id");
+    final uri = Uri.parse(baseUrl + "$entityEndpoint/$id");
     if (path != null) {
       var request = new http.MultipartRequest("PUT", uri)
         ..fields['id'] = id
@@ -279,6 +289,10 @@ class SimpleAPI {
     dynamic body,
   }) async {
     final uri = Uri.parse(baseUrl + "$entityEndpoint/$id");
+
+      print('nene : ' + body.toString());
+      print('URI NỪ : ' + uri.toString());
+
     http.Response response = await http.put(uri, headers: headers, body: body);
     print("lỗi nè: " + response.statusCode.toString());
     if (response.statusCode == 204) {
