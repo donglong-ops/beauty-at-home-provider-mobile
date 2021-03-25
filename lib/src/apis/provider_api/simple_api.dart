@@ -30,7 +30,7 @@ class SimpleAPI {
   static Future<List<T>> getAll<T>(Function(Map<String, dynamic>) fromMap,
       String endtitypoint, Map<String, dynamic> queryParameter) async {
     String uri =
-        "https://beautyathome2.azurewebsites.net/api/v1.0/$endtitypoint";
+        "https://beauty-at-home-4a5ss6e6yq-as.a.run.app/api/v1.0/$endtitypoint";
     http.Response response = await http.get(uri);
     List<T> list = new List();
     dynamic jsonRaw = json.decode(response.body);
@@ -81,7 +81,7 @@ class SimpleAPI {
     Function(Map<String, dynamic>) fromMap,
   }) async {
     var uri =
-        'https://beautyathome2.azurewebsites.net/api/v1.0/$entityEndpoint/$id';
+        'https://beauty-at-home-4a5ss6e6yq-as.a.run.app/api/v1.0/$entityEndpoint/$id';
     var encoded = Uri.encodeFull(uri);
 
     http.Response response = await http.get(

@@ -40,7 +40,8 @@ class ProviderNewOderScreenState extends State<ProviderNewOderScreen> {
   final FirebaseMessaging _firebaseMessaging = FirebaseHelper.fcmInstance();
 
   Future _showNotification(Map<String, dynamic> message) async {
-    await notiPlugin.show(0,
+    await notiPlugin.show(
+      0,
       'new message arived',
       '${message['data']['title']} for ${message['data']['price']}',
       FirebaseHelper.platformSpecInstance(),
@@ -121,14 +122,15 @@ class ProviderNewOderScreenState extends State<ProviderNewOderScreen> {
   final CountdownController controller = CountdownController();
   double minute = 20;
   String currentAddress = "";
+  UserProfile userFo;
   @override
   void initState() {
     initPushNotification();
     getUserLocation();
-    String accountId = context.read<UserProfile>().profile.uid.toString();
+    userFo = context.read<UserProfile>();
     context.read<BookingProvider>().initAllNewBooking(
-        "https://beautyathome2.azurewebsites.net/api/v1.0/bookings?status=Mới&BeautyArtistAccountId=" +
-            accountId);
+        "https://beauty-at-home-4a5ss6e6yq-as.a.run.app/api/v1.0/bookings?status=Mới&BeautyArtistAccountId=" +
+            userFo.profile.uid.toString());
   }
 
   getUserLocation() async {
@@ -593,11 +595,16 @@ class ProviderNewOderScreenState extends State<ProviderNewOderScreen> {
                                                                     SimpleAPI
                                                                         .putAccountModel(
                                                                       'accounts',
-                                                                      id: '21',
-                                                                      displayName:
-                                                                          "Đồng Long",
-                                                                      phone:
-                                                                          '0931180303',
+                                                                      id: userFo
+                                                                          .profile
+                                                                          .uid
+                                                                          .toString(),
+                                                                      displayName: userFo
+                                                                          .profile
+                                                                          .displayName,
+                                                                      phone: userFo
+                                                                          .profile
+                                                                          .phone,
                                                                       status:
                                                                           "INACTIVE",
                                                                       path:
