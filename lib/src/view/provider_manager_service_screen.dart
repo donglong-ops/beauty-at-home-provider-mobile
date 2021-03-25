@@ -32,7 +32,7 @@ class _ProviderManagerScreenStage extends State<ProviderManagerScreen> {
   @override
   void initState() {
     accountId = context.read<UserProfile>().profile.uid.toString();
-    context.read<ServiceProvider>().initAllService("https://beautyathome2.azurewebsites.net/api/v1.0/services?AccountId="+ accountId);
+    context.read<ServiceProvider>().initAllService("https://beauty-at-home-4a5ss6e6yq-as.a.run.app/api/v1.0/services?AccountId="+ accountId);
     super.initState();
   }
 

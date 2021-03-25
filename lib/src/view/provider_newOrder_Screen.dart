@@ -121,13 +121,14 @@ class ProviderNewOderScreenState extends State<ProviderNewOderScreen> {
   final CountdownController controller = CountdownController();
   double minute = 20;
   String currentAddress = "";
+  UserProfile userFo;
   @override
   void initState() {
     initPushNotification();
     getUserLocation();
-    String accountId = context.read<UserProfile>().profile.uid.toString();
+    userFo = context.read<UserProfile>();
     context.read<BookingProvider>().initAllNewBooking(
-        "https://beautyathome2.azurewebsites.net/api/v1.0/bookings?status=Mới&BeautyArtistAccountId=" + accountId);
+        "https://beauty-at-home-4a5ss6e6yq-as.a.run.app/api/v1.0/bookings?status=Mới&BeautyArtistAccountId=" + userFo.profile.uid.toString());
   }
 
   getUserLocation() async {
@@ -517,19 +518,12 @@ class ProviderNewOderScreenState extends State<ProviderNewOderScreen> {
                                                           ),
                                                         ),
                                                         padding:
-                                                            const EdgeInsets
-                                                                    .only(
-                                                                left: 17,
-                                                                right: 18,
-                                                                top: 5),
-                                                        child: Text(
-                                                          "BỎ QUA",
+                                                            const EdgeInsets.only(left: 17, right: 18, top: 5),
+                                                        child: Text("BỎ QUA",
                                                           style: TextStyle(
-                                                            color: Color(
-                                                                0xffcf8b93),
+                                                            color: Color(0xffcf8b93),
                                                             fontSize: 13,
-                                                            fontFamily:
-                                                                "Roboto",
+                                                            fontFamily: "Roboto",
                                                             fontWeight:
                                                                 FontWeight.w700,
                                                           ),
@@ -541,8 +535,7 @@ class ProviderNewOderScreenState extends State<ProviderNewOderScreen> {
                                                       onTap: () {
                                                         showDialog(
                                                           context: context,
-                                                          barrierDismissible:
-                                                              false,
+                                                          barrierDismissible: false,
                                                           builder: (context) {
                                                             return AlertDialog(
                                                               // title: Text("Bạn có chắc muốn hủy đơn?"),
@@ -551,64 +544,37 @@ class ProviderNewOderScreenState extends State<ProviderNewOderScreen> {
                                                               ),
                                                               actions: [
                                                                 FlatButton(
-                                                                  textColor: Color(
-                                                                      0xFF6200EE),
+                                                                  textColor: Color(0xFF6200EE),
                                                                   onPressed:
-                                                                      () {
-                                                                    Navigator.of(
-                                                                            context)
-                                                                        .pop();
-                                                                  },
-                                                                  child: Text(
-                                                                      'Không'),
+                                                                      () {Navigator.of(context).pop();},
+                                                                  child: Text('Không'),
                                                                 ),
                                                                 FlatButton(
-                                                                  textColor: Color(
-                                                                      0xFF6200EE),
+                                                                  textColor: Color(0xFF6200EE),
                                                                   onPressed:
                                                                       () {
-                                                                    SimpleAPI
-                                                                        .put(
-                                                                      'bookings',
-                                                                      booking
-                                                                          .id,
+                                                                    SimpleAPI.put(
+                                                                      'bookings', booking.id,
                                                                       headers: {
-                                                                        "Accept":
-                                                                            "application/json",
-                                                                        "content-type":
-                                                                            "application/json"
+                                                                        "Accept": "application/json",
+                                                                        "content-type": "application/json"
                                                                       },
-                                                                      body: jsonEncode(<
-                                                                          String,
-                                                                          String>{
-                                                                        'id': booking
-                                                                            .id,
-                                                                        'status':
-                                                                            'Xác nhận',
+                                                                      body: jsonEncode(<String, String>{
+                                                                        'id': booking.id,
+                                                                        'status': 'Xác nhận',
                                                                       }),
                                                                     );
-                                                                    SimpleAPI
-                                                                        .putAccountModel(
-                                                                      'accounts',
-                                                                      id: '21',
-                                                                      displayName:
-                                                                          "Đồng Long",
-                                                                      phone:
-                                                                          '0931180303',
-                                                                      status:
-                                                                          "INACTIVE",
-                                                                      path:
-                                                                          null,
+                                                                    SimpleAPI.putAccountModel(
+                                                                      'accounts', id: userFo.profile.uid.toString(),
+                                                                      displayName: userFo.profile.displayName,
+                                                                      phone: userFo.profile.phone,
+                                                                      status: "INACTIVE",
+                                                                      path: null,
                                                                     );
-                                                                    Navigator.of(
-                                                                            context)
-                                                                        .pushReplacement(MaterialPageRoute(
-                                                                            builder: (context) => ProviderScreen(
-                                                                                  isSwiched: false,
-                                                                                )));
+                                                                    Navigator.of(context).pushReplacement(MaterialPageRoute(
+                                                                            builder: (context) => ProviderScreen(isSwiched: false,)));
                                                                   },
-                                                                  child: Text(
-                                                                      'Đồng ý'),
+                                                                  child: Text('Đồng ý'),
                                                                 ),
                                                               ],
                                                             );

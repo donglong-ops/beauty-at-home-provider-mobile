@@ -43,6 +43,7 @@ class _ProviderScreenState extends State<ProviderScreen> {
   int index = 0;
   bool isSwiched = true;
   BookingProvider provider;
+  UserProfile userFo;
   @override
   void initState() {
     super.initState();
@@ -50,10 +51,10 @@ class _ProviderScreenState extends State<ProviderScreen> {
     if (widget.isSwiched != null) {
       isSwiched = widget.isSwiched;
     }
-    String accountId = context.read<UserProfile>().profile.uid.toString();
+    //String accountId = context.read<UserProfile>().profile.uid.toString();
+    userFo = context.read<UserProfile>();
     context.read<BookingProvider>().initAllBooking(
-        "https://beautyathome2.azurewebsites.net/api/v1.0/bookings?BeautyArtistAccountId=" +
-            accountId);
+        "https://beauty-at-home-4a5ss6e6yq-as.a.run.app/api/v1.0/bookings?BeautyArtistAccountId=" + userFo.profile.uid.toString());
 
   }
 
@@ -151,10 +152,10 @@ class _ProviderScreenState extends State<ProviderScreen> {
   Widget build(BuildContext context) {
     String status;
     print('Rebuild');
-    String accountId = context.read<UserProfile>().profile.uid.toString();
+    // String accountId = context.read<UserProfile>().profile.uid.toString();
     provider = context.read<BookingProvider>();
-    provider.initAllBooking("https://beautyathome2.azurewebsites.net/api/v1.0/bookings?BeautyArtistAccountId=" +
-        accountId);
+    provider.initAllBooking("https://beauty-at-home-4a5ss6e6yq-as.a.run.app/api/v1.0/bookings?BeautyArtistAccountId=" +
+        userFo.profile.uid.toString());
     List<BookingModel> lstBooking = provider.bookings;
     return Scaffold(
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
@@ -178,9 +179,9 @@ class _ProviderScreenState extends State<ProviderScreen> {
                 }
 
                 SimpleAPI.putAccountModel('accounts',
-                    id: '21',
-                    displayName: "Đồng Long",
-                    phone: '0931180303',
+                    id: userFo.profile.uid.toString(),
+                    displayName: userFo.profile.displayName,
+                    phone: userFo.profile.phone,
                     status: status,
                     path: null);
                 setState(() {
@@ -1258,9 +1259,9 @@ class _ProviderScreenState extends State<ProviderScreen> {
                                     );
                                     SimpleAPI.putAccountModel(
                                       'accounts',
-                                      id: '21',
-                                      displayName: "Đồng Long",
-                                      phone: '0931180303',
+                                      id: userFo.profile.uid.toString(),
+                                      displayName: userFo.profile.displayName,
+                                      phone: userFo.profile.phone,
                                       status: "ACTIVE",
                                       path: null,
                                     );
