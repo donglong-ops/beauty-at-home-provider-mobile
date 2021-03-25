@@ -23,7 +23,7 @@ class ProfileEditScreenState extends State<ProfileEditScreen> {
   File _file;
   String userName;
   String userEmail;
-  String userPhone = '0931182303';
+  String userPhone ="";
 
   void pickImage() async {
     PickedFile pickedFile =

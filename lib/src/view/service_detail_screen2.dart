@@ -45,28 +45,27 @@ class _ServiceDetailScreenState extends State<ServiceDetailScreen2> {
     serviceName = widget.service.serviceName;
     servicePrice= widget.service.price;
     serviceSumary= widget.service.summary;
-    // serviceTypeName= widget.service.serviceType.name;
     serviceTypeId= widget.service.serviceType.id;
     serviceDescription = widget.service.description;
     super.initState();
     accountId = context.read<UserProfile>().profile.uid.toString();
-    context.read<ServiceTypeProvider>().initAllServiceType("https://beautyathome2.azurewebsites.net/api/v1.0/service-types");
     var serviceType = context.read<ServiceTypeProvider>();
     listStyle = serviceType.serviceTypes;
-
-    for(int i = 0; i < listStyle.length; i++){
-      if(listStyle[i].id.contains(serviceTypeId.toString())){
-        setState(() {
-          possition = i;
-        });
+    if (listStyle != null) {
+      for(int i = 0; i < listStyle.length; i++){
+        if(listStyle[i].id.contains(serviceTypeId.toString())){
+          setState(() {
+            possition = i;
+          });
+        }
       }
     }
+
   }
 
   @override
   Widget build(BuildContext context) {
-    String servTypeId = listStyle[possition].id;
-
+      String servTypeId = listStyle[possition].id;
     return Scaffold(
       backgroundColor: Colors.white,
       body: Container(
@@ -313,6 +312,5 @@ class _ServiceDetailScreenState extends State<ServiceDetailScreen2> {
           ),
         ),
       ),
-    );
-  }
+    );}
 }
