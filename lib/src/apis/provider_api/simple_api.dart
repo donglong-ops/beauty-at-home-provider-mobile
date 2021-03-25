@@ -12,7 +12,7 @@ class SimpleAPI {
   static final String version = VERSION;
 
   static Future<UserProfileModel> login(dynamic body) async {
-    final uri = Uri.parse(baseUrl + "/${EntityEndpoint.AUTH_LOGIN}");
+    final uri = Uri.parse(baseUrl + "${EntityEndpoint.AUTH_LOGIN}");
     http.Response response = await http.post(
       uri,
       headers: <String, String>{

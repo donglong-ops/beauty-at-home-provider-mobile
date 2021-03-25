@@ -89,11 +89,11 @@ class _ServiceDetailScreenState extends State<ServiceDetailScreen2> {
                         child: Container(
                           // margin: EdgeInsets.only(top: 50),
                           width: 50,
-                          child: Image.network(
+                          child: widget.service.gallery != null ? Image.network(
                             widget.service.gallery.images[0].imageUrl,
                             width: 50,
                             fit: BoxFit.cover,
-                          ),
+                          ): Image.asset('public/img/Image.png'),
                         ),
                       )
                           : ClipRRect(child: Image.file(_file, fit: BoxFit.cover)),

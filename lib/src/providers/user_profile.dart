@@ -18,22 +18,24 @@ class UserProfile extends ChangeNotifier {
 
   Future<void> login() async {
     User user = await GoogleService.instance().loginWithGoogle();
-    _isSignIn = true;
+    _isSignIn = false;
     String idToken = await user.getIdToken();
     _profile = await SimpleAPI.login({
       "idToken": idToken,
       "displayName": user.displayName,
       "avatar": user.photoURL,
+      "loginType": 'WORKER',
     });
-    _profile.firebaseRefreshToken = user.refreshToken;
-    _profile.idToken = idToken;
-    _profile.gallery = GalleryModel(images: [
-      ImageModel(imageUrl: user.photoURL),
-    ]);
     if (_profile != null) {
+      _profile.firebaseRefreshToken = user.refreshToken;
+      _profile.idToken = idToken;
+      _profile.gallery = GalleryModel(images: [
+        ImageModel(imageUrl: user.photoURL),
+      ]);
       _isSignIn = true;
+      log("|||||||||||==========<<<<" + _profile.uid.toString());
     }
-    log("|||||||||||==========<<<<" + _profile.uid.toString());
+
     notifyListeners();
   }
 

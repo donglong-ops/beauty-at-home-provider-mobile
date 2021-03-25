@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_app/src/view/login_screen.dart';
+import 'package:flutter_app/src/view/profile_screen.dart';
 import 'package:flutter_app/src/view/provider_confirm_screen.dart';
 import 'package:flutter_app/src/view/provider_newOrder_Screen.dart';
 
@@ -17,6 +18,7 @@ class App extends StatelessWidget {
       routes: {
         // When navigating to the "/" route, build the FirstScreen widget.
         '/': (context) => LoginScreen(),
+        //'/': (context) => ProfileScreen(),
         //'/': (context) => CheckoutScreen(),
         //'/': (context) => PaymentScreen(),
         // '/': (context) => NotificationScreen(),

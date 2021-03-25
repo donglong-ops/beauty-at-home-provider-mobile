@@ -65,11 +65,7 @@ class _AddNewServiceScreenState extends State<AddNewServiceScreen> {
                                 child: Container(
                                   margin: EdgeInsets.only(top: 50),
                                   width: 50,
-                                  child: Image.asset(
-                                    'public/img/Image.png',
-                                    width: 50,
-                                    fit: BoxFit.fitHeight,
-                                  ),
+                                  child: Image.asset('public/img/Image.png', width: 50,fit: BoxFit.fitHeight,),
                                 ),
                               )
                             : ClipRRect(child: Image.file(_file, fit: BoxFit.cover)),

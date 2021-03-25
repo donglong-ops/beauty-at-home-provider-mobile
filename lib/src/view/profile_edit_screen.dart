@@ -111,8 +111,7 @@ class ProfileEditScreenState extends State<ProfileEditScreen> {
                           decoration: BoxDecoration(
                               border: Border.all(
                                   width: 4,
-                                  color: Theme.of(context)
-                                      .scaffoldBackgroundColor),
+                                  color: Theme.of(context).scaffoldBackgroundColor),
                               boxShadow: [
                                 BoxShadow(
                                     spreadRadius: 2,
@@ -124,8 +123,7 @@ class ProfileEditScreenState extends State<ProfileEditScreen> {
                               image: DecorationImage(
                                   fit: BoxFit.cover,
                                   image: _file == null
-                                      ? NetworkImage(userFo
-                                          .profile.gallery.images[0].imageUrl)
+                                      ? NetworkImage(userFo.profile.gallery.images[0].imageUrl)
                                       : new FileImage(new File(_file.path)))),
                         ),
                         Positioned(
@@ -138,8 +136,7 @@ class ProfileEditScreenState extends State<ProfileEditScreen> {
                                   shape: BoxShape.circle,
                                   border: Border.all(
                                     width: 4,
-                                    color: Theme.of(context)
-                                        .scaffoldBackgroundColor,
+                                    color: Theme.of(context).scaffoldBackgroundColor,
                                   ),
                                   color: Colors.green,
                                 ),

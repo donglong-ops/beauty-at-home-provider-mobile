@@ -51,7 +51,6 @@ class _ProviderScreenState extends State<ProviderScreen> {
     if (widget.isSwiched != null) {
       isSwiched = widget.isSwiched;
     }
-    //String accountId = context.read<UserProfile>().profile.uid.toString();
     userFo = context.read<UserProfile>();
     context.read<BookingProvider>().initAllBooking(
         "https://beauty-at-home-4a5ss6e6yq-as.a.run.app/api/v1.0/bookings?BeautyArtistAccountId=" + userFo.profile.uid.toString());
@@ -76,16 +75,6 @@ class _ProviderScreenState extends State<ProviderScreen> {
     });
   }
 
-  getDistance() async {
-    Location location = new Location();
-    LocationData myLocation;
-    myLocation = await location.getLocation();
-    // Geocoder geocoder = new Geocoder(this, addRess);
-    //final double distance = Geolocator.distanceBetween(10.8418324, 106.8071312, myLocation.latitude, myLocation.longitude);
-    final double distance = Geolocator.distanceBetween(
-        10.8418324, 106.8071312, 10.8220246, 106.80624);
-    print("nè nè : " + (distance / 1000).toString());
-  }
 
   Widget title(BuildContext context) {
     if (this.isSwiched == true)
@@ -236,12 +225,7 @@ class _ProviderScreenState extends State<ProviderScreen> {
                                   padding: const EdgeInsets.only(top: 4),
                                   child: Text(
                                     'Chấp nhận (' +
-                                        lstBooking
-                                            .where((element) =>
-                                                element.status == 'Xác nhận')
-                                            .length
-                                            .toString() +
-                                        ')',
+                                        lstBooking.where((element) => element.status == 'Xác nhận').length.toString() + ')',
                                     textAlign: TextAlign.center,
                                     style: TextStyle(
                                       color: Color(0x7f000000),
@@ -275,14 +259,7 @@ class _ProviderScreenState extends State<ProviderScreen> {
                                 child: Padding(
                                   padding: const EdgeInsets.only(top: 4),
                                   child: Text(
-                                    'Chuẩn bị (' +
-                                        lstBooking
-                                            .where((element) =>
-                                                element.status ==
-                                                'Đang trên đường')
-                                            .length
-                                            .toString() +
-                                        ')',
+                                    'Chuẩn bị (' + lstBooking.where((element) => element.status == 'Đang trên đường').length.toString() + ')',
                                     textAlign: TextAlign.center,
                                     style: TextStyle(
                                       color: Color(0x7f000000),
@@ -317,12 +294,7 @@ class _ProviderScreenState extends State<ProviderScreen> {
                                   padding: const EdgeInsets.only(top: 4),
                                   child: Text(
                                     'Đang làm (' +
-                                        lstBooking
-                                            .where((element) =>
-                                                element.status == 'Đang làm')
-                                            .length
-                                            .toString() +
-                                        ')',
+                                        lstBooking.where((element) => element.status == 'Đang làm').length.toString() + ')',
                                     textAlign: TextAlign.center,
                                     style: TextStyle(
                                       color: Color(0x7f000000),
@@ -356,13 +328,7 @@ class _ProviderScreenState extends State<ProviderScreen> {
                                 child: Padding(
                                   padding: const EdgeInsets.all(4),
                                   child: Text(
-                                    'Hoàn thành (' +
-                                        lstBooking
-                                            .where((element) =>
-                                                element.status == 'Hoàn thành')
-                                            .length
-                                            .toString() +
-                                        ')',
+                                    'Hoàn thành (' + lstBooking.where((element) => element.status == 'Hoàn thành').length.toString() + ')',
                                     textAlign: TextAlign.center,
                                     style: TextStyle(
                                       color: Color(0x7f000000),
@@ -422,8 +388,7 @@ class _ProviderScreenState extends State<ProviderScreen> {
                                 Row(
                                   children: <Widget>[
                                     Container(
-                                      width: MediaQuery.of(context).size.width *
-                                          0.42,
+                                      width: MediaQuery.of(context).size.width * 0.42,
                                       child: Row(
                                         children: [
                                           Text('SHA-' + booking.id),
@@ -445,9 +410,7 @@ class _ProviderScreenState extends State<ProviderScreen> {
                                     ),
                                     Container(
                                         alignment: Alignment.topRight,
-                                        width:
-                                            MediaQuery.of(context).size.width *
-                                                0.5,
+                                        width: MediaQuery.of(context).size.width * 0.5,
                                         child: Text(
                                           DateFormat('hh:mm dd-MM-yyyy').format(
                                               DateTime.parse(lstBooking[index].createDate)),
@@ -464,8 +427,7 @@ class _ProviderScreenState extends State<ProviderScreen> {
                                       child: Row(
                                         children: [
                                           Icon(Icons.face),
-                                          Text(
-                                            ' Khách đặt: ',
+                                          Text(' Khách đặt: ',
                                             style: TextStyle(
                                                 fontWeight: FontWeight.bold,
                                                 fontSize: 14),
@@ -486,10 +448,8 @@ class _ProviderScreenState extends State<ProviderScreen> {
                                 children: [
                                   Row(children: [
                                     Container(
-                                        margin:
-                                            EdgeInsets.only(left: 15, right: 5),
-                                        child:
-                                            Icon(Icons.local_library_rounded)),
+                                        margin: EdgeInsets.only(left: 15, right: 5),
+                                        child: Icon(Icons.local_library_rounded)),
                                     Container(
                                       width: 270,
                                       child: Text(
@@ -499,10 +459,7 @@ class _ProviderScreenState extends State<ProviderScreen> {
                                     ),
                                   ]),
                                   GestureDetector(
-                                    onTap: () {
-                                      MapUtils4.openMap(
-                                          currentAddress, booking.endAddress);
-                                    },
+                                    onTap: () {MapUtils4.openMap(currentAddress, booking.endAddress);},
                                     child: Row(
                                       children: [
                                         SizedBox(
@@ -529,8 +486,7 @@ class _ProviderScreenState extends State<ProviderScreen> {
                               Row(
                                 children: [
                                   Container(
-                                      margin:
-                                          EdgeInsets.only(left: 15, right: 5),
+                                      margin: EdgeInsets.only(left: 15, right: 5),
                                       child: Icon(Icons.description_outlined)),
                                   Container(
                                       width: 270,
@@ -556,8 +512,7 @@ class _ProviderScreenState extends State<ProviderScreen> {
                                 children: [
                                   Row(
                                     children: [
-                                      Text(
-                                        '${booking.bookingDetails[index].quantity}  x',
+                                      Text('${booking.bookingDetails[index].quantity}  x',
                                         style: TextStyle(
                                           fontWeight: FontWeight.bold,
                                           fontSize: 14,
@@ -566,8 +521,7 @@ class _ProviderScreenState extends State<ProviderScreen> {
                                       Container(
                                         margin: EdgeInsets.only(left: 15),
                                         child: Text(
-                                          booking.bookingDetails[index]
-                                              .serviceName,
+                                          booking.bookingDetails[index].serviceName,
                                           style: TextStyle(
                                             fontWeight: FontWeight.bold,
                                             fontSize: 13,
@@ -577,8 +531,7 @@ class _ProviderScreenState extends State<ProviderScreen> {
                                     ],
                                   ),
                                   Text(Utils.calculatePrice(
-                                      booking
-                                          .bookingDetails[index].servicePrice,
+                                      booking.bookingDetails[index].servicePrice,
                                       booking.bookingDetails[index].quantity)),
                                 ],
                               ),
@@ -595,8 +548,7 @@ class _ProviderScreenState extends State<ProviderScreen> {
                                       child: Row(
                                         children: [
                                           Text('Tổng đơn: '),
-                                          Text(Utils.formatPrice(
-                                              booking.totalFee)),
+                                          Text(Utils.formatPrice(booking.totalFee)),
                                           Card(
                                             color: Color(0xffC4C4C4),
                                             child: Padding(
@@ -684,8 +636,7 @@ class _ProviderScreenState extends State<ProviderScreen> {
               itemCount: lstBooking.length,
               itemBuilder: (BuildContext buildContext, int index) {
                 BookingModel booking = lstBooking[index];
-                return (lstBooking[index].status
-                        .contains("Đang trên đường"))
+                return (lstBooking[index].status.contains("Đang trên đường"))
                     ? OutlinedCard(
                         margin: EdgeInsets.only(top: 15),
                         padding: EdgeInsets.only(left: 4, right: 4),
@@ -697,8 +648,7 @@ class _ProviderScreenState extends State<ProviderScreen> {
                                 Row(
                                   children: <Widget>[
                                     Container(
-                                      width: MediaQuery.of(context).size.width *
-                                          0.42,
+                                      width: MediaQuery.of(context).size.width * 0.42,
                                       child: Row(
                                         children: [
                                           Text('SHA-' + booking.id),
@@ -720,9 +670,7 @@ class _ProviderScreenState extends State<ProviderScreen> {
                                     ),
                                     Container(
                                         alignment: Alignment.topRight,
-                                        width:
-                                            MediaQuery.of(context).size.width *
-                                                0.5,
+                                        width: MediaQuery.of(context).size.width * 0.5,
                                         child: Text(
                                           DateFormat('hh:mm dd-MM-yyyy').format(
                                               DateTime.parse(lstBooking[index].createDate)),
@@ -739,8 +687,7 @@ class _ProviderScreenState extends State<ProviderScreen> {
                                       child: Row(
                                         children: [
                                           Icon(Icons.face),
-                                          Text(
-                                            ' Khách đặt: ',
+                                          Text(' Khách đặt: ',
                                             style: TextStyle(
                                                 fontWeight: FontWeight.bold,
                                                 fontSize: 14),
@@ -811,8 +758,7 @@ class _ProviderScreenState extends State<ProviderScreen> {
                               Row(
                                 children: [
                                   Container(
-                                      margin:
-                                          EdgeInsets.only(left: 15, right: 5),
+                                      margin: EdgeInsets.only(left: 15, right: 5),
                                       child: Icon(Icons.description_outlined)),
                                   Container(
                                       width: 270,
@@ -848,8 +794,7 @@ class _ProviderScreenState extends State<ProviderScreen> {
                                       Container(
                                         margin: EdgeInsets.only(left: 15),
                                         child: Text(
-                                          booking.bookingDetails[index]
-                                              .serviceName,
+                                          booking.bookingDetails[index].serviceName,
                                           style: TextStyle(
                                             fontWeight: FontWeight.bold,
                                             fontSize: 14,
@@ -858,8 +803,7 @@ class _ProviderScreenState extends State<ProviderScreen> {
                                       ),
                                     ],
                                   ),
-                                  Text(Utils.formatPrice(booking
-                                      .bookingDetails[index].servicePrice)),
+                                  Text(Utils.formatPrice(booking.bookingDetails[index].servicePrice)),
                                 ],
                               ),
                             ),
@@ -875,8 +819,7 @@ class _ProviderScreenState extends State<ProviderScreen> {
                                       child: Row(
                                         children: [
                                           Text('Tổng đơn: '),
-                                          Text(Utils.formatPrice(
-                                              booking.totalFee)),
+                                          Text(Utils.formatPrice(booking.totalFee)),
                                           Card(
                                             color: Color(0xffC4C4C4),
                                             child: Padding(
@@ -921,8 +864,7 @@ class _ProviderScreenState extends State<ProviderScreen> {
                                                 FlatButton(
                                                   textColor: Color(0xFF6200EE),
                                                   onPressed: () {
-                                                    Navigator.of(context)
-                                                        .pushReplacement(
+                                                    Navigator.of(context).pushReplacement(
                                                             MaterialPageRoute(
                                                       builder: (context) =>
                                                           CancelReason(),
@@ -1060,16 +1002,10 @@ class _ProviderScreenState extends State<ProviderScreen> {
                                     ),
                                     Container(
                                         width: 120,
-                                        child: lstBooking[index]
-                                                    .createDate !=
-                                                null
+                                        child: lstBooking[index].createDate != null
                                             ? Text(
-                                                DateFormat('hh:mm dd-MM-yyyy')
-                                                    .format(DateTime.parse(lstBooking[index]
-                                                        .createDate)),
-                                                style: TextStyle(
-                                                    fontWeight:
-                                                        FontWeight.bold),
+                                                DateFormat('hh:mm dd-MM-yyyy').format(DateTime.parse(lstBooking[index].createDate)),
+                                                style: TextStyle(fontWeight: FontWeight.bold),
                                               )
                                             : Text('9AM - 8PM'))
                                   ],
@@ -1081,14 +1017,12 @@ class _ProviderScreenState extends State<ProviderScreen> {
                                       child: Row(
                                         children: [
                                           Icon(Icons.face),
-                                          Text(
-                                            ' Khách đặt: ',
+                                          Text(' Khách đặt: ',
                                             style: TextStyle(
                                                 fontWeight: FontWeight.bold,
                                                 fontSize: 14),
                                           ),
-                                          Text(
-                                              '${booking.customerAccount.name} '),
+                                          Text('${booking.customerAccount.name} '),
                                         ],
                                       ),
                                     ),
@@ -1469,8 +1403,7 @@ class _ProviderScreenState extends State<ProviderScreen> {
                                       Container(
                                         margin: EdgeInsets.only(left: 15),
                                         child: Text(
-                                          booking.bookingDetails[index]
-                                              .serviceName,
+                                          booking.bookingDetails[index].serviceName,
                                           style: TextStyle(
                                             fontWeight: FontWeight.bold,
                                             fontSize: 14,
@@ -1479,8 +1412,7 @@ class _ProviderScreenState extends State<ProviderScreen> {
                                       ),
                                     ],
                                   ),
-                                  Text(Utils.formatPrice(booking
-                                      .bookingDetails[index].servicePrice)),
+                                  Text(Utils.formatPrice(booking.bookingDetails[index].servicePrice)),
                                 ],
                               ),
                             ),
@@ -1496,8 +1428,7 @@ class _ProviderScreenState extends State<ProviderScreen> {
                                       child: Row(
                                         children: [
                                           Text('Tổng đơn: '),
-                                          Text(Utils.formatPrice(
-                                              booking.totalFee)),
+                                          Text(Utils.formatPrice(booking.totalFee)),
                                           Card(
                                             color: Color(0xffC4C4C4),
                                             child: Padding(

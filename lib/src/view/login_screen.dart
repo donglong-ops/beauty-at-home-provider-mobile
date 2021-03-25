@@ -1,10 +1,13 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_app/src/providers/user_profile.dart';
+import 'package:flutter_app/src/services/google_service.dart';
 import 'package:flutter_app/src/utils/routes_name.dart';
 import 'package:flutter_app/src/view/provider_newOrder_Screen.dart';
 import 'package:flutter_app/src/widgets/shared_widget/style.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 import 'package:provider/provider.dart';
 
 import 'login_phone_screen.dart';
@@ -31,7 +34,7 @@ class LoginScreen extends StatelessWidget {
                         width: 290,
                         height: 200,
                         child:
-                        Image(image: AssetImage('public/img/logoBr.png')),
+                            Image(image: AssetImage('public/img/logoBr.png')),
                       ),
                       Container(
                         alignment: Alignment.center,
@@ -61,7 +64,28 @@ class LoginScreen extends StatelessWidget {
         await userProfile.login();
         if (userProfile.isSignIn) {
           // Navigator.of(context).pushNamed(Routes.home);
-          Navigator.of(context).push(MaterialPageRoute(builder: (context) => ProviderNewOderScreen()));
+          Navigator.of(context).push(
+              MaterialPageRoute(builder: (context) => ProviderNewOderScreen()));
+        } else {
+          showDialog(
+              context: context,
+              barrierDismissible: false,
+              builder: (context) {
+                return AlertDialog(
+                    content: Text(
+                      "Tài khoản của bạn không hợp lệ!",
+                    ),
+                    actions: [
+                      FlatButton(
+                        textColor: Color(0xFF6200EE),
+                        onPressed: () {
+                          gooleSignout();
+                          Navigator.of(context).pop();
+                        },
+                        child: Text('Ok'),
+                      ),
+                    ]);
+              });
         }
       },
       child: GestureDetector(
@@ -90,28 +114,11 @@ class LoginScreen extends StatelessWidget {
     );
   }
 
-  Widget _loginWithPhone(BuildContext context) {
-    return GestureDetector(
-      onTap: () {
-        Navigator.of(context).push(MaterialPageRoute(builder: (context) => LoginPhoneScreen()));
-      },
-      child: Container(
-        height: 45,
-        padding: EdgeInsets.symmetric(
-          horizontal: 15,
-        ),
-        color: Colors.white,
-        child: Row(
-          children: <Widget>[
-            Icon(Icons.phone, size: 10.0 * 2.5, color: Color(0xff28BEBA)),
-            SizedBox(width: 30),
-            Text(
-              'Đăng nhập với điện thoại',
-              style: CustomTextStyle.titleText(Colors.black87),
-            ),
-          ],
-        ),
-      ),
-    );
+  Future<void> gooleSignout() async {
+    GoogleSignIn _googleSignIn = new GoogleSignIn();
+    await FirebaseAuth.instance.signOut().then((onValue) {
+      _googleSignIn.signOut();
+    });
   }
 }
+
