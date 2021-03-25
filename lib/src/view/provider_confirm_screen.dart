@@ -23,8 +23,10 @@ import 'package:intl/intl.dart';
 class ProviderScreen extends StatefulWidget {
   final bool noContent;
   final bool isSwiched;
+  
+  final int index;
 
-  const ProviderScreen({Key key, this.noContent = false, this.isSwiched})
+  const ProviderScreen({Key key, this.noContent = false, this.isSwiched, this.index})
       : super(key: key);
   @override
   State<StatefulWidget> createState() => _ProviderScreenState();
@@ -40,7 +42,7 @@ class _ProviderScreenState extends State<ProviderScreen> {
   Color colorTap4 = Colors.white;
   int index = 0;
   bool isSwiched = true;
-
+  BookingProvider provider;
   @override
   void initState() {
     super.initState();
@@ -52,6 +54,7 @@ class _ProviderScreenState extends State<ProviderScreen> {
     context.read<BookingProvider>().initAllBooking(
         "https://beautyathome2.azurewebsites.net/api/v1.0/bookings?BeautyArtistAccountId=" +
             accountId);
+
   }
 
   getUserLocation() async {
@@ -147,6 +150,12 @@ class _ProviderScreenState extends State<ProviderScreen> {
   @override
   Widget build(BuildContext context) {
     String status;
+    print('Rebuild');
+    String accountId = context.read<UserProfile>().profile.uid.toString();
+    provider = context.read<BookingProvider>();
+    provider.initAllBooking("https://beautyathome2.azurewebsites.net/api/v1.0/bookings?BeautyArtistAccountId=" +
+        accountId);
+    List<BookingModel> lstBooking = provider.bookings;
     return Scaffold(
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
       appBar: AppBar(
@@ -180,8 +189,8 @@ class _ProviderScreenState extends State<ProviderScreen> {
               }),
         ],
       ),
-      body: Consumer<BookingProvider>(
-        builder: (context, value, child) => value.bookings == null
+      body:
+        lstBooking == null
             ? Text(" Bạn không có đơn nào ")
             : Padding(
                 padding: const EdgeInsets.all(8.0),
@@ -226,7 +235,7 @@ class _ProviderScreenState extends State<ProviderScreen> {
                                   padding: const EdgeInsets.only(top: 4),
                                   child: Text(
                                     'Chấp nhận (' +
-                                        value.bookings
+                                        lstBooking
                                             .where((element) =>
                                                 element.status == 'Xác nhận')
                                             .length
@@ -266,7 +275,7 @@ class _ProviderScreenState extends State<ProviderScreen> {
                                   padding: const EdgeInsets.only(top: 4),
                                   child: Text(
                                     'Chuẩn bị (' +
-                                        value.bookings
+                                        lstBooking
                                             .where((element) =>
                                                 element.status ==
                                                 'Đang trên đường')
@@ -307,7 +316,7 @@ class _ProviderScreenState extends State<ProviderScreen> {
                                   padding: const EdgeInsets.only(top: 4),
                                   child: Text(
                                     'Đang làm (' +
-                                        value.bookings
+                                        lstBooking
                                             .where((element) =>
                                                 element.status == 'Đang làm')
                                             .length
@@ -347,7 +356,7 @@ class _ProviderScreenState extends State<ProviderScreen> {
                                   padding: const EdgeInsets.all(4),
                                   child: Text(
                                     'Hoàn thành (' +
-                                        value.bookings
+                                        lstBooking
                                             .where((element) =>
                                                 element.status == 'Hoàn thành')
                                             .length
@@ -366,42 +375,41 @@ class _ProviderScreenState extends State<ProviderScreen> {
                         ],
                       ),
                     ),
-                    _buildComponent(index, value),
+                    _buildComponent(index, lstBooking),
                   ],
                 ),
               ),
-      ),
       bottomNavigationBar: WidgetUtils.appBottomNavigationBar(1),
     );
   }
 
-  Widget _buildComponent(int index, BookingProvider value) {
+  Widget _buildComponent(int index, List<BookingModel> lstBooking) {
     switch (index) {
       case 0:
-        return _buildAllBooking(value);
+        return _buildAllBooking(lstBooking);
         break;
       case 1:
-        return _buildPrepareBooking(value);
+        return _buildPrepareBooking(lstBooking);
         break;
       case 2:
-        return _buildDoingBooking(value);
+        return _buildDoingBooking(lstBooking);
         break;
       case 3:
-        return _buildFinishBooking(value);
+        return _buildFinishBooking(lstBooking);
         break;
     }
   }
 
-  Widget _buildAllBooking(BookingProvider value) {
+  Widget _buildAllBooking(List<BookingModel> lstBooking) {
     return Expanded(
       child: widget.noContent
           ? SizedBox()
           : ListView.builder(
               physics: BouncingScrollPhysics(),
-              itemCount: value.bookings.length,
+              itemCount: lstBooking.length,
               itemBuilder: (BuildContext buildContext, int index) {
-                BookingModel booking = value.bookings[index];
-                return (value.bookings[index].status.contains("Xác nhận"))
+                BookingModel booking = lstBooking[index];
+                return (lstBooking[index].status.contains("Xác nhận"))
                     ? OutlinedCard(
                         margin: EdgeInsets.only(top: 15),
                         padding: EdgeInsets.only(left: 4, right: 4),
@@ -441,8 +449,7 @@ class _ProviderScreenState extends State<ProviderScreen> {
                                                 0.5,
                                         child: Text(
                                           DateFormat('hh:mm dd-MM-yyyy').format(
-                                              DateTime.parse(value
-                                                  .bookings[index].createDate)),
+                                              DateTime.parse(lstBooking[index].createDate)),
                                           style: TextStyle(
                                               fontWeight: FontWeight.bold,
                                               fontSize: 15),
@@ -630,7 +637,6 @@ class _ProviderScreenState extends State<ProviderScreen> {
                                         'status': 'Đang trên đường',
                                       }),
                                     );
-                                    initState();
                                   },
                                   child: SizedBox(
                                     width: 336,
@@ -668,16 +674,16 @@ class _ProviderScreenState extends State<ProviderScreen> {
     );
   }
 
-  Widget _buildPrepareBooking(BookingProvider value) {
+  Widget _buildPrepareBooking(List<BookingModel> lstBooking) {
     return Expanded(
       child: widget.noContent
           ? SizedBox()
           : ListView.builder(
               physics: BouncingScrollPhysics(),
-              itemCount: value.bookings.length,
+              itemCount: lstBooking.length,
               itemBuilder: (BuildContext buildContext, int index) {
-                BookingModel booking = value.bookings[index];
-                return (value.bookings[index].status
+                BookingModel booking = lstBooking[index];
+                return (lstBooking[index].status
                         .contains("Đang trên đường"))
                     ? OutlinedCard(
                         margin: EdgeInsets.only(top: 15),
@@ -718,8 +724,7 @@ class _ProviderScreenState extends State<ProviderScreen> {
                                                 0.5,
                                         child: Text(
                                           DateFormat('hh:mm dd-MM-yyyy').format(
-                                              DateTime.parse(value
-                                                  .bookings[index].createDate)),
+                                              DateTime.parse(lstBooking[index].createDate)),
                                           style: TextStyle(
                                               fontWeight: FontWeight.bold,
                                               fontSize: 15),
@@ -970,7 +975,6 @@ class _ProviderScreenState extends State<ProviderScreen> {
                                         'status': 'Đang làm',
                                       }),
                                     );
-                                    initState();
                                   },
                                   child: SizedBox(
                                     width: 336,
@@ -997,6 +1001,7 @@ class _ProviderScreenState extends State<ProviderScreen> {
                                       ),
                                     ),
                                   ),
+
                                 ),
                               ],
                             ),
@@ -1008,16 +1013,16 @@ class _ProviderScreenState extends State<ProviderScreen> {
     );
   }
 
-  Widget _buildDoingBooking(BookingProvider value) {
+  Widget _buildDoingBooking(List<BookingModel> lstBooking) {
     return Expanded(
       child: widget.noContent
           ? SizedBox()
           : ListView.builder(
               physics: BouncingScrollPhysics(),
-              itemCount: value.bookings.length,
+              itemCount: lstBooking.length,
               itemBuilder: (BuildContext buildContext, int index) {
-                BookingModel booking = value.bookings[index];
-                return (value.bookings[index].status.contains("Đang làm"))
+                BookingModel booking = lstBooking[index];
+                return (lstBooking[index].status.contains("Đang làm"))
                     ? OutlinedCard(
                         margin: EdgeInsets.only(top: 15),
                         padding: EdgeInsets.only(left: 4, right: 4),
@@ -1054,13 +1059,12 @@ class _ProviderScreenState extends State<ProviderScreen> {
                                     ),
                                     Container(
                                         width: 120,
-                                        child: value.bookings[index]
+                                        child: lstBooking[index]
                                                     .createDate !=
                                                 null
                                             ? Text(
                                                 DateFormat('hh:mm dd-MM-yyyy')
-                                                    .format(DateTime.parse(value
-                                                        .bookings[index]
+                                                    .format(DateTime.parse(lstBooking[index]
                                                         .createDate)),
                                                 style: TextStyle(
                                                     fontWeight:
@@ -1260,7 +1264,6 @@ class _ProviderScreenState extends State<ProviderScreen> {
                                       status: "ACTIVE",
                                       path: null,
                                     );
-                                    initState();
                                   },
                                   child: SizedBox(
                                     width: 336,
@@ -1298,17 +1301,17 @@ class _ProviderScreenState extends State<ProviderScreen> {
     );
   }
 
-  Widget _buildFinishBooking(BookingProvider value) {
+  Widget _buildFinishBooking(List<BookingModel> lstBooking) {
     return Expanded(
       child: widget.noContent
           ? SizedBox()
           : ListView.builder(
               physics: BouncingScrollPhysics(),
-              itemCount: value.bookings.length,
+              itemCount: lstBooking.length,
               itemBuilder: (BuildContext buildContext, int index) {
-                BookingModel booking = value.bookings[index];
-                return (value.bookings[index].status.contains("Finish") ||
-                        value.bookings[index].status.contains("Hoàn thành"))
+                BookingModel booking = lstBooking[index];
+                return (lstBooking[index].status.contains("Finish") ||
+                    lstBooking[index].status.contains("Hoàn thành"))
                     ? OutlinedCard(
                         margin: EdgeInsets.only(top: 15),
                         padding: EdgeInsets.only(left: 4, right: 4),
@@ -1348,8 +1351,7 @@ class _ProviderScreenState extends State<ProviderScreen> {
                                         child: Text(
                                           "Ngày hoàn thành: " +
                                               DateFormat('dd-MM-yyyy').format(
-                                                  DateTime.parse(value
-                                                      .bookings[index]
+                                                  DateTime.parse(lstBooking[index]
                                                       .updateDate)),
                                           style: TextStyle(
                                               fontWeight: FontWeight.bold,

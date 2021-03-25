@@ -40,8 +40,7 @@ class ProviderNewOderScreenState extends State<ProviderNewOderScreen> {
   final FirebaseMessaging _firebaseMessaging = FirebaseHelper.fcmInstance();
 
   Future _showNotification(Map<String, dynamic> message) async {
-    await notiPlugin.show(
-      0,
+    await notiPlugin.show(0,
       'new message arived',
       '${message['data']['title']} for ${message['data']['price']}',
       FirebaseHelper.platformSpecInstance(),
