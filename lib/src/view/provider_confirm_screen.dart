@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:math';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -23,7 +24,7 @@ import 'package:intl/intl.dart';
 class ProviderScreen extends StatefulWidget {
   final bool noContent;
   final bool isSwiched;
-  
+
   final int index;
 
   const ProviderScreen({Key key, this.noContent = false, this.isSwiched, this.index})
@@ -53,9 +54,8 @@ class _ProviderScreenState extends State<ProviderScreen> {
     }
     userFo = context.read<UserProfile>();
     context.read<BookingProvider>().initAllBooking(
-        "https://beauty-at-home-4a5ss6e6yq-as.a.run.app/api/v1.0/bookings?BeautyArtistAccountId=" + userFo.profile.uid.toString());
-
-  }
+        "https://beauty-at-home-4a5ss6e6yq-as.a.run.app/api/v1.0/bookings?pageSize=100&BeautyArtistAccountId=" + userFo.profile.uid.toString());
+    }
 
   getUserLocation() async {
     Location location = new Location();
@@ -77,8 +77,8 @@ class _ProviderScreenState extends State<ProviderScreen> {
 
 
   Widget title(BuildContext context) {
-    if (this.isSwiched == true)
-      return (Row(
+    if (this.isSwiched == true) {
+      return Row(
         children: [
           Card(
             color: Colors.green,
@@ -105,9 +105,9 @@ class _ProviderScreenState extends State<ProviderScreen> {
                 color: Colors.black),
           ),
         ],
-      ));
-    else
-      return (Row(
+      );
+    } else {
+      return Row(
         children: [
           Card(
             color: Colors.orange,
@@ -134,219 +134,221 @@ class _ProviderScreenState extends State<ProviderScreen> {
                 color: Colors.black),
           ),
         ],
-      ));
+      );
+    }
   }
 
   @override
   Widget build(BuildContext context) {
     String status;
-    print('Rebuild');
     // String accountId = context.read<UserProfile>().profile.uid.toString();
     provider = context.read<BookingProvider>();
-    provider.initAllBooking("https://beauty-at-home-4a5ss6e6yq-as.a.run.app/api/v1.0/bookings?BeautyArtistAccountId=" +
+    provider.initAllBooking("https://beauty-at-home-4a5ss6e6yq-as.a.run.app/api/v1.0/bookings?pageSize=100&BeautyArtistAccountId=" +
         userFo.profile.uid.toString());
-    List<BookingModel> lstBooking = provider.bookings;
-    return Scaffold(
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
-      appBar: AppBar(
-        elevation: 0,
-        leadingWidth: 0,
-        backgroundColor: Colors.white,
-        title: title(context),
-        actions: [
-          Switch(
-              activeColor: Color(0xff256FEF),
-              inactiveThumbColor: Color(0xff979797),
-              activeTrackColor: Color(0xff256FEF),
-              inactiveTrackColor: Color(0xff979797),
-              value: isSwiched,
-              onChanged: (value) {
-                if (value) {
-                  status = 'ACTIVE';
-                } else {
-                  status = "INACTIVE";
-                }
+    // List<BookingModel> lstBooking = provider.bookings;
+    return Consumer<BookingProvider>(
+      builder: (context, value, child) => Scaffold(
+        floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
+        appBar: AppBar(
+          elevation: 0,
+          leadingWidth: 0,
+          backgroundColor: Colors.white,
+          title: title(context),
+          actions: [
+            Switch(
+                activeColor: Color(0xff256FEF),
+                inactiveThumbColor: Color(0xff979797),
+                activeTrackColor: Color(0xff256FEF),
+                inactiveTrackColor: Color(0xff979797),
+                value: isSwiched,
+                onChanged: (value) {
+                  if (value) {
+                    status = 'ACTIVE';
+                  } else {
+                    status = "INACTIVE";
+                  }
 
-                SimpleAPI.putAccountModel('accounts',
-                    id: userFo.profile.uid.toString(),
-                    displayName: userFo.profile.displayName,
-                    phone: userFo.profile.phone,
-                    status: status,
-                    path: null);
-                setState(() {
-                  isSwiched = value;
-                });
-              }),
-        ],
-      ),
-      body:
-        lstBooking == null
-            ? Text(" Bạn không có đơn nào ")
-            : Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Column(
-                  children: <Widget>[
-                    Container(
-                        alignment: Alignment.topLeft,
-                        child: Text(' Đơn của bạn',
-                            style: TextStyle(
-                                color: Colors.black,
-                                fontSize: 20,
-                                fontWeight: FontWeight.bold))),
-                    SizedBox(height: 10),
-                    Container(
-                      width: MediaQuery.of(context).size.width,
-                      height: 24,
-                      child: Row(
-                        mainAxisSize: MainAxisSize.min,
-                        mainAxisAlignment: MainAxisAlignment.end,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          GestureDetector(
-                            onTap: () {
-                              setState(() {
-                                tab = 1;
-                                colorTap1 = Color(0x2d27beba);
-                                colorTap2 = Colors.white;
-                                colorTap3 = Colors.white;
-                                colorTap4 = Colors.white;
-                                index = 0;
-                              });
-                            },
-                            child: SizedBox(
-                              width: 80,
-                              height: 24,
-                              child: Material(
-                                color: colorTap1,
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(6),
-                                ),
-                                child: Padding(
-                                  padding: const EdgeInsets.only(top: 4),
-                                  child: Text(
-                                    'Chấp nhận (' +
-                                        lstBooking.where((element) => element.status == 'Xác nhận').length.toString() + ')',
-                                    textAlign: TextAlign.center,
-                                    style: TextStyle(
-                                      color: Color(0x7f000000),
-                                      fontSize: 11,
+                  SimpleAPI.putAccountModel('accounts',
+                      id: userFo.profile.uid.toString(),
+                      displayName: userFo.profile.displayName,
+                      phone: userFo.profile.phone,
+                      status: status,
+                      path: null);
+                  setState(() {
+                    isSwiched = value;
+                  });
+                }),
+          ],
+        ),
+        body:
+           value.bookings == null || value.bookings.isEmpty
+              ? Text(" Bạn không có đơn nào ")
+              : Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Column(
+                    children: <Widget>[
+                      Container(
+                          alignment: Alignment.topLeft,
+                          child: Text(' Đơn của bạn',
+                              style: TextStyle(
+                                  color: Colors.black,
+                                  fontSize: 20,
+                                  fontWeight: FontWeight.bold))),
+                      SizedBox(height: 10),
+                      Container(
+                        width: MediaQuery.of(context).size.width,
+                        height: 24,
+                        child: Row(
+                          mainAxisSize: MainAxisSize.min,
+                          mainAxisAlignment: MainAxisAlignment.end,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            GestureDetector(
+                              onTap: () {
+                                setState(() {
+                                  tab = 1;
+                                  colorTap1 = Color(0x2d27beba);
+                                  colorTap2 = Colors.white;
+                                  colorTap3 = Colors.white;
+                                  colorTap4 = Colors.white;
+                                  index = 0;
+                                });
+                              },
+                              child: SizedBox(
+                                width: 80,
+                                height: 24,
+                                child: Material(
+                                  color: colorTap1,
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(6),
+                                  ),
+                                  child: Padding(
+                                    padding: const EdgeInsets.only(top: 4),
+                                    child: Text(
+                                      'Chấp nhận (' +
+                                          value.bookings.where((element) => element.status == 'Xác nhận').length.toString() + ')',
+                                      textAlign: TextAlign.center,
+                                      style: TextStyle(
+                                        color: Color(0x7f000000),
+                                        fontSize: 11,
+                                      ),
                                     ),
                                   ),
                                 ),
                               ),
                             ),
-                          ),
-                          SizedBox(width: 4),
-                          GestureDetector(
-                            onTap: () {
-                              setState(() {
-                                tab = 2;
-                                colorTap2 = Color(0x2d27beba);
-                                colorTap1 = Colors.white;
-                                colorTap3 = Colors.white;
-                                colorTap4 = Colors.white;
-                                index = 1;
-                              });
-                            },
-                            child: SizedBox(
-                              width: 80,
-                              height: 24,
-                              child: Material(
-                                color: colorTap2,
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(6),
-                                ),
-                                child: Padding(
-                                  padding: const EdgeInsets.only(top: 4),
-                                  child: Text(
-                                    'Chuẩn bị (' + lstBooking.where((element) => element.status == 'Đang trên đường').length.toString() + ')',
-                                    textAlign: TextAlign.center,
-                                    style: TextStyle(
-                                      color: Color(0x7f000000),
-                                      fontSize: 11,
+                            SizedBox(width: 4),
+                            GestureDetector(
+                              onTap: () {
+                                setState(() {
+                                  tab = 2;
+                                  colorTap2 = Color(0x2d27beba);
+                                  colorTap1 = Colors.white;
+                                  colorTap3 = Colors.white;
+                                  colorTap4 = Colors.white;
+                                  index = 1;
+                                });
+                              },
+                              child: SizedBox(
+                                width: 80,
+                                height: 24,
+                                child: Material(
+                                  color: colorTap2,
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(6),
+                                  ),
+                                  child: Padding(
+                                    padding: const EdgeInsets.only(top: 4),
+                                    child: Text(
+                                      'Chuẩn bị (' + value.bookings.where((element) => element.status == 'Đang trên đường').length.toString() + ')',
+                                      textAlign: TextAlign.center,
+                                      style: TextStyle(
+                                        color: Color(0x7f000000),
+                                        fontSize: 11,
+                                      ),
                                     ),
                                   ),
                                 ),
                               ),
                             ),
-                          ),
-                          SizedBox(width: 4),
-                          GestureDetector(
-                            onTap: () {
-                              setState(() {
-                                tab = 3;
-                                colorTap3 = Color(0x2d27beba);
-                                colorTap1 = Colors.white;
-                                colorTap2 = Colors.white;
-                                colorTap4 = Colors.white;
-                                index = 2;
-                              });
-                            },
-                            child: SizedBox(
-                              width: 84,
-                              height: 24,
-                              child: Material(
-                                color: colorTap3,
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(6),
-                                ),
-                                child: Padding(
-                                  padding: const EdgeInsets.only(top: 4),
-                                  child: Text(
-                                    'Đang làm (' +
-                                        lstBooking.where((element) => element.status == 'Đang làm').length.toString() + ')',
-                                    textAlign: TextAlign.center,
-                                    style: TextStyle(
-                                      color: Color(0x7f000000),
-                                      fontSize: 11,
+                            SizedBox(width: 4),
+                            GestureDetector(
+                              onTap: () {
+                                setState(() {
+                                  tab = 3;
+                                  colorTap3 = Color(0x2d27beba);
+                                  colorTap1 = Colors.white;
+                                  colorTap2 = Colors.white;
+                                  colorTap4 = Colors.white;
+                                  index = 2;
+                                });
+                              },
+                              child: SizedBox(
+                                width: 84,
+                                height: 24,
+                                child: Material(
+                                  color: colorTap3,
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(6),
+                                  ),
+                                  child: Padding(
+                                    padding: const EdgeInsets.only(top: 4),
+                                    child: Text(
+                                      'Đang làm (' +
+                                          value.bookings.where((element) => element.status == 'Đang làm').length.toString() + ')',
+                                      textAlign: TextAlign.center,
+                                      style: TextStyle(
+                                        color: Color(0x7f000000),
+                                        fontSize: 11,
+                                      ),
                                     ),
                                   ),
                                 ),
                               ),
                             ),
-                          ),
-                          SizedBox(width: 4),
-                          GestureDetector(
-                            onTap: () {
-                              setState(() {
-                                tab = 4;
-                                colorTap4 = Color(0x2d27beba);
-                                colorTap2 = Colors.white;
-                                colorTap3 = Colors.white;
-                                colorTap1 = Colors.white;
-                                index = 3;
-                              });
-                            },
-                            child: SizedBox(
-                              width: 88,
-                              height: 24,
-                              child: Material(
-                                color: colorTap4,
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(6),
-                                ),
-                                child: Padding(
-                                  padding: const EdgeInsets.all(4),
-                                  child: Text(
-                                    'Hoàn thành (' + lstBooking.where((element) => element.status == 'Hoàn thành').length.toString() + ')',
-                                    textAlign: TextAlign.center,
-                                    style: TextStyle(
-                                      color: Color(0x7f000000),
-                                      fontSize: 11,
+                            SizedBox(width: 4),
+                            GestureDetector(
+                              onTap: () {
+                                setState(() {
+                                  tab = 4;
+                                  colorTap4 = Color(0x2d27beba);
+                                  colorTap2 = Colors.white;
+                                  colorTap3 = Colors.white;
+                                  colorTap1 = Colors.white;
+                                  index = 3;
+                                });
+                              },
+                              child: SizedBox(
+                                width: 88,
+                                height: 24,
+                                child: Material(
+                                  color: colorTap4,
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(6),
+                                  ),
+                                  child: Padding(
+                                    padding: const EdgeInsets.all(4),
+                                    child: Text(
+                                      'Hoàn thành (' + value.bookings.where((element) => element.status == 'Hoàn thành').length.toString() + ')',
+                                      textAlign: TextAlign.center,
+                                      style: TextStyle(
+                                        color: Color(0x7f000000),
+                                        fontSize: 11,
+                                      ),
                                     ),
                                   ),
                                 ),
                               ),
                             ),
-                          ),
-                        ],
+                          ],
+                        ),
                       ),
-                    ),
-                    _buildComponent(index, lstBooking),
-                  ],
+                      _buildComponent(index, value.bookings),
+                    ],
+                  ),
                 ),
-              ),
-      bottomNavigationBar: WidgetUtils.appBottomNavigationBar(1),
+        bottomNavigationBar: WidgetUtils.appBottomNavigationBar(1),
+      ),
     );
   }
 
@@ -554,7 +556,7 @@ class _ProviderScreenState extends State<ProviderScreen> {
                                             child: Padding(
                                               padding: const EdgeInsets.all(6),
                                               child: Text(
-                                                "CASH",
+                                                "Tiền mặt",
                                                 style: TextStyle(
                                                     fontWeight: FontWeight.bold,
                                                     fontSize: 12),
@@ -825,7 +827,7 @@ class _ProviderScreenState extends State<ProviderScreen> {
                                             child: Padding(
                                               padding: const EdgeInsets.all(6),
                                               child: Text(
-                                                "CASH",
+                                                "Tiền mặt",
                                                 style: TextStyle(
                                                     fontWeight: FontWeight.bold,
                                                     fontSize: 12),
@@ -1151,7 +1153,7 @@ class _ProviderScreenState extends State<ProviderScreen> {
                                             child: Padding(
                                               padding: const EdgeInsets.all(6),
                                               child: Text(
-                                                "CASH",
+                                                "Tiền mặt",
                                                 style: TextStyle(
                                                     fontWeight: FontWeight.bold,
                                                     fontSize: 12),
@@ -1434,7 +1436,7 @@ class _ProviderScreenState extends State<ProviderScreen> {
                                             child: Padding(
                                               padding: const EdgeInsets.all(6),
                                               child: Text(
-                                                "CASH",
+                                                "Tiền mặt",
                                                 style: TextStyle(
                                                     fontWeight: FontWeight.bold,
                                                     fontSize: 12),

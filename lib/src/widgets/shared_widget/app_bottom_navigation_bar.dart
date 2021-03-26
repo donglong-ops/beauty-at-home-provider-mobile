@@ -27,7 +27,7 @@ class AppBottomNavigationBar extends StatelessWidget {
       selectedItemColor: Color(0xff0DB5B4),
       unselectedItemColor: Color(0xffC4C4C4),
       onTap: (value) {
-        Navigator.of(context).push(MaterialPageRoute(
+        Navigator.of(context).pushReplacement(MaterialPageRoute(
           builder: (context) => currentScreenState[value],
         ));
       },

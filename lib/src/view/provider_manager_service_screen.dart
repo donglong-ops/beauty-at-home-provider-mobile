@@ -354,23 +354,23 @@ class ProviderImage extends StatelessWidget {
             ),
           ),
         ),
-        Padding(
-          padding: EdgeInsets.symmetric(horizontal: 5.0, vertical: 20.0),
-          child: Row(
-            children: <Widget>[
-              IconButton(
-                icon: Icon(Icons.arrow_back_ios_outlined),
-                iconSize: 30.0,
-                color: Colors.black,
-                onPressed: () => Navigator.pop(context),
-              ),
-              // Container(
-              //     width: 300,
-              //     alignment: Alignment.topRight,
-              //     child: AnimatedSearchBar()),
-            ],
-          ),
-        ),
+        // Padding(
+        //   padding: EdgeInsets.symmetric(horizontal: 5.0, vertical: 20.0),
+        //   child: Row(
+        //     children: <Widget>[
+        //       IconButton(
+        //         icon: Icon(Icons.arrow_back_ios_outlined),
+        //         iconSize: 30.0,
+        //         color: Colors.black,
+        //         onPressed: () => Navigator.pop(context),
+        //       ),
+        //       // Container(
+        //       //     width: 300,
+        //       //     alignment: Alignment.topRight,
+        //       //     child: AnimatedSearchBar()),
+        //     ],
+        //   ),
+        // ),
       ],
     );
   }
