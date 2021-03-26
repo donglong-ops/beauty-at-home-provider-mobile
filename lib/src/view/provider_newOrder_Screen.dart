@@ -505,7 +505,10 @@ class ProviderNewOderScreenState extends State<ProviderNewOderScreen> {
                                                             'status': 'Đã hủy',
                                                           }),
                                                         );
-                                                        initState();
+                                                        Navigator.of(context).pushReplacement(MaterialPageRoute(
+                                                            builder: (context) => ProviderNewOderScreen(
+
+                                                            )));
                                                       },
                                                       child: Container(
                                                         width: 95,
