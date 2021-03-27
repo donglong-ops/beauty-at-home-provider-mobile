@@ -27,7 +27,8 @@ class ProviderScreen extends StatefulWidget {
 
   final int index;
 
-  const ProviderScreen({Key key, this.noContent = false, this.isSwiched, this.index})
+  const ProviderScreen(
+      {Key key, this.noContent = false, this.isSwiched, this.index})
       : super(key: key);
   @override
   State<StatefulWidget> createState() => _ProviderScreenState();
@@ -54,8 +55,9 @@ class _ProviderScreenState extends State<ProviderScreen> {
     }
     userFo = context.read<UserProfile>();
     context.read<BookingProvider>().initAllBooking(
-        "https://beauty-at-home-4a5ss6e6yq-as.a.run.app/api/v1.0/bookings?pageSize=100&BeautyArtistAccountId=" + userFo.profile.uid.toString());
-    }
+        "https://beauty-at-home.azurewebsites.net/api/v1.0/bookings?pageSize=100&BeautyArtistAccountId=" +
+            userFo.profile.uid.toString());
+  }
 
   getUserLocation() async {
     Location location = new Location();
@@ -74,7 +76,6 @@ class _ProviderScreenState extends State<ProviderScreen> {
       currentAddress = first.addressLine;
     });
   }
-
 
   Widget title(BuildContext context) {
     if (this.isSwiched == true) {
@@ -143,8 +144,9 @@ class _ProviderScreenState extends State<ProviderScreen> {
     String status;
     // String accountId = context.read<UserProfile>().profile.uid.toString();
     provider = context.read<BookingProvider>();
-    provider.initAllBooking("https://beauty-at-home-4a5ss6e6yq-as.a.run.app/api/v1.0/bookings?pageSize=100&BeautyArtistAccountId=" +
-        userFo.profile.uid.toString());
+    provider.initAllBooking(
+        "https://beauty-at-home.azurewebsites.net/api/v1.0/bookings?pageSize=100&BeautyArtistAccountId=" +
+            userFo.profile.uid.toString());
     // List<BookingModel> lstBooking = provider.bookings;
     return Consumer<BookingProvider>(
       builder: (context, value, child) => Scaffold(
@@ -180,173 +182,195 @@ class _ProviderScreenState extends State<ProviderScreen> {
                 }),
           ],
         ),
-        body:
-           value.bookings == null || value.bookings.isEmpty
-              ? Text(" Bạn không có đơn nào ")
-              : Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Column(
-                    children: <Widget>[
-                      Container(
-                          alignment: Alignment.topLeft,
-                          child: Text(' Đơn của bạn',
-                              style: TextStyle(
-                                  color: Colors.black,
-                                  fontSize: 20,
-                                  fontWeight: FontWeight.bold))),
-                      SizedBox(height: 10),
-                      Container(
-                        width: MediaQuery.of(context).size.width,
-                        height: 24,
-                        child: Row(
-                          mainAxisSize: MainAxisSize.min,
-                          mainAxisAlignment: MainAxisAlignment.end,
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            GestureDetector(
-                              onTap: () {
-                                setState(() {
-                                  tab = 1;
-                                  colorTap1 = Color(0x2d27beba);
-                                  colorTap2 = Colors.white;
-                                  colorTap3 = Colors.white;
-                                  colorTap4 = Colors.white;
-                                  index = 0;
-                                });
-                              },
-                              child: SizedBox(
-                                width: 80,
-                                height: 24,
-                                child: Material(
-                                  color: colorTap1,
-                                  shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(6),
-                                  ),
-                                  child: Padding(
-                                    padding: const EdgeInsets.only(top: 4),
-                                    child: Text(
-                                      'Chấp nhận (' +
-                                          value.bookings.where((element) => element.status == 'Xác nhận').length.toString() + ')',
-                                      textAlign: TextAlign.center,
-                                      style: TextStyle(
-                                        color: Color(0x7f000000),
-                                        fontSize: 11,
-                                      ),
+        body: value.bookings == null || value.bookings.isEmpty
+            ? Text(" Bạn không có đơn nào ")
+            : Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Column(
+                  children: <Widget>[
+                    Container(
+                        alignment: Alignment.topLeft,
+                        child: Text(' Đơn của bạn',
+                            style: TextStyle(
+                                color: Colors.black,
+                                fontSize: 20,
+                                fontWeight: FontWeight.bold))),
+                    SizedBox(height: 10),
+                    Container(
+                      width: MediaQuery.of(context).size.width,
+                      height: 24,
+                      child: Row(
+                        mainAxisSize: MainAxisSize.min,
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          GestureDetector(
+                            onTap: () {
+                              setState(() {
+                                tab = 1;
+                                colorTap1 = Color(0x2d27beba);
+                                colorTap2 = Colors.white;
+                                colorTap3 = Colors.white;
+                                colorTap4 = Colors.white;
+                                index = 0;
+                              });
+                            },
+                            child: SizedBox(
+                              width: 80,
+                              height: 24,
+                              child: Material(
+                                color: colorTap1,
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(6),
+                                ),
+                                child: Padding(
+                                  padding: const EdgeInsets.only(top: 4),
+                                  child: Text(
+                                    'Chấp nhận (' +
+                                        value.bookings
+                                            .where((element) =>
+                                                element.status == 'Xác nhận')
+                                            .length
+                                            .toString() +
+                                        ')',
+                                    textAlign: TextAlign.center,
+                                    style: TextStyle(
+                                      color: Color(0x7f000000),
+                                      fontSize: 11,
                                     ),
                                   ),
                                 ),
                               ),
                             ),
-                            SizedBox(width: 4),
-                            GestureDetector(
-                              onTap: () {
-                                setState(() {
-                                  tab = 2;
-                                  colorTap2 = Color(0x2d27beba);
-                                  colorTap1 = Colors.white;
-                                  colorTap3 = Colors.white;
-                                  colorTap4 = Colors.white;
-                                  index = 1;
-                                });
-                              },
-                              child: SizedBox(
-                                width: 80,
-                                height: 24,
-                                child: Material(
-                                  color: colorTap2,
-                                  shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(6),
-                                  ),
-                                  child: Padding(
-                                    padding: const EdgeInsets.only(top: 4),
-                                    child: Text(
-                                      'Chuẩn bị (' + value.bookings.where((element) => element.status == 'Đang trên đường').length.toString() + ')',
-                                      textAlign: TextAlign.center,
-                                      style: TextStyle(
-                                        color: Color(0x7f000000),
-                                        fontSize: 11,
-                                      ),
+                          ),
+                          SizedBox(width: 4),
+                          GestureDetector(
+                            onTap: () {
+                              setState(() {
+                                tab = 2;
+                                colorTap2 = Color(0x2d27beba);
+                                colorTap1 = Colors.white;
+                                colorTap3 = Colors.white;
+                                colorTap4 = Colors.white;
+                                index = 1;
+                              });
+                            },
+                            child: SizedBox(
+                              width: 80,
+                              height: 24,
+                              child: Material(
+                                color: colorTap2,
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(6),
+                                ),
+                                child: Padding(
+                                  padding: const EdgeInsets.only(top: 4),
+                                  child: Text(
+                                    'Chuẩn bị (' +
+                                        value.bookings
+                                            .where((element) =>
+                                                element.status ==
+                                                'Đang trên đường')
+                                            .length
+                                            .toString() +
+                                        ')',
+                                    textAlign: TextAlign.center,
+                                    style: TextStyle(
+                                      color: Color(0x7f000000),
+                                      fontSize: 11,
                                     ),
                                   ),
                                 ),
                               ),
                             ),
-                            SizedBox(width: 4),
-                            GestureDetector(
-                              onTap: () {
-                                setState(() {
-                                  tab = 3;
-                                  colorTap3 = Color(0x2d27beba);
-                                  colorTap1 = Colors.white;
-                                  colorTap2 = Colors.white;
-                                  colorTap4 = Colors.white;
-                                  index = 2;
-                                });
-                              },
-                              child: SizedBox(
-                                width: 84,
-                                height: 24,
-                                child: Material(
-                                  color: colorTap3,
-                                  shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(6),
-                                  ),
-                                  child: Padding(
-                                    padding: const EdgeInsets.only(top: 4),
-                                    child: Text(
-                                      'Đang làm (' +
-                                          value.bookings.where((element) => element.status == 'Đang làm').length.toString() + ')',
-                                      textAlign: TextAlign.center,
-                                      style: TextStyle(
-                                        color: Color(0x7f000000),
-                                        fontSize: 11,
-                                      ),
+                          ),
+                          SizedBox(width: 4),
+                          GestureDetector(
+                            onTap: () {
+                              setState(() {
+                                tab = 3;
+                                colorTap3 = Color(0x2d27beba);
+                                colorTap1 = Colors.white;
+                                colorTap2 = Colors.white;
+                                colorTap4 = Colors.white;
+                                index = 2;
+                              });
+                            },
+                            child: SizedBox(
+                              width: 84,
+                              height: 24,
+                              child: Material(
+                                color: colorTap3,
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(6),
+                                ),
+                                child: Padding(
+                                  padding: const EdgeInsets.only(top: 4),
+                                  child: Text(
+                                    'Đang làm (' +
+                                        value.bookings
+                                            .where((element) =>
+                                                element.status == 'Đang làm')
+                                            .length
+                                            .toString() +
+                                        ')',
+                                    textAlign: TextAlign.center,
+                                    style: TextStyle(
+                                      color: Color(0x7f000000),
+                                      fontSize: 11,
                                     ),
                                   ),
                                 ),
                               ),
                             ),
-                            SizedBox(width: 4),
-                            GestureDetector(
-                              onTap: () {
-                                setState(() {
-                                  tab = 4;
-                                  colorTap4 = Color(0x2d27beba);
-                                  colorTap2 = Colors.white;
-                                  colorTap3 = Colors.white;
-                                  colorTap1 = Colors.white;
-                                  index = 3;
-                                });
-                              },
-                              child: SizedBox(
-                                width: 88,
-                                height: 24,
-                                child: Material(
-                                  color: colorTap4,
-                                  shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(6),
-                                  ),
-                                  child: Padding(
-                                    padding: const EdgeInsets.all(4),
-                                    child: Text(
-                                      'Hoàn thành (' + value.bookings.where((element) => element.status == 'Hoàn thành').length.toString() + ')',
-                                      textAlign: TextAlign.center,
-                                      style: TextStyle(
-                                        color: Color(0x7f000000),
-                                        fontSize: 11,
-                                      ),
+                          ),
+                          SizedBox(width: 4),
+                          GestureDetector(
+                            onTap: () {
+                              setState(() {
+                                tab = 4;
+                                colorTap4 = Color(0x2d27beba);
+                                colorTap2 = Colors.white;
+                                colorTap3 = Colors.white;
+                                colorTap1 = Colors.white;
+                                index = 3;
+                              });
+                            },
+                            child: SizedBox(
+                              width: 88,
+                              height: 24,
+                              child: Material(
+                                color: colorTap4,
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(6),
+                                ),
+                                child: Padding(
+                                  padding: const EdgeInsets.all(4),
+                                  child: Text(
+                                    'Hoàn thành (' +
+                                        value.bookings
+                                            .where((element) =>
+                                                element.status == 'Hoàn thành')
+                                            .length
+                                            .toString() +
+                                        ')',
+                                    textAlign: TextAlign.center,
+                                    style: TextStyle(
+                                      color: Color(0x7f000000),
+                                      fontSize: 11,
                                     ),
                                   ),
                                 ),
                               ),
                             ),
-                          ],
-                        ),
+                          ),
+                        ],
                       ),
-                      _buildComponent(index, value.bookings),
-                    ],
-                  ),
+                    ),
+                    _buildComponent(index, value.bookings),
+                  ],
                 ),
+              ),
         bottomNavigationBar: WidgetUtils.appBottomNavigationBar(1),
       ),
     );
@@ -390,7 +414,8 @@ class _ProviderScreenState extends State<ProviderScreen> {
                                 Row(
                                   children: <Widget>[
                                     Container(
-                                      width: MediaQuery.of(context).size.width * 0.42,
+                                      width: MediaQuery.of(context).size.width *
+                                          0.42,
                                       child: Row(
                                         children: [
                                           Text('SHA-' + booking.id),
@@ -412,10 +437,13 @@ class _ProviderScreenState extends State<ProviderScreen> {
                                     ),
                                     Container(
                                         alignment: Alignment.topRight,
-                                        width: MediaQuery.of(context).size.width * 0.5,
+                                        width:
+                                            MediaQuery.of(context).size.width *
+                                                0.5,
                                         child: Text(
                                           DateFormat('hh:mm dd-MM-yyyy').format(
-                                              DateTime.parse(lstBooking[index].createDate)),
+                                              DateTime.parse(lstBooking[index]
+                                                  .createDate)),
                                           style: TextStyle(
                                               fontWeight: FontWeight.bold,
                                               fontSize: 15),
@@ -429,7 +457,8 @@ class _ProviderScreenState extends State<ProviderScreen> {
                                       child: Row(
                                         children: [
                                           Icon(Icons.face),
-                                          Text(' Khách đặt: ',
+                                          Text(
+                                            ' Khách đặt: ',
                                             style: TextStyle(
                                                 fontWeight: FontWeight.bold,
                                                 fontSize: 14),
@@ -450,8 +479,10 @@ class _ProviderScreenState extends State<ProviderScreen> {
                                 children: [
                                   Row(children: [
                                     Container(
-                                        margin: EdgeInsets.only(left: 15, right: 5),
-                                        child: Icon(Icons.local_library_rounded)),
+                                        margin:
+                                            EdgeInsets.only(left: 15, right: 5),
+                                        child:
+                                            Icon(Icons.local_library_rounded)),
                                     Container(
                                       width: 270,
                                       child: Text(
@@ -461,7 +492,10 @@ class _ProviderScreenState extends State<ProviderScreen> {
                                     ),
                                   ]),
                                   GestureDetector(
-                                    onTap: () {MapUtils4.openMap(currentAddress, booking.endAddress);},
+                                    onTap: () {
+                                      MapUtils4.openMap(
+                                          currentAddress, booking.endAddress);
+                                    },
                                     child: Row(
                                       children: [
                                         SizedBox(
@@ -488,7 +522,8 @@ class _ProviderScreenState extends State<ProviderScreen> {
                               Row(
                                 children: [
                                   Container(
-                                      margin: EdgeInsets.only(left: 15, right: 5),
+                                      margin:
+                                          EdgeInsets.only(left: 15, right: 5),
                                       child: Icon(Icons.description_outlined)),
                                   Container(
                                       width: 270,
@@ -514,7 +549,8 @@ class _ProviderScreenState extends State<ProviderScreen> {
                                 children: [
                                   Row(
                                     children: [
-                                      Text('${booking.bookingDetails[index].quantity}  x',
+                                      Text(
+                                        '${booking.bookingDetails[index].quantity}  x',
                                         style: TextStyle(
                                           fontWeight: FontWeight.bold,
                                           fontSize: 14,
@@ -523,7 +559,8 @@ class _ProviderScreenState extends State<ProviderScreen> {
                                       Container(
                                         margin: EdgeInsets.only(left: 15),
                                         child: Text(
-                                          booking.bookingDetails[index].serviceName,
+                                          booking.bookingDetails[index]
+                                              .serviceName,
                                           style: TextStyle(
                                             fontWeight: FontWeight.bold,
                                             fontSize: 13,
@@ -533,7 +570,8 @@ class _ProviderScreenState extends State<ProviderScreen> {
                                     ],
                                   ),
                                   Text(Utils.calculatePrice(
-                                      booking.bookingDetails[index].servicePrice,
+                                      booking
+                                          .bookingDetails[index].servicePrice,
                                       booking.bookingDetails[index].quantity)),
                                 ],
                               ),
@@ -550,7 +588,8 @@ class _ProviderScreenState extends State<ProviderScreen> {
                                       child: Row(
                                         children: [
                                           Text('Tổng đơn: '),
-                                          Text(Utils.formatPrice(booking.totalFee)),
+                                          Text(Utils.formatPrice(
+                                              booking.totalFee)),
                                           Card(
                                             color: Color(0xffC4C4C4),
                                             child: Padding(
@@ -650,7 +689,8 @@ class _ProviderScreenState extends State<ProviderScreen> {
                                 Row(
                                   children: <Widget>[
                                     Container(
-                                      width: MediaQuery.of(context).size.width * 0.42,
+                                      width: MediaQuery.of(context).size.width *
+                                          0.42,
                                       child: Row(
                                         children: [
                                           Text('SHA-' + booking.id),
@@ -672,10 +712,13 @@ class _ProviderScreenState extends State<ProviderScreen> {
                                     ),
                                     Container(
                                         alignment: Alignment.topRight,
-                                        width: MediaQuery.of(context).size.width * 0.5,
+                                        width:
+                                            MediaQuery.of(context).size.width *
+                                                0.5,
                                         child: Text(
                                           DateFormat('hh:mm dd-MM-yyyy').format(
-                                              DateTime.parse(lstBooking[index].createDate)),
+                                              DateTime.parse(lstBooking[index]
+                                                  .createDate)),
                                           style: TextStyle(
                                               fontWeight: FontWeight.bold,
                                               fontSize: 15),
@@ -689,7 +732,8 @@ class _ProviderScreenState extends State<ProviderScreen> {
                                       child: Row(
                                         children: [
                                           Icon(Icons.face),
-                                          Text(' Khách đặt: ',
+                                          Text(
+                                            ' Khách đặt: ',
                                             style: TextStyle(
                                                 fontWeight: FontWeight.bold,
                                                 fontSize: 14),
@@ -760,7 +804,8 @@ class _ProviderScreenState extends State<ProviderScreen> {
                               Row(
                                 children: [
                                   Container(
-                                      margin: EdgeInsets.only(left: 15, right: 5),
+                                      margin:
+                                          EdgeInsets.only(left: 15, right: 5),
                                       child: Icon(Icons.description_outlined)),
                                   Container(
                                       width: 270,
@@ -796,7 +841,8 @@ class _ProviderScreenState extends State<ProviderScreen> {
                                       Container(
                                         margin: EdgeInsets.only(left: 15),
                                         child: Text(
-                                          booking.bookingDetails[index].serviceName,
+                                          booking.bookingDetails[index]
+                                              .serviceName,
                                           style: TextStyle(
                                             fontWeight: FontWeight.bold,
                                             fontSize: 14,
@@ -805,7 +851,8 @@ class _ProviderScreenState extends State<ProviderScreen> {
                                       ),
                                     ],
                                   ),
-                                  Text(Utils.formatPrice(booking.bookingDetails[index].servicePrice)),
+                                  Text(Utils.formatPrice(booking
+                                      .bookingDetails[index].servicePrice)),
                                 ],
                               ),
                             ),
@@ -821,7 +868,8 @@ class _ProviderScreenState extends State<ProviderScreen> {
                                       child: Row(
                                         children: [
                                           Text('Tổng đơn: '),
-                                          Text(Utils.formatPrice(booking.totalFee)),
+                                          Text(Utils.formatPrice(
+                                              booking.totalFee)),
                                           Card(
                                             color: Color(0xffC4C4C4),
                                             child: Padding(
@@ -866,7 +914,8 @@ class _ProviderScreenState extends State<ProviderScreen> {
                                                 FlatButton(
                                                   textColor: Color(0xFF6200EE),
                                                   onPressed: () {
-                                                    Navigator.of(context).pushReplacement(
+                                                    Navigator.of(context)
+                                                        .pushReplacement(
                                                             MaterialPageRoute(
                                                       builder: (context) =>
                                                           CancelReason(),
@@ -946,7 +995,6 @@ class _ProviderScreenState extends State<ProviderScreen> {
                                       ),
                                     ),
                                   ),
-
                                 ),
                               ],
                             ),
@@ -1004,10 +1052,16 @@ class _ProviderScreenState extends State<ProviderScreen> {
                                     ),
                                     Container(
                                         width: 120,
-                                        child: lstBooking[index].createDate != null
+                                        child: lstBooking[index].createDate !=
+                                                null
                                             ? Text(
-                                                DateFormat('hh:mm dd-MM-yyyy').format(DateTime.parse(lstBooking[index].createDate)),
-                                                style: TextStyle(fontWeight: FontWeight.bold),
+                                                DateFormat('hh:mm dd-MM-yyyy')
+                                                    .format(DateTime.parse(
+                                                        lstBooking[index]
+                                                            .createDate)),
+                                                style: TextStyle(
+                                                    fontWeight:
+                                                        FontWeight.bold),
                                               )
                                             : Text('9AM - 8PM'))
                                   ],
@@ -1019,12 +1073,14 @@ class _ProviderScreenState extends State<ProviderScreen> {
                                       child: Row(
                                         children: [
                                           Icon(Icons.face),
-                                          Text(' Khách đặt: ',
+                                          Text(
+                                            ' Khách đặt: ',
                                             style: TextStyle(
                                                 fontWeight: FontWeight.bold,
                                                 fontSize: 14),
                                           ),
-                                          Text('${booking.customerAccount.name} '),
+                                          Text(
+                                              '${booking.customerAccount.name} '),
                                         ],
                                       ),
                                     ),
@@ -1248,7 +1304,7 @@ class _ProviderScreenState extends State<ProviderScreen> {
               itemBuilder: (BuildContext buildContext, int index) {
                 BookingModel booking = lstBooking[index];
                 return (lstBooking[index].status.contains("Finish") ||
-                    lstBooking[index].status.contains("Hoàn thành"))
+                        lstBooking[index].status.contains("Hoàn thành"))
                     ? OutlinedCard(
                         margin: EdgeInsets.only(top: 15),
                         padding: EdgeInsets.only(left: 4, right: 4),
@@ -1288,8 +1344,9 @@ class _ProviderScreenState extends State<ProviderScreen> {
                                         child: Text(
                                           "Ngày hoàn thành: " +
                                               DateFormat('dd-MM-yyyy').format(
-                                                  DateTime.parse(lstBooking[index]
-                                                      .updateDate)),
+                                                  DateTime.parse(
+                                                      lstBooking[index]
+                                                          .updateDate)),
                                           style: TextStyle(
                                               fontWeight: FontWeight.bold,
                                               fontSize: 13),
@@ -1405,7 +1462,8 @@ class _ProviderScreenState extends State<ProviderScreen> {
                                       Container(
                                         margin: EdgeInsets.only(left: 15),
                                         child: Text(
-                                          booking.bookingDetails[index].serviceName,
+                                          booking.bookingDetails[index]
+                                              .serviceName,
                                           style: TextStyle(
                                             fontWeight: FontWeight.bold,
                                             fontSize: 14,
@@ -1414,7 +1472,8 @@ class _ProviderScreenState extends State<ProviderScreen> {
                                       ),
                                     ],
                                   ),
-                                  Text(Utils.formatPrice(booking.bookingDetails[index].servicePrice)),
+                                  Text(Utils.formatPrice(booking
+                                      .bookingDetails[index].servicePrice)),
                                 ],
                               ),
                             ),
@@ -1430,7 +1489,8 @@ class _ProviderScreenState extends State<ProviderScreen> {
                                       child: Row(
                                         children: [
                                           Text('Tổng đơn: '),
-                                          Text(Utils.formatPrice(booking.totalFee)),
+                                          Text(Utils.formatPrice(
+                                              booking.totalFee)),
                                           Card(
                                             color: Color(0xffC4C4C4),
                                             child: Padding(

@@ -30,9 +30,10 @@ class _ProviderManagerScreenStage extends State<ProviderManagerScreen> {
   @override
   void initState() {
     accountId = context.read<UserProfile>().profile.uid.toString();
-    context.read<ServiceTypeProvider>().initAllServiceType("https://beauty-at-home-4a5ss6e6yq-as.a.run.app/api/v1.0/service-types");
+    context.read<ServiceTypeProvider>().initAllServiceType(
+        "https://beauty-at-home.azurewebsites.net/api/v1.0/service-types");
     context.read<ServiceProvider>().initAllService(
-        "https://beauty-at-home-4a5ss6e6yq-as.a.run.app/api/v1.0/services?AccountId=" +
+        "https://beauty-at-home.azurewebsites.net/api/v1.0/services?AccountId=" +
             accountId);
     super.initState();
   }
@@ -216,17 +217,19 @@ class _ProviderManagerScreenStage extends State<ProviderManagerScreen> {
                                         //   }),
                                         // );
 
-                                        SimpleAPI.putServiceModel('services',id:
-                                            service.serviceID,
-                                            serviceName: service.serviceName,
-                                            summary: service.summary ,
-                                            price: service.price,
-                                            estimateTime: '30',
-                                            status: status,
-                                            description: service.description,
-                                            galleryId: service.gallery.id.toString(),
-                                            accountId: service.account.id,
-                                            serviceTypeId: service.serviceType.id,
+                                        SimpleAPI.putServiceModel(
+                                          'services',
+                                          id: service.serviceID,
+                                          serviceName: service.serviceName,
+                                          summary: service.summary,
+                                          price: service.price,
+                                          estimateTime: '30',
+                                          status: status,
+                                          description: service.description,
+                                          galleryId:
+                                              service.gallery.id.toString(),
+                                          accountId: service.account.id,
+                                          serviceTypeId: service.serviceType.id,
                                         );
                                         setState(() {
                                           if (value) {

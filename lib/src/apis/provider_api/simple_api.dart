@@ -30,7 +30,7 @@ class SimpleAPI {
   static Future<List<T>> getAll<T>(Function(Map<String, dynamic>) fromMap,
       String endtitypoint, Map<String, dynamic> queryParameter) async {
     String uri =
-        "https://beauty-at-home-4a5ss6e6yq-as.a.run.app/api/v1.0/$endtitypoint";
+        "https://beauty-at-home.azurewebsites.net/api/v1.0/$endtitypoint";
     http.Response response = await http.get(uri);
     List<T> list = new List();
     dynamic jsonRaw = json.decode(response.body);
@@ -81,7 +81,7 @@ class SimpleAPI {
     Function(Map<String, dynamic>) fromMap,
   }) async {
     var uri =
-        'https://beauty-at-home-4a5ss6e6yq-as.a.run.app/api/v1.0/$entityEndpoint/$id';
+        'https://beauty-at-home.azurewebsites.net/api/v1.0/$entityEndpoint/$id';
     var encoded = Uri.encodeFull(uri);
 
     http.Response response = await http.get(
@@ -202,8 +202,7 @@ class SimpleAPI {
               }
             else
               {
-          print(value.request.toString()),
-
+                print(value.request.toString()),
                 print('Update failed 2: ' + value.statusCode.toString()),
               }
           });
@@ -290,8 +289,8 @@ class SimpleAPI {
   }) async {
     final uri = Uri.parse(baseUrl + "$entityEndpoint/$id");
 
-      print('nene : ' + body.toString());
-      print('URI NỪ : ' + uri.toString());
+    print('nene : ' + body.toString());
+    print('URI NỪ : ' + uri.toString());
 
     http.Response response = await http.put(uri, headers: headers, body: body);
     print("lỗi nè: " + response.statusCode.toString());

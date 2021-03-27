@@ -129,7 +129,7 @@ class ProviderNewOderScreenState extends State<ProviderNewOderScreen> {
     getUserLocation();
     userFo = context.read<UserProfile>();
     context.read<BookingProvider>().initAllNewBooking(
-        "https://beauty-at-home-4a5ss6e6yq-as.a.run.app/api/v1.0/bookings?status=Mới&BeautyArtistAccountId=" +
+        "https://beauty-at-home.azurewebsites.net/api/v1.0/bookings?status=Mới&BeautyArtistAccountId=" +
             userFo.profile.uid.toString());
   }
 
@@ -505,10 +505,12 @@ class ProviderNewOderScreenState extends State<ProviderNewOderScreen> {
                                                             'status': 'Đã hủy',
                                                           }),
                                                         );
-                                                        Navigator.of(context).pushReplacement(MaterialPageRoute(
-                                                            builder: (context) => ProviderNewOderScreen(
-
-                                                            )));
+                                                        Navigator.of(context)
+                                                            .pushReplacement(
+                                                                MaterialPageRoute(
+                                                                    builder:
+                                                                        (context) =>
+                                                                            ProviderNewOderScreen()));
                                                       },
                                                       child: Container(
                                                         width: 95,
